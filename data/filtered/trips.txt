@@ -1,0 +1,21 @@
+route_id,service_id,trip_headsign,direction_id,shape_id,trip_id
+1037,1,Kempegowda Bus Station,1,171 DOWN,3207
+1037,1,Kempegowda Bus Station,1,171 DOWN,3208
+1037,1,Kempegowda Bus Station,1,171 DOWN,3209
+1037,1,Kempegowda Bus Station,1,171 DOWN,3210
+1037,1,Kempegowda Bus Station,1,171 DOWN,3211
+1037,1,Kempegowda Bus Station,1,171 DOWN,3212
+1037,1,Kempegowda Bus Station,1,171 DOWN,3213
+1037,1,Kempegowda Bus Station,1,171 DOWN,3214
+1037,1,Kempegowda Bus Station,1,171 DOWN,3215
+1037,1,Kempegowda Bus Station,1,171 DOWN,3216
+4754,1,Central Silk Board Metro Station,0,500 BEML-MRTB-CSB UP,39526
+4995,1,BEL Factory,0,276 KBS-BELF UP,40564
+4995,1,BEL Factory,0,276 KBS-BELF UP,40565
+4995,1,BEL Factory,0,276 KBS-BELF UP,40566
+4995,1,Kempegowda Bus Station,1,276 KBS-BELF DOWN,40567
+4995,1,Kempegowda Bus Station,1,276 KBS-BELF DOWN,40568
+7857,1,BEL Factory,0,K-2 MRBS-BEL UP,49694
+7857,1,BEL Factory,0,K-2 MRBS-BEL UP,49695
+7857,1,Mysore Road Bus Station,1,K-2 MRBS-BEL DOWN,49696
+7857,1,Mysore Road Bus Station,1,K-2 MRBS-BEL DOWN,49697

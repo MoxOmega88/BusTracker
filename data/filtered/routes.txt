@@ -1,0 +1,5 @@
+route_long_name,route_short_name,agency_id,route_type,route_id
+BEL Factory ⇔ Kempegowda Bus Station,276 KBS-BELF,1,3,4995
+BEL Factory ⇔ Mysore Road Bus Station,K-2 MRBS-BEL,1,3,7857
+Central Silk Board ⇔ BEML Gate,500 BEML-MRTB-CSB,1,3,4754
+Koramangala 1st Block ⇔ Kempegowda Bus Station,171,1,3,1037

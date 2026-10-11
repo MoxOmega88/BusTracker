@@ -1,0 +1,470 @@
+trip_id,arrival_time,departure_time,stop_id,stop_sequence,stop_headsign
+3207,09:10:00,09:10:00,22892,1,Kempegowda Bus Station
+3207,09:12:02,09:12:02,23921,2,Kempegowda Bus Station
+3207,09:15:30,09:15:30,23333,3,Kempegowda Bus Station
+3207,09:18:40,09:18:40,22617,4,Kempegowda Bus Station
+3207,09:20:15,09:20:15,21731,5,Kempegowda Bus Station
+3207,09:23:02,09:23:02,21800,6,Kempegowda Bus Station
+3207,09:25:21,09:25:21,35137,7,Kempegowda Bus Station
+3207,09:27:16,09:27:16,35100,8,Kempegowda Bus Station
+3207,09:29:14,09:29:14,23594,9,Kempegowda Bus Station
+3207,09:32:38,09:32:38,23595,10,Kempegowda Bus Station
+3207,09:35:16,09:35:16,23596,11,Kempegowda Bus Station
+3207,09:38:53,09:38:53,22990,12,Kempegowda Bus Station
+3207,09:42:15,09:42:15,35544,13,Kempegowda Bus Station
+3207,09:43:33,09:43:33,23598,14,Kempegowda Bus Station
+3207,09:45:09,09:45:09,24136,15,Kempegowda Bus Station
+3207,09:47:00,09:47:00,22877,16,Kempegowda Bus Station
+3207,09:48:31,09:48:31,23599,17,Kempegowda Bus Station
+3207,09:51:02,09:51:02,21281,18,Kempegowda Bus Station
+3207,09:54:16,09:54:16,21166_PF2,19,Kempegowda Bus Station
+3207,09:56:21,09:56:21,20928,20,Kempegowda Bus Station
+3207,10:02:29,10:02:29,22667,21,Kempegowda Bus Station
+3207,10:05:05,10:05:05,20725,22,Kempegowda Bus Station
+3207,10:08:55,10:08:55,35383,23,Kempegowda Bus Station
+3207,10:15:00,10:15:00,20922,24,Kempegowda Bus Station
+3208,09:30:00,09:30:00,22892,1,Kempegowda Bus Station
+3208,09:32:02,09:32:02,23921,2,Kempegowda Bus Station
+3208,09:35:30,09:35:30,23333,3,Kempegowda Bus Station
+3208,09:38:40,09:38:40,22617,4,Kempegowda Bus Station
+3208,09:40:15,09:40:15,21731,5,Kempegowda Bus Station
+3208,09:43:02,09:43:02,21800,6,Kempegowda Bus Station
+3208,09:45:21,09:45:21,35137,7,Kempegowda Bus Station
+3208,09:47:16,09:47:16,35100,8,Kempegowda Bus Station
+3208,09:49:14,09:49:14,23594,9,Kempegowda Bus Station
+3208,09:52:38,09:52:38,23595,10,Kempegowda Bus Station
+3208,09:55:16,09:55:16,23596,11,Kempegowda Bus Station
+3208,09:58:53,09:58:53,22990,12,Kempegowda Bus Station
+3208,10:02:15,10:02:15,35544,13,Kempegowda Bus Station
+3208,10:03:33,10:03:33,23598,14,Kempegowda Bus Station
+3208,10:05:09,10:05:09,24136,15,Kempegowda Bus Station
+3208,10:07:00,10:07:00,22877,16,Kempegowda Bus Station
+3208,10:08:31,10:08:31,23599,17,Kempegowda Bus Station
+3208,10:11:02,10:11:02,21281,18,Kempegowda Bus Station
+3208,10:14:16,10:14:16,21166_PF2,19,Kempegowda Bus Station
+3208,10:16:21,10:16:21,20928,20,Kempegowda Bus Station
+3208,10:22:29,10:22:29,22667,21,Kempegowda Bus Station
+3208,10:25:05,10:25:05,20725,22,Kempegowda Bus Station
+3208,10:28:55,10:28:55,35383,23,Kempegowda Bus Station
+3208,10:35:00,10:35:00,20922,24,Kempegowda Bus Station
+3209,09:50:00,09:50:00,22892,1,Kempegowda Bus Station
+3209,09:51:53,09:51:53,23921,2,Kempegowda Bus Station
+3209,09:55:04,09:55:04,23333,3,Kempegowda Bus Station
+3209,09:58:00,09:58:00,22617,4,Kempegowda Bus Station
+3209,09:59:28,09:59:28,21731,5,Kempegowda Bus Station
+3209,10:02:02,10:02:02,21800,6,Kempegowda Bus Station
+3209,10:04:10,10:04:10,35137,7,Kempegowda Bus Station
+3209,10:05:56,10:05:56,35100,8,Kempegowda Bus Station
+3209,10:07:45,10:07:45,23594,9,Kempegowda Bus Station
+3209,10:10:53,10:10:53,23595,10,Kempegowda Bus Station
+3209,10:13:19,10:13:19,23596,11,Kempegowda Bus Station
+3209,10:16:39,10:16:39,22990,12,Kempegowda Bus Station
+3209,10:19:47,10:19:47,35544,13,Kempegowda Bus Station
+3209,10:20:59,10:20:59,23598,14,Kempegowda Bus Station
+3209,10:22:27,10:22:27,24136,15,Kempegowda Bus Station
+3209,10:24:09,10:24:09,22877,16,Kempegowda Bus Station
+3209,10:25:33,10:25:33,23599,17,Kempegowda Bus Station
+3209,10:27:52,10:27:52,21281,18,Kempegowda Bus Station
+3209,10:30:52,10:30:52,21166_PF2,19,Kempegowda Bus Station
+3209,10:32:47,10:32:47,20928,20,Kempegowda Bus Station
+3209,10:38:27,10:38:27,22667,21,Kempegowda Bus Station
+3209,10:40:50,10:40:50,20725,22,Kempegowda Bus Station
+3209,10:44:23,10:44:23,35383,23,Kempegowda Bus Station
+3209,10:49:59,10:49:59,20922,24,Kempegowda Bus Station
+3210,12:05:00,12:05:00,22892,1,Kempegowda Bus Station
+3210,12:06:53,12:06:53,23921,2,Kempegowda Bus Station
+3210,12:10:04,12:10:04,23333,3,Kempegowda Bus Station
+3210,12:13:00,12:13:00,22617,4,Kempegowda Bus Station
+3210,12:14:28,12:14:28,21731,5,Kempegowda Bus Station
+3210,12:17:02,12:17:02,21800,6,Kempegowda Bus Station
+3210,12:19:10,12:19:10,35137,7,Kempegowda Bus Station
+3210,12:20:56,12:20:56,35100,8,Kempegowda Bus Station
+3210,12:22:45,12:22:45,23594,9,Kempegowda Bus Station
+3210,12:25:53,12:25:53,23595,10,Kempegowda Bus Station
+3210,12:28:19,12:28:19,23596,11,Kempegowda Bus Station
+3210,12:31:39,12:31:39,22990,12,Kempegowda Bus Station
+3210,12:34:47,12:34:47,35544,13,Kempegowda Bus Station
+3210,12:35:59,12:35:59,23598,14,Kempegowda Bus Station
+3210,12:37:27,12:37:27,24136,15,Kempegowda Bus Station
+3210,12:39:09,12:39:09,22877,16,Kempegowda Bus Station
+3210,12:40:33,12:40:33,23599,17,Kempegowda Bus Station
+3210,12:42:52,12:42:52,21281,18,Kempegowda Bus Station
+3210,12:45:52,12:45:52,21166_PF2,19,Kempegowda Bus Station
+3210,12:47:47,12:47:47,20928,20,Kempegowda Bus Station
+3210,12:53:27,12:53:27,22667,21,Kempegowda Bus Station
+3210,12:55:50,12:55:50,20725,22,Kempegowda Bus Station
+3210,12:59:23,12:59:23,35383,23,Kempegowda Bus Station
+3210,13:04:59,13:04:59,20922,24,Kempegowda Bus Station
+3211,12:20:00,12:20:00,22892,1,Kempegowda Bus Station
+3211,12:21:53,12:21:53,23921,2,Kempegowda Bus Station
+3211,12:25:04,12:25:04,23333,3,Kempegowda Bus Station
+3211,12:28:00,12:28:00,22617,4,Kempegowda Bus Station
+3211,12:29:28,12:29:28,21731,5,Kempegowda Bus Station
+3211,12:32:02,12:32:02,21800,6,Kempegowda Bus Station
+3211,12:34:10,12:34:10,35137,7,Kempegowda Bus Station
+3211,12:35:56,12:35:56,35100,8,Kempegowda Bus Station
+3211,12:37:45,12:37:45,23594,9,Kempegowda Bus Station
+3211,12:40:53,12:40:53,23595,10,Kempegowda Bus Station
+3211,12:43:19,12:43:19,23596,11,Kempegowda Bus Station
+3211,12:46:39,12:46:39,22990,12,Kempegowda Bus Station
+3211,12:49:47,12:49:47,35544,13,Kempegowda Bus Station
+3211,12:50:59,12:50:59,23598,14,Kempegowda Bus Station
+3211,12:52:27,12:52:27,24136,15,Kempegowda Bus Station
+3211,12:54:09,12:54:09,22877,16,Kempegowda Bus Station
+3211,12:55:33,12:55:33,23599,17,Kempegowda Bus Station
+3211,12:57:52,12:57:52,21281,18,Kempegowda Bus Station
+3211,13:00:52,13:00:52,21166_PF2,19,Kempegowda Bus Station
+3211,13:02:47,13:02:47,20928,20,Kempegowda Bus Station
+3211,13:08:27,13:08:27,22667,21,Kempegowda Bus Station
+3211,13:10:50,13:10:50,20725,22,Kempegowda Bus Station
+3211,13:14:23,13:14:23,35383,23,Kempegowda Bus Station
+3211,13:19:59,13:19:59,20922,24,Kempegowda Bus Station
+3212,12:35:00,12:35:00,22892,1,Kempegowda Bus Station
+3212,12:36:53,12:36:53,23921,2,Kempegowda Bus Station
+3212,12:40:04,12:40:04,23333,3,Kempegowda Bus Station
+3212,12:43:00,12:43:00,22617,4,Kempegowda Bus Station
+3212,12:44:28,12:44:28,21731,5,Kempegowda Bus Station
+3212,12:47:02,12:47:02,21800,6,Kempegowda Bus Station
+3212,12:49:10,12:49:10,35137,7,Kempegowda Bus Station
+3212,12:50:56,12:50:56,35100,8,Kempegowda Bus Station
+3212,12:52:45,12:52:45,23594,9,Kempegowda Bus Station
+3212,12:55:53,12:55:53,23595,10,Kempegowda Bus Station
+3212,12:58:19,12:58:19,23596,11,Kempegowda Bus Station
+3212,13:01:39,13:01:39,22990,12,Kempegowda Bus Station
+3212,13:04:47,13:04:47,35544,13,Kempegowda Bus Station
+3212,13:05:59,13:05:59,23598,14,Kempegowda Bus Station
+3212,13:07:27,13:07:27,24136,15,Kempegowda Bus Station
+3212,13:09:09,13:09:09,22877,16,Kempegowda Bus Station
+3212,13:10:33,13:10:33,23599,17,Kempegowda Bus Station
+3212,13:12:52,13:12:52,21281,18,Kempegowda Bus Station
+3212,13:15:52,13:15:52,21166_PF2,19,Kempegowda Bus Station
+3212,13:17:47,13:17:47,20928,20,Kempegowda Bus Station
+3212,13:23:27,13:23:27,22667,21,Kempegowda Bus Station
+3212,13:25:50,13:25:50,20725,22,Kempegowda Bus Station
+3212,13:29:23,13:29:23,35383,23,Kempegowda Bus Station
+3212,13:34:59,13:34:59,20922,24,Kempegowda Bus Station
+3213,13:56:00,13:56:00,22892,1,Kempegowda Bus Station
+3213,13:57:32,13:57:32,23921,2,Kempegowda Bus Station
+3213,14:00:08,14:00:08,23333,3,Kempegowda Bus Station
+3213,14:02:32,14:02:32,22617,4,Kempegowda Bus Station
+3213,14:03:44,14:03:44,21731,5,Kempegowda Bus Station
+3213,14:05:49,14:05:49,21800,6,Kempegowda Bus Station
+3213,14:07:34,14:07:34,35137,7,Kempegowda Bus Station
+3213,14:09:01,14:09:01,35100,8,Kempegowda Bus Station
+3213,14:10:29,14:10:29,23594,9,Kempegowda Bus Station
+3213,14:13:04,14:13:04,23595,10,Kempegowda Bus Station
+3213,14:15:03,14:15:03,23596,11,Kempegowda Bus Station
+3213,14:17:46,14:17:46,22990,12,Kempegowda Bus Station
+3213,14:20:19,14:20:19,35544,13,Kempegowda Bus Station
+3213,14:21:18,14:21:18,23598,14,Kempegowda Bus Station
+3213,14:22:30,14:22:30,24136,15,Kempegowda Bus Station
+3213,14:23:53,14:23:53,22877,16,Kempegowda Bus Station
+3213,14:25:02,14:25:02,23599,17,Kempegowda Bus Station
+3213,14:26:56,14:26:56,21281,18,Kempegowda Bus Station
+3213,14:29:22,14:29:22,21166_PF2,19,Kempegowda Bus Station
+3213,14:30:56,14:30:56,20928,20,Kempegowda Bus Station
+3213,14:35:34,14:35:34,22667,21,Kempegowda Bus Station
+3213,14:37:31,14:37:31,20725,22,Kempegowda Bus Station
+3213,14:40:25,14:40:25,35383,23,Kempegowda Bus Station
+3213,14:44:59,14:44:59,20922,24,Kempegowda Bus Station
+3214,14:17:00,14:17:00,22892,1,Kempegowda Bus Station
+3214,14:18:30,14:18:30,23921,2,Kempegowda Bus Station
+3214,14:21:03,14:21:03,23333,3,Kempegowda Bus Station
+3214,14:23:24,14:23:24,22617,4,Kempegowda Bus Station
+3214,14:24:34,14:24:34,21731,5,Kempegowda Bus Station
+3214,14:26:37,14:26:37,21800,6,Kempegowda Bus Station
+3214,14:28:20,14:28:20,35137,7,Kempegowda Bus Station
+3214,14:29:45,14:29:45,35100,8,Kempegowda Bus Station
+3214,14:31:12,14:31:12,23594,9,Kempegowda Bus Station
+3214,14:33:43,14:33:43,23595,10,Kempegowda Bus Station
+3214,14:35:39,14:35:39,23596,11,Kempegowda Bus Station
+3214,14:38:19,14:38:19,22990,12,Kempegowda Bus Station
+3214,14:40:49,14:40:49,35544,13,Kempegowda Bus Station
+3214,14:41:47,14:41:47,23598,14,Kempegowda Bus Station
+3214,14:42:57,14:42:57,24136,15,Kempegowda Bus Station
+3214,14:44:19,14:44:19,22877,16,Kempegowda Bus Station
+3214,14:45:27,14:45:27,23599,17,Kempegowda Bus Station
+3214,14:47:18,14:47:18,21281,18,Kempegowda Bus Station
+3214,14:49:41,14:49:41,21166_PF2,19,Kempegowda Bus Station
+3214,14:51:14,14:51:14,20928,20,Kempegowda Bus Station
+3214,14:55:46,14:55:46,22667,21,Kempegowda Bus Station
+3214,14:57:40,14:57:40,20725,22,Kempegowda Bus Station
+3214,15:00:30,15:00:30,35383,23,Kempegowda Bus Station
+3214,15:05:00,15:05:00,20922,24,Kempegowda Bus Station
+3215,14:37:00,14:37:00,22892,1,Kempegowda Bus Station
+3215,14:38:30,14:38:30,23921,2,Kempegowda Bus Station
+3215,14:41:03,14:41:03,23333,3,Kempegowda Bus Station
+3215,14:43:24,14:43:24,22617,4,Kempegowda Bus Station
+3215,14:44:34,14:44:34,21731,5,Kempegowda Bus Station
+3215,14:46:37,14:46:37,21800,6,Kempegowda Bus Station
+3215,14:48:20,14:48:20,35137,7,Kempegowda Bus Station
+3215,14:49:45,14:49:45,35100,8,Kempegowda Bus Station
+3215,14:51:12,14:51:12,23594,9,Kempegowda Bus Station
+3215,14:53:43,14:53:43,23595,10,Kempegowda Bus Station
+3215,14:55:39,14:55:39,23596,11,Kempegowda Bus Station
+3215,14:58:19,14:58:19,22990,12,Kempegowda Bus Station
+3215,15:00:49,15:00:49,35544,13,Kempegowda Bus Station
+3215,15:01:47,15:01:47,23598,14,Kempegowda Bus Station
+3215,15:02:57,15:02:57,24136,15,Kempegowda Bus Station
+3215,15:04:19,15:04:19,22877,16,Kempegowda Bus Station
+3215,15:05:27,15:05:27,23599,17,Kempegowda Bus Station
+3215,15:07:18,15:07:18,21281,18,Kempegowda Bus Station
+3215,15:09:41,15:09:41,21166_PF2,19,Kempegowda Bus Station
+3215,15:11:14,15:11:14,20928,20,Kempegowda Bus Station
+3215,15:15:46,15:15:46,22667,21,Kempegowda Bus Station
+3215,15:17:40,15:17:40,20725,22,Kempegowda Bus Station
+3215,15:20:30,15:20:30,35383,23,Kempegowda Bus Station
+3215,15:25:00,15:25:00,20922,24,Kempegowda Bus Station
+3216,15:00:00,15:00:00,22892,1,Kempegowda Bus Station
+3216,15:01:53,15:01:53,23921,2,Kempegowda Bus Station
+3216,15:05:04,15:05:04,23333,3,Kempegowda Bus Station
+3216,15:08:00,15:08:00,22617,4,Kempegowda Bus Station
+3216,15:09:28,15:09:28,21731,5,Kempegowda Bus Station
+3216,15:12:02,15:12:02,21800,6,Kempegowda Bus Station
+3216,15:14:10,15:14:10,35137,7,Kempegowda Bus Station
+3216,15:15:56,15:15:56,35100,8,Kempegowda Bus Station
+3216,15:17:45,15:17:45,23594,9,Kempegowda Bus Station
+3216,15:20:53,15:20:53,23595,10,Kempegowda Bus Station
+3216,15:23:19,15:23:19,23596,11,Kempegowda Bus Station
+3216,15:26:39,15:26:39,22990,12,Kempegowda Bus Station
+3216,15:29:47,15:29:47,35544,13,Kempegowda Bus Station
+3216,15:30:59,15:30:59,23598,14,Kempegowda Bus Station
+3216,15:32:27,15:32:27,24136,15,Kempegowda Bus Station
+3216,15:34:09,15:34:09,22877,16,Kempegowda Bus Station
+3216,15:35:33,15:35:33,23599,17,Kempegowda Bus Station
+3216,15:37:52,15:37:52,21281,18,Kempegowda Bus Station
+3216,15:40:52,15:40:52,21166_PF2,19,Kempegowda Bus Station
+3216,15:42:47,15:42:47,20928,20,Kempegowda Bus Station
+3216,15:48:27,15:48:27,22667,21,Kempegowda Bus Station
+3216,15:50:50,15:50:50,20725,22,Kempegowda Bus Station
+3216,15:54:23,15:54:23,35383,23,Kempegowda Bus Station
+3216,15:59:59,15:59:59,20922,24,Kempegowda Bus Station
+39526,07:10:00,07:10:00,24153,1,Central Silk Board Metro Station
+39526,07:12:50,07:12:50,33126,2,Central Silk Board Metro Station
+39526,07:17:04,07:17:04,23120,3,Central Silk Board Metro Station
+39526,07:18:02,07:18:02,25675,4,Central Silk Board Metro Station
+39526,07:24:00,07:24:00,22021,5,Central Silk Board Metro Station
+39526,07:26:37,07:26:37,22001,6,Central Silk Board Metro Station
+39526,07:29:52,07:29:52,22627,7,Central Silk Board Metro Station
+39526,07:32:58,07:32:58,22260,8,Central Silk Board Metro Station
+39526,07:36:47,07:36:47,35409,9,Central Silk Board Metro Station
+39526,07:39:17,07:39:17,21031,10,Central Silk Board Metro Station
+39526,07:44:44,07:44:44,20894,11,Central Silk Board Metro Station
+39526,07:49:42,07:49:42,21058,12,Central Silk Board Metro Station
+39526,07:52:52,07:52:52,20753,13,Central Silk Board Metro Station
+39526,07:56:46,07:56:46,20770,14,Central Silk Board Metro Station
+39526,08:01:17,08:01:17,20639,15,Central Silk Board Metro Station
+39526,08:02:36,08:02:36,21091,16,Central Silk Board Metro Station
+39526,08:03:55,08:03:55,20888,17,Central Silk Board Metro Station
+39526,08:07:09,08:07:09,20850,18,Central Silk Board Metro Station
+39526,08:13:24,08:13:24,20597,19,Central Silk Board Metro Station
+39526,08:18:16,08:18:16,20748,20,Central Silk Board Metro Station
+39526,08:22:43,08:22:43,20569,21,Central Silk Board Metro Station
+39526,08:25:47,08:25:47,21176,22,Central Silk Board Metro Station
+39526,08:30:00,08:30:00,20704,23,Central Silk Board Metro Station
+40564,15:55:00,15:55:00,20921,1,BEL Factory
+40564,15:57:34,15:57:34,20603,2,BEL Factory
+40564,16:01:14,16:01:14,35303,3,BEL Factory
+40564,16:02:50,16:02:50,20702,4,BEL Factory
+40564,16:06:59,16:06:59,20988,5,BEL Factory
+40564,16:08:12,16:08:12,20590,6,BEL Factory
+40564,16:09:24,16:09:24,20561,7,BEL Factory
+40564,16:11:03,16:11:03,20570,8,BEL Factory
+40564,16:13:00,16:13:00,20574,9,BEL Factory
+40564,16:16:16,16:16:16,21215,10,BEL Factory
+40564,16:18:46,16:18:46,21098,11,BEL Factory
+40564,16:22:27,16:22:27,20731,12,BEL Factory
+40564,16:24:50,16:24:50,21030,13,BEL Factory
+40564,16:28:57,16:28:57,33061,14,BEL Factory
+40564,16:30:41,16:30:41,24952,15,BEL Factory
+40564,16:35:12,16:35:12,31389,16,BEL Factory
+40564,16:38:04,16:38:04,21734,17,BEL Factory
+40564,16:40:00,16:40:00,21735,18,BEL Factory
+40565,16:05:00,16:05:00,20921,1,BEL Factory
+40565,16:07:34,16:07:34,20603,2,BEL Factory
+40565,16:11:14,16:11:14,35303,3,BEL Factory
+40565,16:12:50,16:12:50,20702,4,BEL Factory
+40565,16:16:59,16:16:59,20988,5,BEL Factory
+40565,16:18:12,16:18:12,20590,6,BEL Factory
+40565,16:19:24,16:19:24,20561,7,BEL Factory
+40565,16:21:03,16:21:03,20570,8,BEL Factory
+40565,16:23:00,16:23:00,20574,9,BEL Factory
+40565,16:26:16,16:26:16,21215,10,BEL Factory
+40565,16:28:46,16:28:46,21098,11,BEL Factory
+40565,16:32:27,16:32:27,20731,12,BEL Factory
+40565,16:34:50,16:34:50,21030,13,BEL Factory
+40565,16:38:57,16:38:57,33061,14,BEL Factory
+40565,16:40:41,16:40:41,24952,15,BEL Factory
+40565,16:45:12,16:45:12,31389,16,BEL Factory
+40565,16:48:04,16:48:04,21734,17,BEL Factory
+40565,16:50:00,16:50:00,21735,18,BEL Factory
+40566,16:15:00,16:15:00,20921,1,BEL Factory
+40566,16:17:00,16:17:00,20603,2,BEL Factory
+40566,16:19:50,16:19:50,35303,3,BEL Factory
+40566,16:21:05,16:21:05,20702,4,BEL Factory
+40566,16:24:19,16:24:19,20988,5,BEL Factory
+40566,16:25:16,16:25:16,20590,6,BEL Factory
+40566,16:26:12,16:26:12,20561,7,BEL Factory
+40566,16:27:29,16:27:29,20570,8,BEL Factory
+40566,16:29:00,16:29:00,20574,9,BEL Factory
+40566,16:31:32,16:31:32,21215,10,BEL Factory
+40566,16:33:29,16:33:29,21098,11,BEL Factory
+40566,16:36:21,16:36:21,20731,12,BEL Factory
+40566,16:38:12,16:38:12,21030,13,BEL Factory
+40566,16:41:24,16:41:24,33061,14,BEL Factory
+40566,16:42:45,16:42:45,24952,15,BEL Factory
+40566,16:46:16,16:46:16,31389,16,BEL Factory
+40566,16:48:30,16:48:30,21734,17,BEL Factory
+40566,16:50:00,16:50:00,21735,18,BEL Factory
+40567,08:20:00,08:20:00,21735,1,Kempegowda Bus Station
+40567,08:22:12,08:22:12,20637,2,Kempegowda Bus Station
+40567,08:24:50,08:24:50,28426,3,Kempegowda Bus Station
+40567,08:29:27,08:29:27,32470,4,Kempegowda Bus Station
+40567,08:31:10,08:31:10,33056,5,Kempegowda Bus Station
+40567,08:35:15,08:35:15,21029,6,Kempegowda Bus Station
+40567,08:37:50,08:37:50,20730,7,Kempegowda Bus Station
+40567,08:41:13,08:41:13,21099,8,Kempegowda Bus Station
+40567,08:44:19,08:44:19,21214,9,Kempegowda Bus Station
+40567,08:46:43,08:46:43,20573,10,Kempegowda Bus Station
+40567,08:49:19,08:49:19,20564,11,Kempegowda Bus Station
+40567,08:50:14,08:50:14,20562,12,Kempegowda Bus Station
+40567,08:51:40,08:51:40,20589,13,Kempegowda Bus Station
+40567,08:52:58,08:52:58,20989,14,Kempegowda Bus Station
+40567,08:55:47,08:55:47,20971,15,Kempegowda Bus Station
+40567,08:58:22,08:58:22,20703,16,Kempegowda Bus Station
+40567,09:05:00,09:05:00,20922,17,Kempegowda Bus Station
+40568,08:30:00,08:30:00,21735,1,Kempegowda Bus Station
+40568,08:32:27,08:32:27,20637,2,Kempegowda Bus Station
+40568,08:35:22,08:35:22,28426,3,Kempegowda Bus Station
+40568,08:40:30,08:40:30,32470,4,Kempegowda Bus Station
+40568,08:42:25,08:42:25,33056,5,Kempegowda Bus Station
+40568,08:46:57,08:46:57,21029,6,Kempegowda Bus Station
+40568,08:49:49,08:49:49,20730,7,Kempegowda Bus Station
+40568,08:53:35,08:53:35,21099,8,Kempegowda Bus Station
+40568,08:57:01,08:57:01,21214,9,Kempegowda Bus Station
+40568,08:59:41,08:59:41,20573,10,Kempegowda Bus Station
+40568,09:02:35,09:02:35,20564,11,Kempegowda Bus Station
+40568,09:03:36,09:03:36,20562,12,Kempegowda Bus Station
+40568,09:05:12,09:05:12,20589,13,Kempegowda Bus Station
+40568,09:06:38,09:06:38,20989,14,Kempegowda Bus Station
+40568,09:09:46,09:09:46,20971,15,Kempegowda Bus Station
+40568,09:12:38,09:12:38,20703,16,Kempegowda Bus Station
+40568,09:20:00,09:20:00,20922,17,Kempegowda Bus Station
+49694,15:35:00,15:35:00,21042,1,BEL Factory
+49694,15:38:05,15:38:05,20739,2,BEL Factory
+49694,15:41:26,15:41:26,20613,3,BEL Factory
+49694,15:43:31,15:43:31,39679,4,BEL Factory
+49694,15:45:03,15:45:03,35395_PF1,5,BEL Factory
+49694,15:46:09,15:46:09,21011,6,BEL Factory
+49694,15:48:13,15:48:13,21266,7,BEL Factory
+49694,15:50:39,15:50:39,21013,8,BEL Factory
+49694,15:52:25,15:52:25,20600,9,BEL Factory
+49694,15:54:48,15:54:48,20891,10,BEL Factory
+49694,15:57:58,15:57:58,20813,11,BEL Factory
+49694,15:59:13,15:59:13,20592,12,BEL Factory
+49694,16:01:05,16:01:05,21274,13,BEL Factory
+49694,16:02:58,16:02:58,21165,14,BEL Factory
+49694,16:05:01,16:05:01,21028,15,BEL Factory
+49694,16:07:01,16:07:01,21050,16,BEL Factory
+49694,16:09:34,16:09:34,20576,17,BEL Factory
+49694,16:10:48,16:10:48,20980,18,BEL Factory
+49694,16:12:49,16:12:49,20860,19,BEL Factory
+49694,16:14:22,16:14:22,20797,20,BEL Factory
+49694,16:16:20,16:16:20,20793,21,BEL Factory
+49694,16:17:36,16:17:36,24016,22,BEL Factory
+49694,16:19:33,16:19:33,22564,23,BEL Factory
+49694,16:21:31,16:21:31,21691,24,BEL Factory
+49694,16:23:56,16:23:56,21900,25,BEL Factory
+49694,16:24:47,16:24:47,22307,26,BEL Factory
+49694,16:28:07,16:28:07,22277,27,BEL Factory
+49694,16:31:19,16:31:19,21969,28,BEL Factory
+49694,16:33:20,16:33:20,21734,29,BEL Factory
+49694,16:35:00,16:35:00,21735,30,BEL Factory
+49695,15:40:00,15:40:00,21042,1,BEL Factory
+49695,15:43:05,15:43:05,20739,2,BEL Factory
+49695,15:46:26,15:46:26,20613,3,BEL Factory
+49695,15:48:31,15:48:31,39679,4,BEL Factory
+49695,15:50:03,15:50:03,35395_PF1,5,BEL Factory
+49695,15:51:09,15:51:09,21011,6,BEL Factory
+49695,15:53:13,15:53:13,21266,7,BEL Factory
+49695,15:55:39,15:55:39,21013,8,BEL Factory
+49695,15:57:25,15:57:25,20600,9,BEL Factory
+49695,15:59:48,15:59:48,20891,10,BEL Factory
+49695,16:02:58,16:02:58,20813,11,BEL Factory
+49695,16:04:13,16:04:13,20592,12,BEL Factory
+49695,16:06:05,16:06:05,21274,13,BEL Factory
+49695,16:07:58,16:07:58,21165,14,BEL Factory
+49695,16:10:01,16:10:01,21028,15,BEL Factory
+49695,16:12:01,16:12:01,21050,16,BEL Factory
+49695,16:14:34,16:14:34,20576,17,BEL Factory
+49695,16:15:48,16:15:48,20980,18,BEL Factory
+49695,16:17:49,16:17:49,20860,19,BEL Factory
+49695,16:19:22,16:19:22,20797,20,BEL Factory
+49695,16:21:20,16:21:20,20793,21,BEL Factory
+49695,16:22:36,16:22:36,24016,22,BEL Factory
+49695,16:24:33,16:24:33,22564,23,BEL Factory
+49695,16:26:31,16:26:31,21691,24,BEL Factory
+49695,16:28:56,16:28:56,21900,25,BEL Factory
+49695,16:29:47,16:29:47,22307,26,BEL Factory
+49695,16:33:07,16:33:07,22277,27,BEL Factory
+49695,16:36:19,16:36:19,21969,28,BEL Factory
+49695,16:38:20,16:38:20,21734,29,BEL Factory
+49695,16:40:00,16:40:00,21735,30,BEL Factory
+49696,07:55:00,07:55:00,21735,1,Mysore Road Bus Station
+49696,07:56:57,07:56:57,20637,2,Mysore Road Bus Station
+49696,07:58:43,07:58:43,21968,3,Mysore Road Bus Station
+49696,08:01:39,08:01:39,33881,4,Mysore Road Bus Station
+49696,08:05:20,08:05:20,22306,5,Mysore Road Bus Station
+49696,08:06:14,08:06:14,21899,6,Mysore Road Bus Station
+49696,08:08:45,08:08:45,21690,7,Mysore Road Bus Station
+49696,08:10:48,08:10:48,22647,8,Mysore Road Bus Station
+49696,08:12:49,08:12:49,21288,9,Mysore Road Bus Station
+49696,08:15:23,08:15:23,20796,10,Mysore Road Bus Station
+49696,08:16:46,08:16:46,20859,11,Mysore Road Bus Station
+49696,08:19:15,08:19:15,20979,12,Mysore Road Bus Station
+49696,08:20:31,08:20:31,20575,13,Mysore Road Bus Station
+49696,08:22:52,08:22:52,34333,14,Mysore Road Bus Station
+49696,08:24:05,08:24:05,21049,15,Mysore Road Bus Station
+49696,08:25:32,08:25:32,21027,16,Mysore Road Bus Station
+49696,08:27:32,08:27:32,21164,17,Mysore Road Bus Station
+49696,08:29:21,08:29:21,21273,18,Mysore Road Bus Station
+49696,08:31:15,08:31:15,20591,19,Mysore Road Bus Station
+49696,08:33:16,08:33:16,20814,20,Mysore Road Bus Station
+49696,08:35:53,08:35:53,20890,21,Mysore Road Bus Station
+49696,08:40:25,08:40:25,21269,22,Mysore Road Bus Station
+49696,08:42:17,08:42:17,21623,23,Mysore Road Bus Station
+49696,08:44:28,08:44:28,21010,24,Mysore Road Bus Station
+49696,08:45:19,08:45:19,35395_PF1,25,Mysore Road Bus Station
+49696,08:49:09,08:49:09,35427,26,Mysore Road Bus Station
+49696,08:51:28,08:51:28,20738,27,Mysore Road Bus Station
+49696,08:54:04,08:54:04,20626,28,Mysore Road Bus Station
+49696,08:55:00,08:55:00,21042,29,Mysore Road Bus Station
+49697,08:00:00,08:00:00,21735,1,Mysore Road Bus Station
+49697,08:02:07,08:02:07,20637,2,Mysore Road Bus Station
+49697,08:04:02,08:04:02,21968,3,Mysore Road Bus Station
+49697,08:07:13,08:07:13,33881,4,Mysore Road Bus Station
+49697,08:11:12,08:11:12,22306,5,Mysore Road Bus Station
+49697,08:12:11,08:12:11,21899,6,Mysore Road Bus Station
+49697,08:14:54,08:14:54,21690,7,Mysore Road Bus Station
+49697,08:17:07,08:17:07,22647,8,Mysore Road Bus Station
+49697,08:19:19,08:19:19,21288,9,Mysore Road Bus Station
+49697,08:22:05,08:22:05,20796,10,Mysore Road Bus Station
+49697,08:23:35,08:23:35,20859,11,Mysore Road Bus Station
+49697,08:26:16,08:26:16,20979,12,Mysore Road Bus Station
+49697,08:27:39,08:27:39,20575,13,Mysore Road Bus Station
+49697,08:30:11,08:30:11,34333,14,Mysore Road Bus Station
+49697,08:31:31,08:31:31,21049,15,Mysore Road Bus Station
+49697,08:33:04,08:33:04,21027,16,Mysore Road Bus Station
+49697,08:35:15,08:35:15,21164,17,Mysore Road Bus Station
+49697,08:37:13,08:37:13,21273,18,Mysore Road Bus Station
+49697,08:39:17,08:39:17,20591,19,Mysore Road Bus Station
+49697,08:41:27,08:41:27,20814,20,Mysore Road Bus Station
+49697,08:44:18,08:44:18,20890,21,Mysore Road Bus Station
+49697,08:49:12,08:49:12,21269,22,Mysore Road Bus Station
+49697,08:51:14,08:51:14,21623,23,Mysore Road Bus Station
+49697,08:53:36,08:53:36,21010,24,Mysore Road Bus Station
+49697,08:54:31,08:54:31,35395_PF1,25,Mysore Road Bus Station
+49697,08:58:40,08:58:40,35427,26,Mysore Road Bus Station
+49697,09:01:11,09:01:11,20738,27,Mysore Road Bus Station
+49697,09:03:59,09:03:59,20626,28,Mysore Road Bus Station
+49697,09:04:59,09:04:59,21042,29,Mysore Road Bus Station
