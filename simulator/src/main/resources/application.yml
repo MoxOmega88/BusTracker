@@ -8,4 +8,4 @@ spring:
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
 
 bustracker:
-  data-dir: ../data/filtered
+  data-dir: data/filtered
