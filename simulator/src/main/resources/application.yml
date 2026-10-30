@@ -14,3 +14,4 @@ bustracker:
   sim:
     speedup: 10
     stagger-sec: 15
+    incidents-enabled: true
