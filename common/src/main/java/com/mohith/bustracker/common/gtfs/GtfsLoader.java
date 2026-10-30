@@ -1,4 +1,4 @@
-package com.mohith.bustracker.simulator.gtfs;
+package com.mohith.bustracker.common.gtfs;
 
 import com.mohith.bustracker.simulator.gtfs.GtfsModel.*;
 import org.apache.commons.csv.CSVFormat;
@@ -6,8 +6,7 @@ import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
+
 
 import java.io.IOException;
 import java.io.Reader;
@@ -16,7 +15,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.*;
 
-@Component
 public class GtfsLoader {
     private static final Logger log = LoggerFactory.getLogger(GtfsLoader.class);
     private static final double SNAP_WARN_M = 150;
@@ -25,9 +23,9 @@ public class GtfsLoader {
 
     private final Path dir;
 
-    public GtfsLoader(@Value("${bustracker.data-dir}") String dir) {
-        this.dir = Path.of(dir);
-    }
+    public GtfsLoader(String dir) {
+    this.dir = Path.of(dir);
+}
 
     public GtfsData load() throws IOException {
         Map<String, String> routeNames = loadRouteNames();
