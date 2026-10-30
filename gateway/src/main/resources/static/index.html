@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bus Tracker</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.css">
+<style>
+  :root { --bg:#f5f6f8; --panel:#fff; --text:#1d2330; --muted:#6b7385; --line:#e3e6ec;
+          --warn:#e69500; --crit:#d62839; --ok:#2a9d5c; --info:#3b6fd4; }
+  * { box-sizing: border-box; }
+  html, body { height: 100%; margin: 0; }
+  body { display: flex; font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+         color: var(--text); background: var(--bg); }
+  #side { width: 370px; display: flex; flex-direction: column; background: var(--panel);
+          border-right: 1px solid var(--line); z-index: 1000; }
+  #map { flex: 1; }
+  .block { padding: 12px 16px; border-bottom: 1px solid var(--line); }
+  h1 { font-size: 17px; margin: 0 0 6px; }
+  h2 { font-size: 12px; margin: 0 0 8px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); }
+  .row { display: flex; align-items: center; justify-content: space-between; gap: 8px; font-size: 13px; }
+  .muted { color: var(--muted); font-size: 12px; }
+  .pill { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; padding: 2px 8px;
+          border-radius: 10px; background: #eef0f4; }
+  .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--crit); }
+  .pill.live .dot { background: var(--ok); }
+  .legend-item { display: flex; align-items: center; gap: 8px; font-size: 13px; margin: 3px 0; }
+  .swatch { width: 22px; height: 0; border-top: 4px solid var(--c); }
+  #bus table { width: 100%; border-collapse: collapse; font-size: 12.5px; margin-top: 8px; }
+  #bus th { text-align: left; color: var(--muted); font-weight: 500; padding: 3px 0; }
+  #bus td { padding: 3px 0; border-top: 1px solid var(--line); }
+  #bus td:nth-child(n+2), #bus th:nth-child(n+2) { text-align: right; padding-left: 8px; }
+  .strong { font-weight: 600; }
+  #alerts { flex: 1; overflow-y: auto; padding: 8px 12px 16px; }
+  .alert { border-left: 4px solid var(--info); background: #f8f9fb; border-radius: 4px;
+           padding: 6px 10px; margin: 6px 0; cursor: pointer; font-size: 12.5px; }
+  .alert.warn { border-color: var(--warn); }
+  .alert.critical { border-color: var(--crit); background: #fdf1f2; }
+  .alert.info { border-color: var(--ok); }
+  .a-top { display: flex; justify-content: space-between; font-weight: 600; margin-bottom: 2px; }
+  .a-time { font-weight: 400; color: var(--muted); }
+  /* bus markers */
+  .bus-wrap { transition: transform 1s linear; }
+  .zooming .bus-wrap { transition: none !important; }
+  .bus { background: var(--c); color: #fff; font: 600 11px system-ui, sans-serif; border-radius: 11px;
+         text-align: center; line-height: 20px; height: 22px; border: 2px solid #fff;
+         box-shadow: 0 1px 4px rgba(0,0,0,.45); }
+  .bus.delay { background: var(--warn); animation: pulse 1.2s infinite; }
+  .bus.ghost { background: #8a8f9a; outline: 2px dashed var(--crit); outline-offset: 1px; }
+  .bus.sel { box-shadow: 0 0 0 3px rgba(29,35,48,.55); }
+  @keyframes pulse { 50% { transform: scale(1.12); } }
+  @media (max-width: 760px) { body { flex-direction: column-reverse; } #side { width: 100%; height: 45%; } }
+</style>
+</head>
+<body>
+<div id="side">
+  <div class="block">
+    <div class="row"><h1>Bus Tracker</h1><span id="status" class="pill"><span class="dot"></span><span id="status-text">Connecting</span></span></div>
+    <div class="row muted"><span>Simulated clock (10x speed)</span><span id="clock">--:--:--</span></div>
+    <div class="row muted"><span>Buses reporting</span><span id="count">0</span></div>
+  </div>
+  <div class="block"><h2>Routes</h2><div id="legend"></div>
+    <div class="muted" style="margin-top:6px">Solid line: one direction. Dashed: the other.</div></div>
+  <div class="block" id="bus"><h2>Selected bus</h2><div class="muted">Click a bus on the map to see its upcoming stops.</div></div>
+  <div class="block" style="border-bottom:none;padding-bottom:0"><h2>Alerts</h2></div>
+  <div id="alerts"><div class="muted" id="no-alerts">No alerts yet.</div></div>
+</div>
+<div id="map"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js"></script>
+<script>
+const COLORS = ['#1f77b4', '#e4572e', '#2a9d5c', '#8e44ad', '#0b7a8a', '#b5651d'];
+const routeColor = {};
+const buses = {};          // vehicleId -> { marker, data, status }
+let selected = null;
+let simClock = 0;
+
+const map = L.map('map').setView([12.97, 77.58], 12);
+L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+  { maxZoom: 19, attribution: '&copy; OpenStreetMap contributors' }).addTo(map);
+map.on('zoomstart', () => map.getContainer().classList.add('zooming'));
+map.on('zoomend', () => map.getContainer().classList.remove('zooming'));
+
+const $ = id => document.getElementById(id);
+const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const fmtTime = ts => new Date(ts).toLocaleTimeString();
+const fmtDur = sec => {
+  let m = Math.floor(sec / 60), s = Math.round(sec % 60);
+  if (s === 60) { m += 1; s = 0; }
+  return m + ':' + String(s).padStart(2, '0');
+};
+const colorOf = name => routeColor[name] || '#555';
+const labelOf = name => String(name).split(' ')[0];
+
+function makeIcon(d, status, isSel) {
+  return L.divIcon({
+    className: 'bus-wrap',
+    html: `<div class="bus ${status}${isSel ? ' sel' : ''}" style="--c:${colorOf(d.routeName)}">${esc(labelOf(d.routeName))}</div>`,
+    iconSize: [38, 22], iconAnchor: [19, 11]
+  });
+}
+function refreshIcon(id) {
+  const b = buses[id];
+  if (b && b.data) b.marker.setIcon(makeIcon(b.data, b.status, id === selected));
+}
+
+// ---- static data: routes and stops ----
+fetch('/api/routes').then(r => r.json()).then(shapes => {
+  const all = [];
+  let ci = 0;
+  shapes.forEach(s => {
+    if (!routeColor[s.routeName]) routeColor[s.routeName] = COLORS[ci++ % COLORS.length];
+    const color = routeColor[s.routeName];
+    L.polyline(s.points, { color, weight: 4, opacity: .55,
+      dashArray: s.directionId === 1 ? '8 6' : undefined }).addTo(map);
+    s.points.forEach(p => all.push(p));
+    s.stops.forEach(st => L.circleMarker([st.lat, st.lon],
+      { radius: 3, color: '#555', weight: 1, fillColor: '#fff', fillOpacity: 1 })
+      .bindTooltip(st.name).addTo(map));
+  });
+  if (all.length) map.fitBounds(all, { padding: [30, 30] });
+  $('legend').innerHTML = Object.entries(routeColor).map(([name, c]) =>
+    `<div class="legend-item"><span class="swatch" style="--c:${c}"></span>${esc(name)}</div>`).join('');
+  connect();
+});
+
+// ---- live stream ----
+function connect() {
+  const es = new EventSource('/stream');
+  es.onopen = () => setStatus(true);
+  es.onerror = () => setStatus(false);   // the browser reconnects by itself
+  es.addEventListener('eta', e => onEta(JSON.parse(e.data)));
+  es.addEventListener('alert', e => onAlert(JSON.parse(e.data)));
+}
+function setStatus(live) {
+  $('status').classList.toggle('live', live);
+  $('status-text').textContent = live ? 'Live' : 'Reconnecting';
+}
+
+function onEta(d) {
+  simClock = Math.max(simClock, d.timestamp);
+  let b = buses[d.vehicleId];
+  if (!b) {
+    b = { status: 'ok', data: d,
+          marker: L.marker([d.lat, d.lon], { icon: makeIcon(d, 'ok', false) })
+                   .bindTooltip(`${d.routeName} (${d.vehicleId})`).addTo(map) };
+    b.marker.on('click', () => select(d.vehicleId));
+    buses[d.vehicleId] = b;
+    $('count').textContent = Object.keys(buses).length;
+  }
+  b.data = d;
+  b.marker.setLatLng([d.lat, d.lon]);
+  if (selected === d.vehicleId) renderBus();
+}
+
+const STATUS_OF = { DELAY: 'delay', GHOST_BUS: 'ghost', DELAY_CLEARED: 'ok', GHOST_RECOVERED: 'ok' };
+const TITLE_OF = { DELAY: 'Delay', GHOST_BUS: 'Ghost bus', DELAY_CLEARED: 'Delay cleared', GHOST_RECOVERED: 'Reporting again' };
+
+function onAlert(a) {
+  simClock = Math.max(simClock, a.timestamp);
+  const b = buses[a.vehicleId];
+  const st = STATUS_OF[a.type];
+  if (b && st && b.status !== st) { b.status = st; refreshIcon(a.vehicleId); }
+
+  const el = document.createElement('div');
+  el.className = 'alert ' + String(a.severity).toLowerCase();
+  el.innerHTML = `<div class="a-top"><span>${esc(TITLE_OF[a.type] || a.type)}</span><span class="a-time">${esc(fmtTime(a.timestamp))}</span></div><div class="a-msg"></div>`;
+  el.querySelector('.a-msg').textContent = a.message;
+  el.onclick = () => { map.flyTo([a.lat, a.lon], 15); select(a.vehicleId); };
+  const none = $('no-alerts'); if (none) none.remove();
+  $('alerts').prepend(el);
+  while ($('alerts').children.length > 40) $('alerts').lastChild.remove();
+}
+
+// ---- selected bus panel ----
+function select(id) {
+  const prev = selected;
+  selected = id;
+  if (prev) refreshIcon(prev);
+  refreshIcon(id);
+  renderBus();
+}
+function renderBus() {
+  const b = buses[selected];
+  if (!b) return;
+  const d = b.data;
+  const pct = Math.round(Math.abs(d.pace - 1) * 100);
+  const paceText = pct < 2 ? 'on schedule'
+    : d.pace > 1 ? `${pct}% faster than the timetable` : `${pct}% slower than the timetable`;
+  const statusText = b.status === 'delay' ? ' - delayed' : b.status === 'ghost' ? ' - not reporting' : '';
+  const rows = d.upcoming.map(s => `<tr><td>${esc(s.stopName)}</td><td>${fmtDur(s.scheduledEtaSec)}</td><td class="strong">${fmtDur(s.correctedEtaSec)}</td></tr>`).join('');
+  $('bus').innerHTML = `<h2>Selected bus</h2>
+    <div class="row"><span class="strong">${esc(d.routeName)}</span><span class="muted">${esc(d.vehicleId)}${statusText}</span></div>
+    <div class="muted">Running ${paceText}</div>
+    <table><thead><tr><th>Next stops</th><th>Timetable</th><th>Corrected</th></tr></thead><tbody>${rows || '<tr><td colspan="3">End of route</td></tr>'}</tbody></table>
+    <div class="muted" style="margin-top:6px">Times are mm:ss in simulated time.</div>`;
+}
+
+setInterval(() => { $('clock').textContent = simClock ? fmtTime(simClock) : '--:--:--'; }, 500);
+</script>
+</body>
+</html>
