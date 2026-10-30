@@ -1,6 +1,6 @@
 package com.mohith.bustracker.common.gtfs;
 
-import com.mohith.bustracker.simulator.gtfs.GtfsModel.*;
+import com.mohith.bustracker.common.gtfs.GtfsModel.*;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;

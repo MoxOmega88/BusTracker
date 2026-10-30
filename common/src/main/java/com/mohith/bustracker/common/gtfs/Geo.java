@@ -1,4 +1,4 @@
-package com.mohith.bustracker.simulator.gtfs;
+package com.mohith.bustracker.common.gtfs;
 
 public final class Geo {
     private Geo() {}

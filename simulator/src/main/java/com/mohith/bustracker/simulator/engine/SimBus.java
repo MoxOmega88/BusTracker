@@ -1,8 +1,8 @@
 package com.mohith.bustracker.simulator.engine;
 
 import com.mohith.bustracker.common.VehiclePosition;
-import com.mohith.bustracker.simulator.gtfs.GtfsModel.Shape;
-import com.mohith.bustracker.simulator.gtfs.GtfsModel.Trip;
+import com.mohith.bustracker.common.gtfs.GtfsModel.Shape;
+import com.mohith.bustracker.common.gtfs.GtfsModel.Trip;
 import java.util.Random;
 
 public class SimBus {

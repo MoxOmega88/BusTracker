@@ -5,14 +5,21 @@ spring:
     bootstrap-servers: localhost:9092
     consumer:
       group-id: eta-service
-      auto-offset-reset: earliest
+      auto-offset-reset: latest
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
       properties:
         spring.json.trusted.packages: com.mohith.bustracker.common
+        spring.json.value.default.type: com.mohith.bustracker.common.VehiclePosition
+        spring.json.use.type.headers: false
     producer:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      properties:
+        max.block.ms: 5000
 
-server:
-  port: 8081
+bustracker:
+  data-dir: data/filtered
+  eta:
+    lookahead: 5
+    pace-alpha: 0.2

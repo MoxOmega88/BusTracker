@@ -1,7 +1,7 @@
 package com.mohith.bustracker.simulator.engine;
 
-import com.mohith.bustracker.simulator.gtfs.GtfsModel.Shape;
-import com.mohith.bustracker.simulator.gtfs.GtfsModel.ShapePoint;
+import com.mohith.bustracker.common.gtfs.GtfsModel.Shape;
+import com.mohith.bustracker.common.gtfs.GtfsModel.ShapePoint;
 import java.util.List;
 
 public final class RouteGeometry {
