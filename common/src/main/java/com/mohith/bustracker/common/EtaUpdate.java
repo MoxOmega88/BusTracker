@@ -11,6 +11,9 @@ public record EtaUpdate(
         double lat,
         double lon,
         double distAlongM,
+        double speedKmh,
+        String status,
+        boolean delayed,
         double pace,
         long timestamp,
         List<StopEta> upcoming) {}

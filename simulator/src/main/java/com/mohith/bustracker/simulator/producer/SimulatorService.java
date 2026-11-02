@@ -28,6 +28,7 @@ public class SimulatorService {
     private final IncidentPlan plan;
     private final double speedup;
     private final double staggerSec;
+    private final SimBus.Params params;
     private final List<SimBus> buses = new ArrayList<>();
     private final AtomicLong sent = new AtomicLong();
     private Set<String> lastActive = new HashSet<>();
@@ -35,15 +36,19 @@ public class SimulatorService {
     private long simNowMs;
     private long ticks = 0;
 
-    public SimulatorService(KafkaTemplate<String, VehiclePosition> kafka, GtfsLoader loader,
-                            IncidentPlan plan,
+    public SimulatorService(KafkaTemplate<String, VehiclePosition> kafka, GtfsLoader loader, IncidentPlan plan,
                             @Value("${bustracker.sim.speedup:10}") double speedup,
-                            @Value("${bustracker.sim.stagger-sec:15}") double staggerSec) {
+                            @Value("${bustracker.sim.stagger-sec:15}") double staggerSec,
+                            @Value("${bustracker.sim.cruise-mps:5.4}") double cruiseMps,
+                            @Value("${bustracker.sim.dwell-min-sec:20}") double dwellMin,
+                            @Value("${bustracker.sim.dwell-max-sec:45}") double dwellMax,
+                            @Value("${bustracker.sim.red-prob:0.45}") double redProb) {
         this.kafka = kafka;
         this.loader = loader;
         this.plan = plan;
         this.speedup = speedup;
         this.staggerSec = staggerSec;
+        this.params = new SimBus.Params(cruiseMps, 0.7, dwellMin, dwellMax, redProb, 15, 40);
     }
 
     @PostConstruct
@@ -53,7 +58,7 @@ public class SimulatorService {
         Map<String, Integer> perShape = new HashMap<>();
         for (Trip trip : data.trips().values()) {
             int idx = perShape.merge(trip.shapeId(), 1, Integer::sum) - 1;
-            buses.add(new SimBus(trip, data.shapes().get(trip.shapeId()), idx * staggerSec, rnd, plan));
+            buses.add(new SimBus(trip, data.shapes().get(trip.shapeId()), idx * staggerSec, rnd, plan, params));
         }
         simStartMs = System.currentTimeMillis();
         simNowMs = simStartMs;

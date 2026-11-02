@@ -3,7 +3,7 @@ package com.mohith.bustracker.eta.service;
 import com.mohith.bustracker.common.gtfs.GtfsModel.StopTime;
 import com.mohith.bustracker.common.gtfs.GtfsModel.Trip;
 
-/** Timetable of one trip: lets us ask "at this distance, what time should the bus be there?" */
+/** Timetable of one trip, indexed by stop. */
 public class TripSchedule {
     private final Trip trip;
     private final double[] t;   // scheduled offset (s) at each stop
@@ -24,10 +24,9 @@ public class TripSchedule {
     }
 
     public Trip trip() { return trip; }
-
-    public double offsetSec(StopTime st) {
-        return st.scheduledSec() - trip.startSec();
-    }
+    public int size() { return t.length; }
+    public double timeAt(int i) { return t[i]; }
+    public double distAt(int i) { return d[i]; }
 
     /** Scheduled time offset (s) at a given distance along the route. */
     public double timeAtDist(double dist) {

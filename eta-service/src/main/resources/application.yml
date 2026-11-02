@@ -21,6 +21,7 @@ spring:
 bustracker:
   data-dir: data/filtered
   eta:
-    lookahead: 5
-    pace-alpha: 0.2
+    score-lookahead: 5       # only the next 5 stops are scored for accuracy
+    max-published-stops: 40  # the stop board needs all remaining stops
+    pace-alpha: 0.4
     ghost-sec: 90
