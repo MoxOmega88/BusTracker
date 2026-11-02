@@ -3,200 +3,235 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Bus Tracker</title>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.css">
+<title>Bus Tracker · ಬಸ್ ಎಲ್ಲಿದೆ?</title>
+<meta name="description" content="Live BMTC bus tracking and honest ETAs, streamed through Apache Kafka.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;800&family=DM+Sans:wght@400;500;700&family=DotGothic16&family=Noto+Sans+Kannada:wght@600;700&display=swap" rel="stylesheet">
 <style>
-  :root { --bg:#f5f6f8; --panel:#fff; --text:#1d2330; --muted:#6b7385; --line:#e3e6ec;
-          --warn:#e69500; --crit:#d62839; --ok:#2a9d5c; --info:#3b6fd4; }
-  * { box-sizing: border-box; }
-  html, body { height: 100%; margin: 0; }
-  body { display: flex; font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
-         color: var(--text); background: var(--bg); }
-  #side { width: 370px; display: flex; flex-direction: column; background: var(--panel);
-          border-right: 1px solid var(--line); z-index: 1000; }
-  #map { flex: 1; }
-  .block { padding: 12px 16px; border-bottom: 1px solid var(--line); }
-  h1 { font-size: 17px; margin: 0 0 6px; }
-  h2 { font-size: 12px; margin: 0 0 8px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); }
-  .row { display: flex; align-items: center; justify-content: space-between; gap: 8px; font-size: 13px; }
-  .muted { color: var(--muted); font-size: 12px; }
-  .pill { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; padding: 2px 8px;
-          border-radius: 10px; background: #eef0f4; }
-  .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--crit); }
-  .pill.live .dot { background: var(--ok); }
-  .legend-item { display: flex; align-items: center; gap: 8px; font-size: 13px; margin: 3px 0; }
-  .swatch { width: 22px; height: 0; border-top: 4px solid var(--c); }
-  #bus table { width: 100%; border-collapse: collapse; font-size: 12.5px; margin-top: 8px; }
-  #bus th { text-align: left; color: var(--muted); font-weight: 500; padding: 3px 0; }
-  #bus td { padding: 3px 0; border-top: 1px solid var(--line); }
-  #bus td:nth-child(n+2), #bus th:nth-child(n+2) { text-align: right; padding-left: 8px; }
-  .strong { font-weight: 600; }
-  #alerts { flex: 1; overflow-y: auto; padding: 8px 12px 16px; }
-  .alert { border-left: 4px solid var(--info); background: #f8f9fb; border-radius: 4px;
-           padding: 6px 10px; margin: 6px 0; cursor: pointer; font-size: 12.5px; }
-  .alert.warn { border-color: var(--warn); }
-  .alert.critical { border-color: var(--crit); background: #fdf1f2; }
-  .alert.info { border-color: var(--ok); }
-  .a-top { display: flex; justify-content: space-between; font-weight: 600; margin-bottom: 2px; }
-  .a-time { font-weight: 400; color: var(--muted); }
-  /* bus markers */
-  .bus-wrap { transition: transform 1s linear; }
-  .zooming .bus-wrap { transition: none !important; }
-  .bus { background: var(--c); color: #fff; font: 600 11px system-ui, sans-serif; border-radius: 11px;
-         text-align: center; line-height: 20px; height: 22px; border: 2px solid #fff;
-         box-shadow: 0 1px 4px rgba(0,0,0,.45); }
-  .bus.delay { background: var(--warn); animation: pulse 1.2s infinite; }
-  .bus.ghost { background: #8a8f9a; outline: 2px dashed var(--crit); outline-offset: 1px; }
-  .bus.sel { box-shadow: 0 0 0 3px rgba(29,35,48,.55); }
-  @keyframes pulse { 50% { transform: scale(1.12); } }
-  @media (max-width: 760px) { body { flex-direction: column-reverse; } #side { width: 100%; height: 45%; } }
+:root{--bg:#0a0e13;--panel:#10161e;--line:#243040;--text:#e9eef5;--muted:#8793a6;--amber:#ffb300;
+  --display:'Bricolage Grotesque',system-ui,sans-serif;--body:'DM Sans',system-ui,sans-serif;--led:'DotGothic16','Courier New',monospace}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--text);font:17px/1.6 var(--body)}
+a{color:inherit}
+.wrap{max-width:1180px;margin:0 auto;padding:0 24px}
+.led{font-family:var(--led);color:var(--amber);text-shadow:0 0 10px rgba(255,179,0,.45)}
+.stripe{height:6px;background:linear-gradient(90deg,#3da5ff 0 25%,#ff7a45 25% 50%,#3ddc97 50% 75%,#c77dff 75%)}
+
+.nav{display:flex;align-items:center;gap:30px;height:74px}
+.brand{font:800 21px var(--display);letter-spacing:.03em;text-decoration:none}
+.nav .sp{flex:1}
+.nav a.l{font-size:14px;color:var(--muted);text-decoration:none;letter-spacing:.04em}
+.nav a.l:hover{color:var(--text)}
+
+.hero{display:grid;grid-template-columns:1.02fr 1fr;gap:40px;align-items:center;min-height:calc(100vh - 86px);padding-bottom:40px}
+.eyebrow{display:inline-flex;align-items:center;gap:9px;font:700 12px var(--body);letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin:0 0 22px}
+.eyebrow i{width:9px;height:9px;border-radius:50%;background:#3ddc97;animation:ping 2s infinite}
+@keyframes ping{0%{box-shadow:0 0 0 0 rgba(61,220,151,.6)}70%,100%{box-shadow:0 0 0 9px rgba(61,220,151,0)}}
+h1{font:800 clamp(56px,8.4vw,116px)/.9 var(--display);letter-spacing:-.035em;margin:0}
+.kn{font:700 clamp(26px,3.4vw,40px) 'Noto Sans Kannada',sans-serif;color:var(--amber);margin:14px 0 22px}
+.lede{max-width:500px;color:#c3ccd9;margin:0 0 30px}
+.cta{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:22px}
+.btn{display:inline-block;text-decoration:none;font:800 15px var(--display);letter-spacing:.04em;padding:14px 22px;border:2px solid var(--text);border-radius:6px}
+.btn.primary{background:var(--amber);border-color:var(--amber);color:#0a0e13;box-shadow:5px 5px 0 #7a5600;transition:transform .12s,box-shadow .12s}
+.btn.primary:hover{transform:translate(-2px,-2px);box-shadow:7px 7px 0 #7a5600}
+.btn.primary:active{transform:translate(3px,3px);box-shadow:2px 2px 0 #7a5600}
+.btn:not(.primary):hover{background:var(--text);color:#0a0e13}
+.fine{font-size:13px;color:var(--muted);max-width:480px;margin:0}
+
+.art{position:relative;height:min(74vh,640px);min-height:420px;border:1px solid var(--line);border-radius:12px;background:
+  radial-gradient(circle at 70% 20%,rgba(255,179,0,.06),transparent 55%),#0c1118;overflow:hidden}
+.art::before{content:"";position:absolute;inset:0;background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);background-size:44px 44px;opacity:.25}
+#art{position:absolute;inset:0;width:100%;height:100%}
+.board{position:absolute;left:18px;right:18px;bottom:18px;background:#05080b;border:1px solid #1b2431;border-radius:8px;padding:10px 14px;box-shadow:0 12px 30px rgba(0,0,0,.6),inset 0 0 22px rgba(0,0,0,.6)}
+.board h3{margin:0 0 6px;font:700 11px var(--body);letter-spacing:.16em;text-transform:uppercase;color:var(--muted);display:flex;justify-content:space-between}
+.brow{display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center;padding:6px 0;border-top:1px dashed #1b2431}
+.brow:first-of-type{border-top:0}
+.chip{--c:#888;background:var(--c);color:#0a0e13;border-radius:5px;font:800 12px var(--display);padding:2px 8px;min-width:40px;text-align:center}
+.bdest,.beta{font-family:var(--led);color:var(--amber);text-transform:uppercase;font-size:15px;text-shadow:0 0 8px rgba(255,179,0,.45);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.beta{font-size:18px}
+.bnone{font-family:var(--led);color:#6b5a2a;font-size:14px;padding:6px 0}
+
+.stats{border-block:1px solid var(--line);background:var(--panel)}
+.stats .wrap{display:grid;grid-template-columns:repeat(4,1fr)}
+.stat{padding:28px 20px;border-left:1px solid var(--line)}
+.stat:first-child{border-left:0;padding-left:0}
+.stat .n{font-family:var(--led);color:var(--amber);font-size:clamp(40px,5vw,60px);line-height:1;text-shadow:0 0 12px rgba(255,179,0,.4)}
+.stat .t{font:700 11px var(--body);letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-top:8px}
+
+section.block{padding:96px 0 40px}
+.sec-label{font:700 12px var(--body);letter-spacing:.2em;text-transform:uppercase;color:var(--amber);margin:0 0 14px}
+h2{font:800 clamp(34px,4.6vw,56px)/1 var(--display);letter-spacing:-.025em;margin:0 0 18px;max-width:760px}
+.sub{color:#c3ccd9;max-width:640px;margin:0 0 44px}
+.flow{display:grid;grid-template-columns:1fr auto 1fr auto 1fr auto 1fr;gap:10px;align-items:stretch}
+.node{border:1px solid var(--line);background:var(--panel);border-radius:8px;padding:16px}
+.node b{display:block;font:800 17px var(--display);margin-bottom:4px}
+.node span{font-size:13.5px;color:var(--muted);line-height:1.45;display:block}
+.node code{font:12px var(--led);color:var(--amber)}
+.arrow{align-self:center;font:700 22px var(--display);color:var(--muted);text-align:center}
+.feat{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin-top:70px;border-top:1px solid var(--line)}
+.f{padding:30px 28px 10px 0}
+.f+.f{padding-left:28px;border-left:1px solid var(--line)}
+.f .no{font:800 15px var(--display);color:var(--amber);letter-spacing:.1em}
+.f h3{font:800 24px/1.1 var(--display);margin:10px 0 10px;letter-spacing:-.01em}
+.f p{margin:0;color:#c3ccd9;font-size:15.5px}
+.honest{margin-top:60px;border:2px dashed var(--line);border-radius:10px;padding:26px 28px;display:grid;grid-template-columns:1fr 1fr;gap:30px}
+.honest h4{margin:0 0 8px;font:800 13px var(--body);letter-spacing:.16em;text-transform:uppercase;color:var(--amber)}
+.honest p{margin:0;font-size:15px;color:#c3ccd9}
+footer{margin-top:90px;border-top:1px solid var(--line);padding:30px 0 50px;color:var(--muted);font-size:13px}
+footer .wrap{display:flex;gap:30px;justify-content:space-between;flex-wrap:wrap}
+footer p{margin:0;max-width:640px}
+
+@media (max-width:900px){
+  .hero{grid-template-columns:1fr;min-height:0}
+  .flow{grid-template-columns:1fr}.arrow{transform:rotate(90deg)}
+  .feat{grid-template-columns:1fr}.f+.f{padding-left:0;border-left:0;border-top:1px solid var(--line)}
+  .stats .wrap{grid-template-columns:1fr 1fr}.stat:nth-child(3){border-left:0;padding-left:0}
+  .honest{grid-template-columns:1fr}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;scroll-behavior:auto}}
 </style>
 </head>
 <body>
-<div id="side">
-  <div class="block">
-    <div class="row"><h1>Bus Tracker</h1><span id="status" class="pill"><span class="dot"></span><span id="status-text">Connecting</span></span></div>
-    <div class="row muted"><span>Simulated clock (10x speed)</span><span id="clock">--:--:--</span></div>
-    <div class="row muted"><span>Buses reporting</span><span id="count">0</span></div>
-  </div>
-  <div class="block"><h2>Routes</h2><div id="legend"></div>
-    <div class="muted" style="margin-top:6px">Solid line: one direction. Dashed: the other.</div></div>
-  <div class="block" id="bus"><h2>Selected bus</h2><div class="muted">Click a bus on the map to see its upcoming stops.</div></div>
-  <div class="block" style="border-bottom:none;padding-bottom:0"><h2>Alerts</h2></div>
-  <div id="alerts"><div class="muted" id="no-alerts">No alerts yet.</div></div>
+<div class="stripe"></div>
+<div class="wrap">
+  <nav class="nav">
+    <a class="brand" href="/">BUS TRACKER</a>
+    <span class="sp"></span>
+    <a class="l" href="/app.html">Live map</a>
+    <a class="l" href="#how">How it works</a>
+    <a class="l" href="https://github.com/YOUR-USERNAME/bus-tracker">GitHub</a>
+  </nav>
+
+  <header class="hero">
+    <div>
+      <p class="eyebrow"><i></i>Live on Kafka · BMTC routes</p>
+      <h1>Where's<br>my bus?</h1>
+      <p class="kn">ಬಸ್ ಎಲ್ಲಿದೆ?</p>
+      <p class="lede">Bengaluru's buses never run to the timetable. This tracker streams bus positions through Apache Kafka, works out how late each bus really is, and tells you when it will actually turn up.</p>
+      <div class="cta">
+        <a class="btn primary" href="/app.html">OPEN THE LIVE MAP →</a>
+        <a class="btn" href="#how">HOW IT WORKS</a>
+      </div>
+      <p class="fine">Routes, stops and timetables are real BMTC data. Bus positions are simulated, and the system is built so a real GPS feed can replace the simulator.</p>
+    </div>
+    <div class="art">
+      <canvas id="art"></canvas>
+      <div class="board"><h3><span>Next buses to a stop</span><span>ETA</span></h3><div id="rows"><div class="bnone">WAITING FOR BUSES…</div></div></div>
+    </div>
+  </header>
 </div>
-<div id="map"></div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js"></script>
+<div class="stats"><div class="wrap">
+  <div class="stat"><div class="n" id="s-buses">--</div><div class="t">Buses reporting now</div></div>
+  <div class="stat"><div class="n" id="s-alerts">--</div><div class="t">Alerts raised</div></div>
+  <div class="stat"><div class="n" id="s-routes">--</div><div class="t">Routes</div></div>
+  <div class="stat"><div class="n" id="s-stops">--</div><div class="t">Stops</div></div>
+</div></div>
+
+<div class="wrap">
+  <section class="block" id="how">
+    <p class="sec-label">How it works</p>
+    <h2>Every ping is an event.</h2>
+    <p class="sub">A simulated bus sends its position every few seconds. Four small services turn those pings into a live map, with Kafka in the middle so each piece can be scaled or replaced on its own.</p>
+    <div class="flow">
+      <div class="node"><b>Simulator</b><span>Buses drive real BMTC routes: they brake for stops and red signals, dwell, and get stuck in jams.</span></div>
+      <div class="arrow">→</div>
+      <div class="node"><b>ETA service</b><span>Reads <code>bus.positions</code>, learns how each bus runs against its timetable, and flags trouble.</span></div>
+      <div class="arrow">→</div>
+      <div class="node"><b>Gateway</b><span>Reads <code>bus.eta</code> and <code>bus.alerts</code>, then streams them to browsers over SSE.</span></div>
+      <div class="arrow">→</div>
+      <div class="node"><b>This map</b><span>Search a stop, plan a direct ride, or watch a single bus.</span></div>
+    </div>
+    <div class="feat">
+      <div class="f"><div class="no">01</div><h3>One bus, one order</h3><p>Positions are keyed by vehicle ID, so every ping from a bus lands on the same partition, in order. Several ETA instances split the buses between them as one consumer group.</p></div>
+      <div class="f"><div class="no">02</div><h3>An ETA that learns the bus</h3><p>Each finished stop-to-stop segment shows how fast this bus is running against its timetable. The rest of the trip is scaled by that pace, and the error is tracked against a timetable-only baseline.</p></div>
+      <div class="f"><div class="no">03</div><h3>Trouble gets noticed</h3><p>A bus crawling below 7 km/h away from a stop raises a delay alert. A bus that goes silent becomes a ghost bus. Duplicate and out-of-order pings are dropped.</p></div>
+    </div>
+    <div class="honest">
+      <div><h4>What's real</h4><p>Routes, stops, stop sequences and timetables, from the unofficial BMTC GTFS dataset by Vonter (scraped from the Namma BMTC app, so it has rough edges).</p></div>
+      <div><h4>What's simulated</h4><p>GPS positions, traffic and incidents. BMTC doesn't publish a public real-time feed. The producer is the only piece that would change when one exists.</p></div>
+    </div>
+  </section>
+</div>
+
+<footer><div class="wrap">
+  <p>Bus Tracker · Spring Boot, Apache Kafka, GTFS. Map tiles © OpenStreetMap contributors © CARTO. Route data: unofficial BMTC GTFS by Vonter.</p>
+  <p><a href="/app.html">Open the live map →</a></p>
+</div></footer>
+<div class="stripe"></div>
+
 <script>
-const COLORS = ['#1f77b4', '#e4572e', '#2a9d5c', '#8e44ad', '#0b7a8a', '#b5651d'];
-const routeColor = {};
-const buses = {};          // vehicleId -> { marker, data, status }
-let selected = null;
-let simClock = 0;
-
-const map = L.map('map').setView([12.97, 77.58], 12);
-L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-  { maxZoom: 19, attribution: '&copy; OpenStreetMap contributors' }).addTo(map);
-map.on('zoomstart', () => map.getContainer().classList.add('zooming'));
-map.on('zoomend', () => map.getContainer().classList.remove('zooming'));
-
 const $ = id => document.getElementById(id);
 const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const fmtTime = ts => new Date(ts).toLocaleTimeString();
-const fmtDur = sec => {
-  let m = Math.floor(sec / 60), s = Math.round(sec % 60);
-  if (s === 60) { m += 1; s = 0; }
-  return m + ':' + String(s).padStart(2, '0');
-};
-const colorOf = name => routeColor[name] || '#555';
-const labelOf = name => String(name).split(' ')[0];
+const COLORS = {'171':'#3da5ff','500':'#ff7a45','276':'#3ddc97','K-2':'#c77dff'};
+const SPARE = ['#ffd166','#4cc9f0','#f72585','#b8f2e6'];
+const colorOf = l => COLORS[l] || (COLORS[l] = SPARE[Object.keys(COLORS).length % SPARE.length]);
+const minsText = s => s < 30 ? 'NOW' : (Math.round(s / 60) || 1) + ' MIN';
 
-function makeIcon(d, status, isSel) {
-  return L.divIcon({
-    className: 'bus-wrap',
-    html: `<div class="bus ${status}${isSel ? ' sel' : ''}" style="--c:${colorOf(d.routeName)}">${esc(labelOf(d.routeName))}</div>`,
-    iconSize: [38, 22], iconAnchor: [19, 11]
-  });
+/* live numbers and the departure board */
+async function poll() {
+  try {
+    const s = await (await fetch('/api/stats')).json();
+    $('s-buses').textContent = s.buses; $('s-alerts').textContent = s.alerts;
+    $('s-routes').textContent = s.routes; $('s-stops').textContent = s.stops;
+    $('rows').innerHTML = s.board.length ? s.board.map(r => `<div class="brow">
+      <span class="chip" style="--c:${colorOf(r.route)}">${esc(r.route)}</span>
+      <span class="bdest">${esc(r.nextStop)}</span><span class="beta">${minsText(r.etaSec)}</span></div>`).join('')
+      : '<div class="bnone">NO BUSES REPORTING · START THE SIMULATOR</div>';
+  } catch (e) { /* gateway restarting */ }
 }
-function refreshIcon(id) {
-  const b = buses[id];
-  if (b && b.data) b.marker.setIcon(makeIcon(b.data, b.status, id === selected));
-}
+poll(); setInterval(poll, 2000);
 
-// ---- static data: routes and stops ----
-fetch('/api/routes').then(r => r.json()).then(shapes => {
-  const all = [];
-  let ci = 0;
-  shapes.forEach(s => {
-    if (!routeColor[s.routeName]) routeColor[s.routeName] = COLORS[ci++ % COLORS.length];
-    const color = routeColor[s.routeName];
-    L.polyline(s.points, { color, weight: 4, opacity: .55,
-      dashArray: s.directionId === 1 ? '8 6' : undefined }).addTo(map);
-    s.points.forEach(p => all.push(p));
-    s.stops.forEach(st => L.circleMarker([st.lat, st.lon],
-      { radius: 3, color: '#555', weight: 1, fillColor: '#fff', fillOpacity: 1 })
-      .bindTooltip(st.name).addTo(map));
-  });
-  if (all.length) map.fitBounds(all, { padding: [30, 30] });
-  $('legend').innerHTML = Object.entries(routeColor).map(([name, c]) =>
-    `<div class="legend-item"><span class="swatch" style="--c:${c}"></span>${esc(name)}</div>`).join('');
-  connect();
-});
+/* the real route shapes, drawn with buses running along them */
+(async () => {
+  const cv = $('art'), ctx = cv.getContext('2d');
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let shapes = [], W = 0, H = 0, lines = [], dots = [], last = 0;
+  try { shapes = await (await fetch('/api/routes')).json(); } catch (e) { return; }
 
-// ---- live stream ----
-function connect() {
-  const es = new EventSource('/stream');
-  es.onopen = () => setStatus(true);
-  es.onerror = () => setStatus(false);   // the browser reconnects by itself
-  es.addEventListener('eta', e => onEta(JSON.parse(e.data)));
-  es.addEventListener('alert', e => onAlert(JSON.parse(e.data)));
-}
-function setStatus(live) {
-  $('status').classList.toggle('live', live);
-  $('status-text').textContent = live ? 'Live' : 'Reconnecting';
-}
-
-function onEta(d) {
-  simClock = Math.max(simClock, d.timestamp);
-  let b = buses[d.vehicleId];
-  if (!b) {
-    b = { status: 'ok', data: d,
-          marker: L.marker([d.lat, d.lon], { icon: makeIcon(d, 'ok', false) })
-                   .bindTooltip(`${d.routeName} (${d.vehicleId})`).addTo(map) };
-    b.marker.on('click', () => select(d.vehicleId));
-    buses[d.vehicleId] = b;
-    $('count').textContent = Object.keys(buses).length;
+  function build() {
+    const r = cv.getBoundingClientRect(), dpr = Math.min(2, devicePixelRatio || 1);
+    W = r.width; H = r.height; cv.width = W * dpr; cv.height = H * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    let minLa = 90, maxLa = -90, minLo = 180, maxLo = -180;
+    shapes.forEach(s => s.points.forEach(([la, lo]) => { minLa = Math.min(minLa, la); maxLa = Math.max(maxLa, la); minLo = Math.min(minLo, lo); maxLo = Math.max(maxLo, lo); }));
+    const k = Math.cos(((minLa + maxLa) / 2) * Math.PI / 180), dx = (maxLo - minLo) * k, dy = maxLa - minLa;
+    const pad = 36, boardRoom = 120, sc = Math.min((W - 2 * pad) / dx, (H - 2 * pad - boardRoom) / dy);
+    const ox = (W - dx * sc) / 2, oy = pad + ((H - 2 * pad - boardRoom) - dy * sc) / 2;
+    lines = shapes.map(s => {
+      const pts = s.points.map(([la, lo]) => ({ x: ox + (lo - minLo) * k * sc, y: oy + (maxLa - la) * sc }));
+      const cum = [0]; for (let i = 1; i < pts.length; i++) cum.push(cum[i - 1] + Math.hypot(pts[i].x - pts[i - 1].x, pts[i].y - pts[i - 1].y));
+      return { color: colorOf(s.routeName.split(' ')[0]), pts, cum, total: cum[cum.length - 1], dashed: s.directionId === 1 };
+    });
+    dots = []; lines.forEach(l => { for (let i = 0; i < 3; i++) dots.push({ l, t: Math.random() * l.total, v: 22 + Math.random() * 20 }); });
+    draw(0);
   }
-  b.data = d;
-  b.marker.setLatLng([d.lat, d.lon]);
-  if (selected === d.vehicleId) renderBus();
-}
-
-const STATUS_OF = { DELAY: 'delay', GHOST_BUS: 'ghost', DELAY_CLEARED: 'ok', GHOST_RECOVERED: 'ok' };
-const TITLE_OF = { DELAY: 'Delay', GHOST_BUS: 'Ghost bus', DELAY_CLEARED: 'Delay cleared', GHOST_RECOVERED: 'Reporting again' };
-
-function onAlert(a) {
-  simClock = Math.max(simClock, a.timestamp);
-  const b = buses[a.vehicleId];
-  const st = STATUS_OF[a.type];
-  if (b && st && b.status !== st) { b.status = st; refreshIcon(a.vehicleId); }
-
-  const el = document.createElement('div');
-  el.className = 'alert ' + String(a.severity).toLowerCase();
-  el.innerHTML = `<div class="a-top"><span>${esc(TITLE_OF[a.type] || a.type)}</span><span class="a-time">${esc(fmtTime(a.timestamp))}</span></div><div class="a-msg"></div>`;
-  el.querySelector('.a-msg').textContent = a.message;
-  el.onclick = () => { map.flyTo([a.lat, a.lon], 15); select(a.vehicleId); };
-  const none = $('no-alerts'); if (none) none.remove();
-  $('alerts').prepend(el);
-  while ($('alerts').children.length > 40) $('alerts').lastChild.remove();
-}
-
-// ---- selected bus panel ----
-function select(id) {
-  const prev = selected;
-  selected = id;
-  if (prev) refreshIcon(prev);
-  refreshIcon(id);
-  renderBus();
-}
-function renderBus() {
-  const b = buses[selected];
-  if (!b) return;
-  const d = b.data;
-  const pct = Math.round(Math.abs(d.pace - 1) * 100);
-  const paceText = pct < 2 ? 'on schedule'
-    : d.pace > 1 ? `${pct}% faster than the timetable` : `${pct}% slower than the timetable`;
-  const statusText = b.status === 'delay' ? ' - delayed' : b.status === 'ghost' ? ' - not reporting' : '';
-  const rows = d.upcoming.map(s => `<tr><td>${esc(s.stopName)}</td><td>${fmtDur(s.scheduledEtaSec)}</td><td class="strong">${fmtDur(s.correctedEtaSec)}</td></tr>`).join('');
-  $('bus').innerHTML = `<h2>Selected bus</h2>
-    <div class="row"><span class="strong">${esc(d.routeName)}</span><span class="muted">${esc(d.vehicleId)}${statusText}</span></div>
-    <div class="muted">Running ${paceText}</div>
-    <table><thead><tr><th>Next stops</th><th>Timetable</th><th>Corrected</th></tr></thead><tbody>${rows || '<tr><td colspan="3">End of route</td></tr>'}</tbody></table>
-    <div class="muted" style="margin-top:6px">Times are mm:ss in simulated time.</div>`;
-}
-
-setInterval(() => { $('clock').textContent = simClock ? fmtTime(simClock) : '--:--:--'; }, 500);
+  function at(l, d) {
+    let lo = 0, hi = l.cum.length - 1;
+    while (hi - lo > 1) { const m = (lo + hi) >> 1; if (l.cum[m] <= d) lo = m; else hi = m; }
+    const f = (d - l.cum[lo]) / ((l.cum[hi] - l.cum[lo]) || 1);
+    return { x: l.pts[lo].x + (l.pts[hi].x - l.pts[lo].x) * f, y: l.pts[lo].y + (l.pts[hi].y - l.pts[lo].y) * f };
+  }
+  function draw(dt) {
+    ctx.clearRect(0, 0, W, H); ctx.lineJoin = 'round'; ctx.lineCap = 'round';
+    lines.forEach(l => {
+      ctx.beginPath(); l.pts.forEach((p, i) => i ? ctx.lineTo(p.x, p.y) : ctx.moveTo(p.x, p.y));
+      ctx.strokeStyle = l.color; ctx.globalAlpha = .18; ctx.lineWidth = 9; ctx.setLineDash([]); ctx.stroke();
+      ctx.globalAlpha = .9; ctx.lineWidth = 2.5; ctx.setLineDash(l.dashed ? [7, 6] : []); ctx.stroke();
+    });
+    ctx.globalAlpha = 1; ctx.setLineDash([]);
+    dots.forEach(d => {
+      d.t = (d.t + d.v * dt) % d.l.total;
+      const p = at(d.l, d.t);
+      ctx.beginPath(); ctx.arc(p.x, p.y, 5, 0, 7); ctx.fillStyle = d.l.color; ctx.fill();
+      ctx.lineWidth = 2; ctx.strokeStyle = '#0a0e13'; ctx.stroke();
+    });
+  }
+  function frame(now) { const dt = Math.min(.05, (now - last) / 1000 || 0); last = now; draw(dt); requestAnimationFrame(frame); }
+  build(); addEventListener('resize', build);
+  if (!reduce) requestAnimationFrame(frame);
+})();
 </script>
 </body>
 </html>

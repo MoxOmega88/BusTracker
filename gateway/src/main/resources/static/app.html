@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Live map · Bus Tracker</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;800&family=DM+Sans:wght@400;500;700&family=DotGothic16&family=Noto+Sans+Kannada:wght@600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.css">
+<style>
+:root{--bg:#0a0e13;--panel:#10161e;--panel2:#161e29;--line:#243040;--text:#e9eef5;--muted:#8793a6;
+  --amber:#ffb300;--mint:#3ddc97;--red:#ff4d5e;
+  --display:'Bricolage Grotesque',system-ui,sans-serif;--body:'DM Sans',system-ui,sans-serif;--led:'DotGothic16','Courier New',monospace}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--text);font:14px/1.45 var(--body);display:flex;flex-direction:column;overflow:hidden}
+button{font:inherit;color:inherit;cursor:pointer}
+.hidden{display:none!important}
+.led{font-family:var(--led);color:var(--amber);text-shadow:0 0 8px rgba(255,179,0,.45)}
+
+#top{height:54px;flex:none;display:flex;align-items:center;gap:18px;padding:0 16px;background:var(--panel);border-bottom:1px solid var(--line);position:relative}
+#top::after{content:"";position:absolute;left:0;right:0;bottom:-4px;height:4px;z-index:5;
+  background:linear-gradient(90deg,#3da5ff 0 25%,#ff7a45 25% 50%,#3ddc97 50% 75%,#c77dff 75%)}
+.brand{display:flex;align-items:baseline;gap:12px;text-decoration:none;color:var(--text);font:800 20px var(--display);letter-spacing:.03em}
+.brand .kn{font:600 13px 'Noto Sans Kannada',sans-serif;color:var(--amber);letter-spacing:0}
+.sp{flex:1}
+.clock{display:flex;align-items:center;gap:10px}
+#clock{font-size:20px}
+.tag{font-size:11px;letter-spacing:.1em;color:var(--muted);border:1px solid var(--line);padding:2px 6px;border-radius:3px}
+.status{display:flex;align-items:center;gap:7px;font-size:12px;color:var(--muted)}
+.status i{width:8px;height:8px;border-radius:50%;background:var(--red)}
+.status.live i{background:var(--mint);animation:ping 2s infinite}
+@keyframes ping{0%{box-shadow:0 0 0 0 rgba(61,220,151,.6)}70%,100%{box-shadow:0 0 0 8px rgba(61,220,151,0)}}
+
+main{flex:1;display:flex;min-height:0;margin-top:4px}
+#side{width:400px;flex:none;background:var(--panel);border-right:1px solid var(--line);display:flex;flex-direction:column;min-height:0}
+.tabs{display:flex;border-bottom:1px solid var(--line)}
+.tab{flex:1;background:none;border:0;border-bottom:3px solid transparent;padding:12px 4px;font:700 11.5px var(--body);letter-spacing:.12em;text-transform:uppercase;color:var(--muted);position:relative}
+.tab.on{color:var(--text);border-bottom-color:var(--amber)}
+.badge{position:absolute;top:6px;right:8px;background:var(--red);color:#fff;font:700 10px var(--body);border-radius:9px;padding:1px 5px;letter-spacing:0}
+.pane{flex:1;overflow-y:auto;padding:14px 16px 24px}
+.hint,.empty{color:var(--muted);font-size:12.5px;margin:0 0 12px}
+.empty{padding:14px;border:1px dashed var(--line);border-radius:6px}
+.lbl{display:block;font:700 11px var(--body);letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:0 0 6px}
+
+.chip{--c:#888;background:var(--c);color:#0a0e13;border:0;border-radius:5px;font:800 13px var(--display);letter-spacing:.02em;padding:4px 9px;min-width:44px;text-align:center}
+.chip.sm{font-size:12px;padding:2px 7px;min-width:38px}
+
+.route-row{display:flex;align-items:center;gap:12px;padding:11px 0;border-bottom:1px solid var(--line)}
+.route-row.off{opacity:.42}
+.route-row .chip{cursor:pointer}
+.r-info{flex:1;min-width:0}
+.r-name{font-weight:700}
+.r-sub{color:var(--muted);font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.r-count{text-align:right;line-height:1}
+.r-count .led{font-size:22px;display:block}
+.r-count small{color:var(--muted);font-size:10px;letter-spacing:.1em;text-transform:uppercase}
+.only{background:none;border:1px solid var(--line);border-radius:4px;color:var(--muted);font-size:11px;padding:3px 7px}
+.only:hover{color:var(--text);border-color:var(--muted)}
+.foot-note{margin-top:14px;color:var(--muted);font-size:12px}
+
+.field{position:relative;margin-bottom:14px}
+.field input{width:100%;background:var(--bg);color:var(--text);border:1px solid var(--line);border-radius:6px;padding:10px 12px;font:15px var(--body);outline:none}
+.field input:focus{border-color:var(--amber)}
+.sug{list-style:none;margin:4px 0 0;padding:0;position:absolute;left:0;right:0;z-index:50;background:var(--panel2);border:1px solid var(--line);border-radius:6px;overflow:hidden}
+.sug:empty{display:none}
+.sug li{padding:9px 12px;cursor:pointer;border-bottom:1px solid var(--line)}
+.sug li:last-child{border:0}
+.sug li:hover{background:#1d2837}
+
+.board{background:#05080b;border:1px solid #1b2431;border-radius:8px;padding:10px 12px;box-shadow:inset 0 0 24px rgba(0,0,0,.6)}
+.board h3{margin:0 0 8px;font:700 11px var(--body);letter-spacing:.14em;text-transform:uppercase;color:var(--muted);display:flex;justify-content:space-between}
+.b-row{display:grid;grid-template-columns:auto 1fr auto;gap:10px;align-items:center;padding:8px 0;border-top:1px dashed #1b2431}
+.b-row:first-of-type{border-top:0}
+.b-dest{font-family:var(--led);color:var(--amber);text-transform:uppercase;font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.b-eta{font-family:var(--led);color:var(--amber);font-size:20px;text-shadow:0 0 8px rgba(255,179,0,.5)}
+.b-sub{grid-column:2 / 4;color:var(--muted);font-size:11.5px;margin-top:-6px}
+.b-sub .warn{color:var(--amber)}
+
+.row2{display:flex;gap:8px;align-items:flex-end}
+.row2 .field{flex:1;margin-bottom:0}
+.swap{background:var(--panel2);border:1px solid var(--line);border-radius:6px;height:42px;width:42px;font-size:16px}
+.go{width:100%;margin:14px 0;background:var(--amber);color:#0a0e13;border:0;border-radius:6px;padding:11px;font:800 14px var(--display);letter-spacing:.04em;box-shadow:3px 3px 0 #7a5600}
+.go:active{transform:translate(2px,2px);box-shadow:1px 1px 0 #7a5600}
+.opt{background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:12px;margin-bottom:10px;cursor:pointer}
+.opt:hover{border-color:var(--amber)}
+.opt-top{display:flex;align-items:center;gap:10px}
+.opt-dest{flex:1;font-weight:700}
+.opt-time{font-size:17px}
+.opt-sub{color:var(--muted);font-size:12.5px;margin:4px 0 8px}
+.opt-live{border-top:1px dashed var(--line);padding-top:8px;font-size:12.5px}
+.opt-live div{display:flex;justify-content:space-between;padding:2px 0}
+.opt-live .none{color:var(--muted)}
+
+.alert{border-left:4px solid var(--mint);background:var(--panel2);border-radius:4px;padding:8px 10px;margin-bottom:8px;cursor:pointer;font-size:13px}
+.alert.warn{border-color:var(--amber)}
+.alert.critical{border-color:var(--red)}
+.a-top{display:flex;justify-content:space-between;font-weight:700;margin-bottom:2px}
+.a-time{font-weight:400;color:var(--muted);font-size:12px}
+
+#mapwrap{flex:1;position:relative;min-width:0}
+#map{position:absolute;inset:0;background:#0a0e13}
+.leaflet-tooltip{background:var(--panel);color:var(--text);border:1px solid var(--line);box-shadow:none;font:12px var(--body)}
+.leaflet-tooltip-top:before{border-top-color:var(--line)}
+.leaflet-container{font-family:var(--body)}
+.leaflet-control-attribution{background:rgba(10,14,19,.75)!important;color:var(--muted)!important}
+.leaflet-control-attribution a{color:var(--muted)!important}
+.leaflet-bar a{background:var(--panel);color:var(--text);border-color:var(--line)}
+
+.bus-wrap{transition:transform 1s linear}
+.zooming .bus-wrap{transition:none!important}
+.bus{background:var(--c);color:#0a0e13;font:800 11px var(--display);border-radius:12px;text-align:center;line-height:20px;height:24px;border:2px solid #0a0e13;box-shadow:0 0 0 1px rgba(255,255,255,.35),0 2px 6px rgba(0,0,0,.6)}
+.bus.delay{animation:pulse 1.3s infinite;box-shadow:0 0 0 3px var(--amber),0 2px 6px rgba(0,0,0,.6)}
+.bus.ghost{background:#59616f;color:#cbd2dc;outline:2px dashed var(--red);outline-offset:2px}
+.bus.sel{box-shadow:0 0 0 3px #fff,0 2px 6px rgba(0,0,0,.6)}
+@keyframes pulse{50%{transform:scale(1.14)}}
+.pin{width:26px;height:26px;border-radius:50% 50% 50% 0;transform:rotate(-45deg);background:var(--amber);border:2px solid #0a0e13;display:grid;place-items:center}
+.pin b{transform:rotate(45deg);color:#0a0e13;font:800 12px var(--display)}
+
+#busCard{position:absolute;left:16px;bottom:16px;width:390px;max-width:calc(100% - 32px);z-index:900;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:14px;box-shadow:0 10px 30px rgba(0,0,0,.55)}
+#busCard .x{position:absolute;top:8px;right:10px;background:none;border:0;color:var(--muted);font-size:20px;line-height:1}
+.bc-top{display:flex;gap:12px;align-items:center;margin-bottom:10px;padding-right:20px}
+.bc-dest{font:800 16px var(--display)}
+.bc-sub{color:var(--muted);font-size:12px}
+.bc-stats{display:flex;align-items:baseline;gap:14px;margin-bottom:8px}
+.bc-stats .big{font-size:30px}
+.bc-stats small{color:var(--muted);margin-left:4px}
+.bc-pace{color:var(--muted);font-size:12.5px}
+#busCard table{width:100%;border-collapse:collapse;font-size:12.5px}
+#busCard th{text-align:right;color:var(--muted);font:700 10.5px var(--body);letter-spacing:.1em;text-transform:uppercase;padding:4px 0}
+#busCard th:first-child{text-align:left}
+#busCard td{padding:5px 0;border-top:1px solid var(--line);text-align:right;font-variant-numeric:tabular-nums}
+#busCard td:first-child{text-align:left}
+#busCard td.live{font-family:var(--led);color:var(--amber);font-size:15px}
+
+#toast{position:absolute;top:14px;left:50%;transform:translate(-50%,-80px);background:var(--amber);color:#0a0e13;font-weight:700;padding:8px 14px;border-radius:6px;z-index:1200;transition:transform .25s}
+#toast.show{transform:translate(-50%,0)}
+
+@media (max-width:800px){
+  main{flex-direction:column-reverse}
+  #side{width:100%;height:46%;border-right:0;border-top:1px solid var(--line)}
+  #busCard{width:auto;left:8px;right:8px;bottom:8px}
+  .brand .kn{display:none}
+}
+</style>
+</head>
+<body>
+<header id="top">
+  <a class="brand" href="/">BUS TRACKER<span class="kn">ಬಸ್ ಎಲ್ಲಿದೆ?</span></a>
+  <span class="sp"></span>
+  <div class="clock"><span class="tag">SIM 10×</span><span id="clock" class="led">--:--:--</span></div>
+  <div class="status" id="status"><i></i><span id="status-text">Connecting</span></div>
+</header>
+
+<main>
+  <aside id="side">
+    <nav class="tabs">
+      <button class="tab on" data-tab="routes">Routes</button>
+      <button class="tab" data-tab="stops">Stops</button>
+      <button class="tab" data-tab="plan">Plan</button>
+      <button class="tab" data-tab="alerts">Alerts<span class="badge hidden" id="badge">0</span></button>
+    </nav>
+
+    <section class="pane" id="tab-routes">
+      <p class="hint">Show up to 4 routes at a time. Solid line: one direction. Dashed: the other. Click a bus for its next stops.</p>
+      <div id="route-list"></div>
+      <div class="foot-note"><span id="count">0</span> buses reporting</div>
+    </section>
+
+    <section class="pane hidden" id="tab-stops">
+      <label class="lbl" for="stop-q">Find a bus stop</label>
+      <div class="field"><input id="stop-q" placeholder="Try “Adugodi” or “BEL Circle”" autocomplete="off"><ul class="sug" id="stop-sug"></ul></div>
+      <div id="board-out"><p class="empty">Search for a stop to see which buses are coming, soonest first. You can also click any stop on the map.</p></div>
+    </section>
+
+    <section class="pane hidden" id="tab-plan">
+      <p class="hint">Direct buses only (no transfers) on the demo routes.</p>
+      <div class="row2">
+        <div class="field"><label class="lbl" for="plan-from">From</label><input id="plan-from" placeholder="Boarding stop" autocomplete="off"><ul class="sug" id="plan-from-sug"></ul></div>
+        <button class="swap" id="swap" title="Swap" aria-label="Swap stops">⇅</button>
+      </div>
+      <div class="field" style="margin-top:12px"><label class="lbl" for="plan-to">To</label><input id="plan-to" placeholder="Destination stop" autocomplete="off"><ul class="sug" id="plan-to-sug"></ul></div>
+      <button class="go" id="plan-go">FIND BUSES</button>
+      <div id="plan-out"></div>
+    </section>
+
+    <section class="pane hidden" id="tab-alerts">
+      <p class="hint">Delays, road blocks and buses that stop reporting. Click one to fly to it.</p>
+      <div id="alert-list"><p class="empty" id="no-alerts">No alerts yet.</p></div>
+    </section>
+  </aside>
+
+  <div id="mapwrap">
+    <div id="map"></div>
+    <div id="toast"></div>
+    <div id="busCard" class="hidden"></div>
+  </div>
+</main>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js"></script>
+<script>
+(() => {
+'use strict';
+const $ = id => document.getElementById(id);
+const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const label = n => String(n).split(' ')[0];
+const PALETTE = {'171':'#3da5ff','500':'#ff7a45','276':'#3ddc97','K-2':'#c77dff'};
+const SPARE = ['#ffd166','#4cc9f0','#f72585','#b8f2e6','#9bf6ff'];
+const colorOf = n => PALETTE[label(n)] || (PALETTE[label(n)] = SPARE[Object.keys(PALETTE).length % SPARE.length]);
+const mmss = s => { s = Math.max(0, Math.round(s)); return Math.floor(s / 60) + ':' + String(s % 60).padStart(2, '0'); };
+const minsText = s => s < 30 ? 'NOW' : (Math.round(s / 60) || 1) + ' MIN';
+const MAX_VISIBLE = 4;
+
+const routes = {};      // route label -> { label, color, group, visible, dirs, names }
+const buses = {};       // vehicleId -> { d, marker, ghost, sig }
+const headsigns = {};   // "routeName|dir" -> headsign
+let selected = null, simClock = 0, activeTab = 'routes', unread = 0, connectedAt = 0;
+
+/* ---------- map ---------- */
+const map = L.map('map', { zoomControl: false }).setView([12.97, 77.58], 12);
+L.control.zoom({ position: 'bottomright' }).addTo(map);
+L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',
+  { subdomains: 'abcd', maxZoom: 19, attribution: '&copy; OpenStreetMap contributors &copy; CARTO' }).addTo(map);
+map.on('zoomstart', () => map.getContainer().classList.add('zooming'));
+map.on('zoomend', () => map.getContainer().classList.remove('zooming'));
+
+let toastTimer;
+function toast(msg) {
+  const t = $('toast'); t.textContent = msg; t.classList.add('show');
+  clearTimeout(toastTimer); toastTimer = setTimeout(() => t.classList.remove('show'), 2200);
+}
+
+/* ---------- tabs ---------- */
+function showTab(name) {
+  activeTab = name;
+  document.querySelectorAll('.tab').forEach(t => t.classList.toggle('on', t.dataset.tab === name));
+  document.querySelectorAll('.pane').forEach(p => p.classList.toggle('hidden', p.id !== 'tab-' + name));
+  if (name === 'alerts') { unread = 0; updateBadge(); }
+  if (name === 'routes') renderRouteList();
+}
+document.querySelectorAll('.tab').forEach(t => t.onclick = () => showTab(t.dataset.tab));
+function updateBadge() { const b = $('badge'); b.textContent = unread; b.classList.toggle('hidden', unread === 0); }
+
+/* ---------- routes ---------- */
+function ensureRoute(routeName) {
+  const l = label(routeName);
+  if (!routes[l]) {
+    routes[l] = { label: l, color: colorOf(routeName), group: L.layerGroup().addTo(map), visible: true, dirs: [], names: new Set([routeName]) };
+  }
+  return routes[l];
+}
+async function loadRoutes() {
+  const shapes = await (await fetch('/api/routes')).json();
+  const bounds = [];
+  shapes.forEach(s => {
+    const r = ensureRoute(s.routeName);
+    r.names.add(s.routeName);
+    r.dirs.push({ dir: s.directionId, headsign: s.headsign });
+    headsigns[s.routeName + '|' + s.directionId] = s.headsign;
+    L.polyline(s.points, { color: r.color, weight: 4, opacity: .85, dashArray: s.directionId === 1 ? '9 7' : undefined }).addTo(r.group);
+    s.stops.forEach(st => L.circleMarker([st.lat, st.lon],
+      { radius: 4, color: r.color, weight: 2, fillColor: '#0a0e13', fillOpacity: 1 })
+      .bindTooltip(st.name, { direction: 'top' })
+      .on('click', () => openStopByName(st.name)).addTo(r.group));
+    s.points.forEach(p => bounds.push(p));
+  });
+  if (bounds.length) map.fitBounds(bounds, { padding: [40, 40] });
+  renderRouteList();
+}
+const visibleCount = () => Object.values(routes).filter(r => r.visible).length;
+function applyVisibility(r) { r.visible ? r.group.addTo(map) : map.removeLayer(r.group); }
+function toggleRoute(l) {
+  const r = routes[l]; if (!r) return;
+  if (!r.visible && visibleCount() >= MAX_VISIBLE) { toast('Up to ' + MAX_VISIBLE + ' routes at a time'); return; }
+  r.visible = !r.visible; applyVisibility(r); renderRouteList();
+}
+function showOnly(labels) {
+  Object.values(routes).forEach(r => { r.visible = labels.includes(r.label); applyVisibility(r); });
+  renderRouteList();
+}
+function renderRouteList() {
+  if (activeTab !== 'routes') return;
+  const el = $('route-list'); el.innerHTML = '';
+  Object.values(routes).forEach(r => {
+    const n = Object.values(buses).filter(b => label(b.d.routeName) === r.label).length;
+    const row = document.createElement('div');
+    row.className = 'route-row' + (r.visible ? '' : ' off');
+    row.innerHTML = `<button class="chip" style="--c:${r.color}" title="Show / hide">${esc(r.label)}</button>
+      <div class="r-info"><div class="r-name">${esc([...r.names].join(' / '))}</div>
+      <div class="r-sub">${r.dirs.map(d => esc(d.headsign)).join(' · ')}</div></div>
+      <button class="only">only</button>
+      <div class="r-count"><span class="led">${n}</span><small>live</small></div>`;
+    row.querySelector('.chip').onclick = () => toggleRoute(r.label);
+    row.querySelector('.only').onclick = () => showOnly([r.label]);
+    el.appendChild(row);
+  });
+  $('count').textContent = Object.keys(buses).length;
+}
+setInterval(renderRouteList, 2000);
+
+/* ---------- buses ---------- */
+function icon(d, ghost, sel) {
+  const cls = ['bus']; if (ghost) cls.push('ghost'); else if (d.delayed) cls.push('delay'); if (sel) cls.push('sel');
+  return L.divIcon({ className: 'bus-wrap', iconSize: [40, 24], iconAnchor: [20, 12],
+    html: `<div class="${cls.join(' ')}" style="--c:${colorOf(d.routeName)}">${esc(label(d.routeName))}</div>` });
+}
+function refreshIcon(id) {
+  const b = buses[id]; if (!b) return;
+  const sig = `${b.ghost}|${b.d.delayed}|${id === selected}`;
+  if (sig === b.sig) return;
+  b.sig = sig; b.marker.setIcon(icon(b.d, b.ghost, id === selected));
+}
+function onEta(d) {
+  simClock = Math.max(simClock, d.timestamp);
+  let b = buses[d.vehicleId];
+  if (!b) {
+    const r = ensureRoute(d.routeName);
+    b = { d, ghost: false, sig: `false|${d.delayed}|false`,
+          marker: L.marker([d.lat, d.lon], { icon: icon(d, false, false), keyboard: false })
+                   .bindTooltip(`${d.routeName} · ${d.vehicleId}`, { direction: 'top', offset: [0, -10] }) };
+    b.marker.on('click', () => selectBus(d.vehicleId));
+    r.group.addLayer(b.marker);
+    buses[d.vehicleId] = b;
+  }
+  b.d = d; b.ghost = false;
+  b.marker.setLatLng([d.lat, d.lon]);
+  refreshIcon(d.vehicleId);
+  if (selected === d.vehicleId) renderBusCard();
+}
+function selectBus(id) {
+  const prev = selected; selected = id;
+  if (prev) refreshIcon(prev);
+  refreshIcon(id);
+  $('busCard').classList.remove('hidden');
+  renderBusCard();
+}
+function renderBusCard() {
+  const b = buses[selected]; if (!b) return;
+  const d = b.d, c = colorOf(d.routeName);
+  const pct = Math.round(Math.abs(d.pace - 1) * 100);
+  const pace = pct < 3 ? 'Running to the timetable' : d.pace > 1 ? `Running ${pct}% faster than the timetable` : `Running ${pct}% slower than the timetable`;
+  const state = b.ghost ? 'NOT REPORTING' : d.delayed ? 'DELAYED' : d.status === 'STOPPED_AT' ? 'AT STOP' : 'IN TRANSIT';
+  const rows = d.upcoming.slice(0, 6).map(s =>
+    `<tr><td>${esc(s.stopName)}</td><td>${mmss(s.scheduledEtaSec)}</td><td class="live">${mmss(s.correctedEtaSec)}</td></tr>`).join('');
+  $('busCard').innerHTML = `<button class="x" aria-label="Close">×</button>
+    <div class="bc-top"><span class="chip" style="--c:${c}">${esc(label(d.routeName))}</span>
+      <div><div class="bc-dest">${esc(headsigns[d.routeName + '|' + d.directionId] || d.routeName)}</div>
+      <div class="bc-sub">${esc(d.vehicleId)} · ${state}</div></div></div>
+    <div class="bc-stats"><div><span class="led big">${Math.round(d.speedKmh)}</span><small>km/h</small></div><div class="bc-pace">${pace}</div></div>
+    <table><thead><tr><th>Next stops</th><th>Timetable</th><th>Live</th></tr></thead>
+    <tbody>${rows || '<tr><td colspan="3">End of route</td></tr>'}</tbody></table>`;
+}
+$('busCard').addEventListener('click', e => {
+  if (e.target.classList.contains('x')) { const p = selected; selected = null; refreshIcon(p); $('busCard').classList.add('hidden'); }
+});
+
+/* ---------- alerts ---------- */
+const TITLE = { DELAY: 'Delay', GHOST_BUS: 'Ghost bus', DELAY_CLEARED: 'Delay cleared', GHOST_RECOVERED: 'Reporting again' };
+function onAlert(a) {
+  simClock = Math.max(simClock, a.timestamp);
+  const b = buses[a.vehicleId];
+  if (a.type === 'GHOST_BUS' && b) { b.ghost = true; refreshIcon(a.vehicleId); if (selected === a.vehicleId) renderBusCard(); }
+  const el = document.createElement('div');
+  el.className = 'alert ' + String(a.severity).toLowerCase();
+  el.innerHTML = `<div class="a-top"><span>${esc(TITLE[a.type] || a.type)}</span><span class="a-time">${esc(new Date(a.timestamp).toLocaleTimeString('en-GB'))}</span></div><div class="a-msg"></div>`;
+  el.querySelector('.a-msg').textContent = a.message;
+  el.onclick = () => { map.flyTo([a.lat, a.lon], 15); selectBus(a.vehicleId); };
+  const none = $('no-alerts'); if (none) none.remove();
+  $('alert-list').prepend(el);
+  while ($('alert-list').children.length > 40) $('alert-list').lastChild.remove();
+  if (activeTab !== 'alerts' && Date.now() - connectedAt > 1500) { unread++; updateBadge(); }
+}
+
+/* ---------- stop search + arrivals board ---------- */
+function attachSuggest(input, list, onPick) {
+  let timer;
+  input.addEventListener('input', () => {
+    clearTimeout(timer);
+    timer = setTimeout(async () => {
+      const q = input.value.trim();
+      if (!q) { list.innerHTML = ''; return; }
+      const res = await (await fetch('/api/stops?q=' + encodeURIComponent(q))).json();
+      list.innerHTML = res.map(g => `<li>${esc(g.name)}</li>`).join('');
+      list.querySelectorAll('li').forEach((li, i) => li.onmousedown = e => {
+        e.preventDefault(); input.value = res[i].name; list.innerHTML = ''; onPick(res[i]);
+      });
+    }, 120);
+  });
+  input.addEventListener('blur', () => setTimeout(() => list.innerHTML = '', 150));
+}
+let curStop = null, stopPin = null;
+function pin(letter, lat, lon) {
+  return L.marker([lat, lon], { icon: L.divIcon({ className: '', iconSize: [26, 26], iconAnchor: [13, 26], html: `<div class="pin"><b>${letter}</b></div>` }) }).addTo(map);
+}
+function pickStop(g) {
+  curStop = g;
+  if (stopPin) map.removeLayer(stopPin);
+  stopPin = pin('•', g.lat, g.lon).bindTooltip(g.name);
+  map.flyTo([g.lat, g.lon], Math.max(map.getZoom(), 14), { duration: .8 });
+  refreshArrivals();
+}
+async function refreshArrivals() {
+  if (!curStop) return;
+  const rows = await (await fetch('/api/arrivals?ids=' + encodeURIComponent(curStop.ids.join(',')))).json();
+  const body = rows.length ? rows.map(a => `<div class="b-row">
+      <span class="chip sm" style="--c:${colorOf(a.routeName)}">${esc(label(a.routeName))}</span>
+      <span class="b-dest">${esc(a.headsign || a.routeName)}</span><span class="b-eta">${minsText(a.etaSec)}</span>
+      <div class="b-sub">${a.stopsAway === 0 ? 'next stop' : a.stopsAway + ' stops away'} · timetable says ${minsText(a.timetableSec).toLowerCase()}${a.delayed ? ' · <span class="warn">delayed</span>' : ''}</div></div>`).join('')
+    : '<div class="b-sub" style="margin:8px 0">No buses approaching right now.</div>';
+  $('board-out').innerHTML = `<div class="board"><h3><span>${esc(curStop.name)}</span><span>ETA</span></h3>${body}</div>
+    <p class="hint" style="margin-top:10px">Times are in simulated minutes.</p>`;
+}
+async function openStopByName(name) {
+  showTab('stops'); $('stop-q').value = name;
+  const res = await (await fetch('/api/stops?q=' + encodeURIComponent(name))).json();
+  const g = res.find(x => x.name.toLowerCase() === name.toLowerCase()) || res[0];
+  if (g) pickStop(g);
+}
+attachSuggest($('stop-q'), $('stop-sug'), pickStop);
+
+/* ---------- plan ---------- */
+let planPins = [], planActive = false;
+attachSuggest($('plan-from'), $('plan-from-sug'), () => {});
+attachSuggest($('plan-to'), $('plan-to-sug'), () => {});
+$('swap').onclick = () => { const a = $('plan-from').value; $('plan-from').value = $('plan-to').value; $('plan-to').value = a; };
+$('plan-go').onclick = () => runPlan(false);
+async function runPlan(silent) {
+  const f = $('plan-from').value.trim(), t = $('plan-to').value.trim();
+  if (!f || !t) { if (!silent) toast('Enter a start and a destination'); return; }
+  const res = await (await fetch(`/api/plan?from=${encodeURIComponent(f)}&to=${encodeURIComponent(t)}`)).json();
+  planActive = true;
+  renderPlan(res);
+  if (!silent) showPlanPins(res);
+}
+function showPlanPins(res) {
+  planPins.forEach(p => map.removeLayer(p)); planPins = [];
+  if (res.from) planPins.push(pin('A', res.from.lat, res.from.lon));
+  if (res.to) planPins.push(pin('B', res.to.lat, res.to.lon));
+  if (res.from && res.to) map.fitBounds([[res.from.lat, res.from.lon], [res.to.lat, res.to.lon]], { padding: [80, 80] });
+}
+function renderPlan(res) {
+  const box = $('plan-out');
+  if (!res.from || !res.to) { box.innerHTML = `<p class="empty">${!res.from ? 'Unknown starting stop.' : 'Unknown destination.'} Pick a stop from the suggestions.</p>`; return; }
+  if (!res.options.length) { box.innerHTML = `<p class="empty">No direct bus from <b>${esc(res.from.name)}</b> to <b>${esc(res.to.name)}</b> on the demo routes. Transfers aren't supported yet.</p>`; return; }
+  box.innerHTML = res.options.map(o => {
+    const live = o.buses.length ? o.buses.map(b => `<div><span>${esc(b.vehicleId)}${b.delayed ? ' · delayed' : ''}</span><span>boards in <b>${minsText(b.boardSec).toLowerCase()}</b> · arrives in <b>${minsText(b.destSec).toLowerCase()}</b></span></div>`).join('')
+      : '<div class="none">No bus approaching this stop right now</div>';
+    return `<div class="opt"><div class="opt-top"><span class="chip" style="--c:${colorOf(o.routeName)}">${esc(label(o.routeName))}</span>
+      <span class="opt-dest">towards ${esc(o.headsign)}</span><span class="opt-time led">~${Math.max(1, Math.round(o.rideSec / 60))} MIN</span></div>
+      <div class="opt-sub">${o.stopsBetween} stops · timetable ride time</div><div class="opt-live">${live}</div></div>`;
+  }).join('');
+  box.querySelectorAll('.opt').forEach((el, i) => el.onclick = () => {
+    showOnly([label(res.options[i].routeName)]);
+    map.fitBounds([[res.from.lat, res.from.lon], [res.to.lat, res.to.lon]], { padding: [80, 80] });
+  });
+}
+
+/* ---------- stream ---------- */
+function setStatus(live) { $('status').classList.toggle('live', live); $('status-text').textContent = live ? 'Live' : 'Reconnecting'; }
+function connect() {
+  const es = new EventSource('/stream');
+  es.onopen = () => { connectedAt = Date.now(); setStatus(true); };
+  es.onerror = () => setStatus(false);
+  es.addEventListener('eta', e => onEta(JSON.parse(e.data)));
+  es.addEventListener('alert', e => onAlert(JSON.parse(e.data)));
+  es.addEventListener('reset', () => {
+    Object.values(buses).forEach(b => b.marker.remove());
+    Object.keys(buses).forEach(k => delete buses[k]);
+    selected = null; $('busCard').classList.add('hidden');
+  });
+}
+setInterval(() => {
+  $('clock').textContent = simClock ? new Date(simClock).toLocaleTimeString('en-GB') : '--:--:--';
+  if (activeTab === 'stops') refreshArrivals();
+  if (activeTab === 'plan' && planActive) runPlan(true);
+}, 2000);
+document.addEventListener('keydown', e => { if (e.key === 'Escape') $('busCard').querySelector('.x')?.click(); });
+
+loadRoutes().then(connect);
+})();
+</script>
+</body>
+</html>
