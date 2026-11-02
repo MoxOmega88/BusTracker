@@ -143,6 +143,10 @@ main{flex:1;display:flex;min-height:0;margin-top:4px}
   #busCard{width:auto;left:8px;right:8px;bottom:8px}
   .brand .kn{display:none}
 }
+.cb{appearance:none;-webkit-appearance:none;width:20px;height:20px;flex:none;margin:0;border:2px solid var(--c);border-radius:4px;background:transparent;cursor:pointer;display:grid;place-items:center}
+.cb:checked{background:var(--c)}
+.cb:checked::after{content:"";width:5px;height:10px;border:solid #0a0e13;border-width:0 3px 3px 0;transform:rotate(45deg) translate(-1px,-1px)}
+.route-row{cursor:pointer}
 </style>
 </head>
 <body>
@@ -163,7 +167,7 @@ main{flex:1;display:flex;min-height:0;margin-top:4px}
     </nav>
 
     <section class="pane" id="tab-routes">
-      <p class="hint">Show up to 4 routes at a time. Solid line: one direction. Dashed: the other. Click a bus for its next stops.</p>
+      <p class="hint">Tick the routes you want on the map. Solid line: one direction. Dashed: the other. Click a bus for its next stops.</p>
       <div id="route-list"></div>
       <div class="foot-note"><span id="count">0</span> buses reporting</div>
     </section>
@@ -220,8 +224,10 @@ let selected = null, simClock = 0, activeTab = 'routes', unread = 0, connectedAt
 /* ---------- map ---------- */
 const map = L.map('map', { zoomControl: false }).setView([12.97, 77.58], 12);
 L.control.zoom({ position: 'bottomright' }).addTo(map);
-L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',
-  { subdomains: 'abcd', maxZoom: 19, attribution: '&copy; OpenStreetMap contributors &copy; CARTO' }).addTo(map);
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  maxZoom: 19,
+  attribution: '&copy; OpenStreetMap contributors'
+}).addTo(map);
 map.on('zoomstart', () => map.getContainer().classList.add('zooming'));
 map.on('zoomend', () => map.getContainer().classList.remove('zooming'));
 
@@ -272,7 +278,7 @@ const visibleCount = () => Object.values(routes).filter(r => r.visible).length;
 function applyVisibility(r) { r.visible ? r.group.addTo(map) : map.removeLayer(r.group); }
 function toggleRoute(l) {
   const r = routes[l]; if (!r) return;
-  if (!r.visible && visibleCount() >= MAX_VISIBLE) { toast('Up to ' + MAX_VISIBLE + ' routes at a time'); return; }
+  if (!r.visible && visibleCount() >= MAX_VISIBLE) { toast('Up to ' + MAX_VISIBLE + ' routes at a time'); renderRouteList(); return; }
   r.visible = !r.visible; applyVisibility(r); renderRouteList();
 }
 function showOnly(labels) {
@@ -281,19 +287,30 @@ function showOnly(labels) {
 }
 function renderRouteList() {
   if (activeTab !== 'routes') return;
-  const el = $('route-list'); el.innerHTML = '';
-  Object.values(routes).forEach(r => {
-    const n = Object.values(buses).filter(b => label(b.d.routeName) === r.label).length;
-    const row = document.createElement('div');
-    row.className = 'route-row' + (r.visible ? '' : ' off');
-    row.innerHTML = `<button class="chip" style="--c:${r.color}" title="Show / hide">${esc(r.label)}</button>
-      <div class="r-info"><div class="r-name">${esc([...r.names].join(' / '))}</div>
-      <div class="r-sub">${r.dirs.map(d => esc(d.headsign)).join(' · ')}</div></div>
-      <button class="only">only</button>
-      <div class="r-count"><span class="led">${n}</span><small>live</small></div>`;
-    row.querySelector('.chip').onclick = () => toggleRoute(r.label);
-    row.querySelector('.only').onclick = () => showOnly([r.label]);
-    el.appendChild(row);
+  const el = $('route-list');
+  if (el.children.length !== Object.keys(routes).length) {   // build once; later calls only update the state
+    el.innerHTML = '';
+    Object.values(routes).forEach(r => {
+      const row = document.createElement('label');
+      row.className = 'route-row';
+      row.dataset.route = r.label;
+      row.innerHTML = `<input type="checkbox" class="cb" style="--c:${r.color}" aria-label="Show route ${esc(r.label)}">
+        <span class="chip" style="--c:${r.color}">${esc(r.label)}</span>
+        <div class="r-info"><div class="r-name">${esc([...r.names].join(' / '))}</div>
+        <div class="r-sub">${r.dirs.map(d => esc(d.headsign)).join(' · ')}</div></div>
+        <button class="only" type="button">only</button>
+        <div class="r-count"><span class="led">0</span><small>live</small></div>`;
+      row.querySelector('.cb').onchange = () => toggleRoute(r.label);
+      row.querySelector('.only').onclick = e => { e.preventDefault(); showOnly([r.label]); };
+      el.appendChild(row);
+    });
+  }
+  el.querySelectorAll('.route-row').forEach(row => {
+    const r = routes[row.dataset.route];
+    row.classList.toggle('off', !r.visible);
+    row.querySelector('.cb').checked = r.visible;
+    row.querySelector('.led').textContent =
+      Object.values(buses).filter(b => label(b.d.routeName) === r.label).length;
   });
   $('count').textContent = Object.keys(buses).length;
 }
