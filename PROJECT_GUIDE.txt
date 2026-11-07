@@ -1,0 +1,747 @@
+BUS TRACKER - COMPLETE PROJECT AND INTERVIEW GUIDE
+==================================================
+
+Document scope
+--------------
+This document describes the repository as implemented, including the source
+modules, Kafka flow, GTFS loading, simulation, ETA algorithm, gateway APIs,
+browser UI, data files, build/deployment setup, limitations, and likely
+interview questions. The positions are simulated; the route, stop, shape, and
+timetable data is based on a filtered BMTC GTFS feed.
+
+
+1. PROJECT IN ONE MINUTE
+------------------------
+Bus Tracker is a Spring Boot 3 / Java 21 multi-module application for live
+bus positions and honest estimated arrival times (ETAs).
+
+The pipeline is:
+
+  filtered GTFS files
+          |
+          v
+  simulator --(bus.positions, keyed by vehicleId)--> Kafka
+          |
+          v
+  eta-service --(bus.eta and bus.alerts)--> Kafka
+          |
+          v
+  gateway --(REST and Server-Sent Events)--> browser map/UI
+
+The simulator drives buses over real BMTC route geometry and stops using simple
+physics. The ETA service consumes those position events, compares progress with
+the timetable, learns a per-bus pace multiplier, predicts upcoming stops, and
+emits delay/ghost-bus alerts. The gateway consumes the derived events, keeps the
+latest live state in memory, serves query APIs, and pushes updates to browsers.
+
+Important honesty point for interviews:
+  - GTFS route/stops/timetable data is real source data.
+  - Real-time GPS positions are deliberately simulated because BMTC does not
+    publish a public real-time feed.
+  - A real feed can replace the simulator while retaining the VehiclePosition
+    event contract and downstream services.
+
+
+2. REPOSITORY STRUCTURE AND EVERY FILE
+--------------------------------------
+
+Root build and documentation
+
+README.md
+  Project overview, architecture diagram, Kafka topic table, ETA model,
+  alert rules, run instructions, API table, limitations, roadmap, and
+  technology list. It is the product-level explanation and the first place to
+  check when operating the project.
+
+pom.xml
+  Parent Maven POM. Inherits Spring Boot 3.5.0 dependency management, sets
+  group/version (com.mohith:bus-tracker:0.1.0), selects Java 21, and declares
+  the modules common, simulator, eta-service, and gateway. It is packaging=pom,
+  so it builds the modules rather than producing a runnable root application.
+
+docker-compose.yml
+  Defines one Apache Kafka 3.9.0 container in KRaft combined
+  broker/controller mode. It exposes localhost:9092 for host applications and
+  uses kafka:19092 for container-internal traffic. It configures one node,
+  six default partitions, plaintext listeners, and replication factor 1
+  settings appropriate for local development, not production HA.
+
+.gitignore
+  Excludes Maven target directories, IDE metadata, IntelliJ files, raw GTFS
+  input, and Python cache files. The filtered data is intentionally tracked;
+  the large raw feed is treated as local input.
+
+docs/demo.gif
+  Recorded visual demonstration of the application. It is documentation/media,
+  not runtime input.
+
+Module POM files
+
+common/pom.xml
+  Shared library. Depends on Apache Commons CSV for GTFS parsing, SLF4J for
+  loader logging, and Jackson databind for JSON-compatible event models.
+
+simulator/pom.xml
+  Spring Boot application depending on common, spring-boot-starter,
+  spring-kafka, test starter, and Commons CSV. The Boot Maven plugin packages a
+  runnable fat jar.
+
+eta-service/pom.xml
+  Spring Boot application depending on common, spring-boot-starter,
+  spring-kafka, and test starter. It packages the ETA processor as a runnable
+  jar.
+
+gateway/pom.xml
+  Spring Boot web application depending on common, spring-boot-starter-web,
+  spring-kafka, and test starter. It packages REST, SSE, and static UI assets.
+
+
+3. COMMON MODULE
+----------------
+Package: com.mohith.bustracker.common
+
+Topics.java
+  Single source of truth for topic names:
+    POSITIONS = bus.positions
+    ETA       = bus.eta
+    ALERTS    = bus.alerts
+  The private constructor prevents accidental instantiation. Sharing these
+  constants prevents producer/consumer spelling drift.
+
+VehiclePosition.java
+  Java record representing an input position event. Fields include vehicle and
+  trip identity, route metadata, direction, latitude/longitude, speed in m/s,
+  distance along the route shape, current status, and event timestamp.
+  currentStatus is shaped after GTFS-Realtime VehiclePosition:
+  IN_TRANSIT_TO or STOPPED_AT.
+
+EtaUpdate.java
+  Derived per-bus event published by the ETA service. It contains current
+  position, route/trip identity, speed converted to km/h, status, delayed flag,
+  learned pace, timestamp, and a list of upcoming StopEta predictions.
+
+StopEta.java
+  One predicted stop: stop ID/name, sequence, distance remaining, timetable
+  ETA seconds, corrected ETA seconds, and predicted absolute arrival time.
+
+BusAlert.java
+  Alert record with type, severity, vehicle/route, human message, coordinates,
+  and timestamp. Types are DELAY, DELAY_CLEARED, GHOST_BUS, and
+  GHOST_RECOVERED.
+
+gtfs/Geo.java
+  Utility for city-scale distance. It converts latitude/longitude deltas to
+  radians, corrects longitude by mean latitude, and applies an Earth-radius
+  approximation. It is fast and sufficiently accurate for route snapping and
+  shape distances; it is not intended as a survey-grade geodesic calculation.
+
+gtfs/GtfsModel.java
+  Immutable nested records:
+    ShapePoint: coordinate plus cumulative distance along a shape.
+    Shape: shape ID and ordered points; lengthM is final cumulative distance.
+    Stop: ID, display name, latitude, longitude.
+    StopTime: stop visit, sequence, scheduled seconds, shape distance.
+    Trip: trip/route metadata and ordered StopTime list.
+    GtfsData: maps of shapes and trips.
+  These records provide one shared in-memory domain model to all services.
+
+gtfs/GtfsLoader.java
+  Loads routes.txt, stops.txt, shapes.txt, stop_times.txt, and trips.txt using
+  Commons CSV and UTF-8 readers.
+
+  Loading sequence:
+    1. Build route ID -> short-name map.
+    2. Build stop ID -> Stop map.
+    3. Group and sort shape points by shape_pt_sequence, calculating cumulative
+       distance using Geo.meters.
+    4. Group and sort raw stop times by stop_sequence.
+    5. For each trip, find its shape and stop times.
+    6. Snap each stop to the nearest shape point at or after the previous match.
+       The non-backtracking rule preserves route order even when coordinates
+       are noisy. Stops more than 150 m from a shape point generate a warning.
+    7. Create a Trip and return GtfsData.
+
+  parseSec handles GTFS times such as 09:10:00 and correctly permits hours over
+  24, which GTFS uses for after-midnight service. Missing shape/stop-time trips
+  are skipped with a warning; missing optional text fields use defaults.
+
+
+4. SIMULATOR MODULE
+-------------------
+Purpose: create a deterministic, lively substitute for a real GPS feed.
+
+SimulatorApplication.java
+  Spring Boot entry point. @EnableScheduling enables the one-second simulation
+  tick.
+
+config/SimulatorConfig.java
+  Creates a GtfsLoader bean using bustracker.data-dir.
+
+engine/Breakdown.java
+  Immutable breakdown interval. activeAt returns true for a simulated time
+  inside [startSimSec, endSimSec). A broken bus emits no position events.
+
+engine/Incident.java
+  Immutable route segment incident. It identifies incident type, shape,
+  fractional start/end of route, speed factor, and active simulated time.
+  Factor 1.0 is normal; 0.0 is stopped.
+
+engine/IncidentPlan.java
+  Configurable incident catalog. When enabled it injects:
+    - SLOWDOWN-171: route shape 171 DOWN, 25%-45%, speed factor .25.
+    - BLOCK-K2: route shape K-2 MRBS-BEL UP, 20%-21%, factor 0.
+    - BREAKDOWN-3212: trip 3212 becomes silent for a time interval.
+  speedFactor selects the most restrictive active matching incident. activeIds
+  supports start/end logging. Disabling incidents creates empty lists.
+
+engine/RouteGeometry.java
+  Converts distance along a shape to latitude/longitude. It clamps endpoints,
+  binary-searches the two surrounding shape points, then linearly interpolates
+  between them. This is why the simulator can move continuously over a
+  polyline rather than jumping between GTFS points.
+
+engine/SimBus.java
+  The bus physics state machine.
+
+  State:
+    - distance and velocity along one route shape
+    - next stop and next traffic signal
+    - DRIVE, DWELL, or SIGNAL_WAIT mode
+    - per-bus cruise speed, traffic drift, and signal decision
+
+  Movement:
+    - cruise speed is configured around 5.4 m/s, with a random per-bus spread.
+    - acceleration is 0.9 m/s2 and braking is 1.3 m/s2.
+    - target speed is limited by cruise speed times traffic and incident factor.
+    - braking distance is used to approach the next stop or red signal safely.
+    - stops dwell for a random configured interval.
+    - traffic signals are generated deterministically per shape ID, away from
+      stops, and randomly become red with the configured probability.
+    - traffic is a bounded mean-reverting random walk.
+    - co-located stops are handled as one physical halt.
+    - when the final stop is complete, restartTrip loops the demo.
+
+  tick advances simulated time in small steps and returns a VehiclePosition.
+  It returns null before staggered departure or during a breakdown. The
+  timestamp is the simulator's simulated clock, not wall-clock time.
+
+producer/SimulatorService.java
+  Spring service and Kafka producer.
+
+  @PostConstruct loads GTFS, creates one SimBus per loaded trip, staggers buses
+  sharing a shape, and seeds Random with 42 for repeatability. Every second:
+    - wall time advances by one second;
+    - simulated time advances by speedup (default 10) seconds;
+    - incidents are logged when their active set changes;
+    - each bus is ticked;
+    - non-null positions are sent to bus.positions using vehicleId as key.
+
+  Kafka send callbacks log failures and count confirmed sends. Every ten ticks
+  it logs progress. It does not persist simulation state, so restarting resets
+  the run and its simulated clock.
+
+simulator/src/main/resources/application.yml
+  Configures application name, Kafka localhost:9092, JSON producer serializers,
+  max.block.ms=5000, filtered data path, 10x speed, 15 simulated-second
+  stagger, incidents, cruise speed, dwell bounds, and red probability.
+
+
+5. ETA SERVICE
+--------------
+Purpose: transform positions into predictions and operational alerts.
+
+EtaApplication.java
+  Spring Boot entry point with scheduling enabled for ghost scans.
+
+config/EtaConfig.java
+  Loads GtfsData once as a Spring bean from bustracker.data-dir. Startup fails
+  explicitly if the GTFS files cannot be read.
+
+service/TripSchedule.java
+  Converts one Trip into compact arrays of time offsets from trip start and
+  non-decreasing shape distances. timeAtDist linearly interpolates scheduled
+  time at an arbitrary current distance. This supplies the timetable baseline.
+
+service/VehicleState.java
+  Mutable in-memory state per vehicle. It stores last timestamp/position,
+  current pace, arrival tracking, delay counters, ghost flag, and pending first
+  predictions used for accuracy scoring.
+  The intended concurrency model is one Kafka partition-owner thread writing a
+  vehicle and the ghost scanner reading it; volatile fields and a concurrent
+  vehicle map support that boundary.
+
+service/AccuracyTracker.java
+  Thread-safe cumulative MAE counters for schedule and corrected predictions.
+  Every 30 seconds it logs count, schedule MAE, corrected MAE, and percentage
+  improvement. It is operational telemetry, not persistent analytics.
+
+service/EtaProcessor.java
+  Core algorithm.
+
+  Event guards:
+    - unknown trips are ignored;
+    - timestamps older than the last vehicle timestamp are dropped;
+    - a clock restart gap of 10 minutes resets state;
+    - a large backwards distance jump resets a completed/looped trip.
+
+  Initialization:
+    The first event identifies the next stop. Stops already behind the bus are
+    not assigned exact arrival times because the service did not observe them.
+
+  Arrival detection:
+    When distance crosses a stop, the processor interpolates the arrival
+    timestamp between the previous and current position events. This is more
+    accurate than assigning the current event time to every crossed stop.
+
+  Pace model:
+    pace = timetable segment duration / actual segment duation.
+    On an observed completed segment, it applies an exponential moving average:
+      newPace = alpha * clamp(planned / actual) + (1-alpha) * oldPace
+    Alpha defaults to 0.4. Pace is clamped from 0.3 to 3.0.
+    If the current segment is already slower than predicted, effective pace is
+    reduced immediately instead of waiting for the stop arrival.
+
+  ETA:
+    schedRemain = timetable time at stop - timetable time at current distance
+    correctedRemain = schedRemain / effectivePace
+    The service publishes both values so the UI can explain the correction.
+    It publishes up to 40 upcoming stops and records first predictions for the
+    next 5 stops. At actual arrival, pending predictions are scored by absolute
+    error in seconds.
+
+  Delay detection:
+    STOPPED_AT is excluded because normal dwell is not a road delay.
+    An in-transit bus below 2.0 m/s for 8 consecutive pings becomes DELAYED.
+    A delayed bus at or above 3.0 m/s for 3 consecutive pings clears the delay.
+    With a 10-second simulated reporting interval this is approximately 80
+    seconds to start and 30 seconds to clear.
+
+  Ghost detection:
+    detectGhosts compares stream time with each vehicle's last timestamp.
+    Silence beyond ghost-sec (default 90 simulated seconds) emits one critical
+    GHOST_BUS alert. The atomic ghost flag prevents repeats. The next valid
+    event emits GHOST_RECOVERED.
+
+  Result contains one EtaUpdate and zero or more BusAlert records. The
+  processor rounds output fields to stable UI-friendly precision.
+
+consumer/PositionListener.java
+  @KafkaListener consumes bus.positions with concurrency=3. It invokes the
+  processor, publishes EtaUpdate to bus.eta using vehicleId as key, and
+  publishes each alert to bus.alerts with the same key.
+
+consumer/GhostBusScanner.java
+  Runs every two seconds, asks EtaProcessor for newly detected ghosts, and
+  publishes resulting alerts.
+
+eta-service/src/main/resources/application.yml
+  Configures JSON consumer deserialization as VehiclePosition, trusted common
+  package, JSON producer, and ETA parameters: five scored lookahead stops,
+  forty published stops, alpha=.4, and ghost threshold=90 seconds.
+
+
+6. GATEWAY MODULE
+-----------------
+Purpose: provide browser-facing APIs and real-time fan-out.
+
+GatewayApplication.java
+  Spring Boot web entry point.
+
+GatewayConfig.java
+  Loads shared GTFS data as a GtfsData bean.
+
+consumer/FeedListener.java
+  Consumes bus.eta and bus.alerts. Each listener uses a random consumer group
+  ID generated at startup. Therefore multiple gateway instances each receive a
+  full copy of the feed rather than splitting events between gateways.
+  ETA JSON is parsed into EtaUpdate before being handed to StreamHub. Malformed
+  ETA JSON is logged and skipped; alerts are forwarded as JSON.
+
+web/StreamHub.java
+  In-memory live state and SSE broadcaster.
+  - latest/latestJson keeps one current update per vehicle.
+  - recentAlerts retains at most 50 alert JSON messages.
+  - subscribe creates a never-timeout SseEmitter, registers cleanup callbacks,
+    and immediately sends a snapshot so a newly opened page is not blank.
+  - publishEta updates the latest bus and broadcasts an eta event.
+  - publishAlert increments the count, stores the bounded history, and
+    broadcasts an alert event.
+  - freshBuses excludes updates older than 120,000 ms of stream time.
+  - synchronized emitter writes prevent two Kafka listener threads from
+    concurrently writing one HTTP response.
+  - a 10-minute backwards timestamp gap is treated as a simulator restart:
+    state is cleared and a reset SSE event is sent.
+
+web/TransitIndex.java
+  Read-only query index over GTFS.
+  - chooses one representative trip per shape/route direction for displayed
+    geometry and stops;
+  - builds ShapeDto objects for the map;
+  - groups stops by lower-case name while retaining all stop IDs/platforms;
+  - stores route-direction -> headsign;
+  - searches prefix matches before substring matches, capped at eight;
+  - finds direct rides by locating stop A before stop B on representative trips.
+  It deliberately supports direct rides only; it is not a transfer planner.
+
+web/ApiController.java
+  REST and SSE endpoints:
+
+  GET /api/routes
+    Returns route shape polylines, route metadata, and stops.
+  GET /api/stops?q=
+    Returns up to eight grouped stop-name suggestions.
+  GET /api/arrivals?ids=id1,id2
+    Scans fresh bus updates, finds the first matching upcoming stop per bus,
+    sorts by corrected ETA, and returns at most eight arrivals.
+  GET /api/plan?from=&to=
+    Finds static direct-route options and attaches currently live buses that
+    contain both stops in their upcoming list. Returns at most three buses per
+    option.
+  GET /api/stats
+    Returns fresh bus count, route count, grouped stop count, alert count,
+    stream time, and a five-row mini board.
+  GET /stream
+    Opens the text/event-stream endpoint backed by SseEmitter.
+
+  Nested records are the JSON response DTOs: Arrival, LiveBus, PlanOption,
+  PlanResponse, BoardRow, and Stats.
+
+gateway/src/main/resources/application.yml
+  Configures gateway name, Kafka string deserializers, latest offset behavior,
+  HTTP port 8081, and filtered GTFS data path.
+
+static/index.html
+  Landing page. It provides branding, explanation, links to the live map and
+  GitHub, and a canvas animation that fetches /api/routes. It periodically
+  polls /api/stats for live counters and a mini arrivals board. CSS provides
+  responsive layout, typography, colors, and reduced-motion behavior.
+
+static/app.html
+  Live map application. It loads Leaflet from a CDN, fetches /api/routes to
+  draw polylines and stop data, and connects to /stream using EventSource.
+  It maintains browser-side bus state, updates animated markers, highlights
+  delayed and ghost buses, shows per-bus upcoming timetable/corrected ETAs,
+  displays alerts, searches stops, loads arrivals, and calls /api/plan for
+  direct rides. It escapes user/event text before HTML insertion and handles
+  SSE reset/reconnection state.
+
+
+7. KAFKA DESIGN IN DEPTH
+------------------------
+
+Topics and contracts
+
+  bus.positions
+    6 partitions, key vehicleId, JSON VehiclePosition.
+    Producer: simulator. Consumer: ETA service group eta-service.
+
+  bus.eta
+    6 partitions, key vehicleId, JSON EtaUpdate.
+    Producer: ETA service. Consumer: each gateway instance's unique group.
+
+  bus.alerts
+    3 partitions, key vehicleId, JSON BusAlert.
+    Producer: ETA service. Consumer: each gateway instance's unique group.
+
+Why key by vehicleId
+  Kafka hashes the key to choose a partition. All events for a vehicle go to
+  the same partition, preserving order within that partition. That lets the
+  ETA service update one VehicleState in sequence without a distributed lock.
+  Ordering is per partition, not globally across all buses.
+
+Consumer groups
+  The ETA listener has one stable group and concurrency 3. Three consumers
+  share the six position partitions. Running another ETA instance causes Kafka
+  to rebalance partitions across the instances. Because each vehicle remains in
+  one partition, its state is owned by one consumer at a time.
+
+  The gateway intentionally uses a random group per startup. A normal shared
+  group would load-balance events, causing each gateway instance to see only a
+  subset. Unique groups implement broadcast/fan-out semantics so every gateway
+  receives the full feed.
+
+Serialization
+  Simulator and ETA producers use Spring Kafka JsonSerializer. ETA consumes
+  VehiclePosition with JsonDeserializer and an explicit default type. Gateway
+  consumes strings and parses ETA JSON with ObjectMapper, while forwarding
+  alert JSON. Trusted packages are restricted to the common event package.
+
+Reliability and current tradeoffs
+  Event sends are asynchronous. Simulator logs send failures; listener sends
+  do not currently attach failure callbacks. The design has no retry topic,
+  dead-letter queue, schema registry, or persistent state. Topic replication
+  is one in local Docker. These are known roadmap/production-hardening items.
+
+
+8. END-TO-END REQUEST/EVENT FLOWS
+---------------------------------
+
+Startup:
+  1. Start Kafka and create the three topics.
+  2. Start eta-service; it loads GTFS and subscribes to positions.
+  3. Start gateway; it loads GTFS and subscribes to derived feeds.
+  4. Start simulator; it loads GTFS and creates buses.
+
+One position:
+  1. Scheduled simulator tick advances each SimBus by 10 simulated seconds.
+  2. SimBus returns position, status, speed, distance, and simulated timestamp.
+  3. Simulator sends it to bus.positions keyed by BUS-<tripId>.
+  4. ETA service drops stale/duplicate events, updates state, detects arrivals,
+     learns pace, builds upcoming StopEta records, and emits EtaUpdate.
+  5. Delay transitions are emitted as BusAlert events.
+  6. Gateway receives JSON, updates latest bus state, and broadcasts SSE eta.
+  7. Browser marker and side-panel card update immediately.
+
+Ghost:
+  1. A breakdown causes SimBus.tick to return null, so no position is sent.
+  2. ETA stream time continues from other buses.
+  3. GhostBusScanner observes silence above 90 simulated seconds.
+  4. ETA service emits GHOST_BUS once.
+  5. Gateway forwards the alert; the UI marks the bus as not reporting.
+  6. On the next position, ETA emits GHOST_RECOVERED.
+
+Restart:
+  If timestamps move backwards by over ten minutes, ETA state resets. Gateway
+  clears its live snapshot and sends reset. This avoids mixing a new simulator
+  run with stale old-clock data.
+
+
+9. DATA FILES AND SCRIPTS
+-------------------------
+
+data/filtered/routes.txt
+  Four selected route rows. Route metadata and short names.
+
+data/filtered/trips.txt
+  Twenty selected trips, including route ID, headsign, direction, shape, and
+  trip ID. The simulator creates one simulated bus per trip.
+
+data/filtered/stop_times.txt
+  469 scheduled stop visits. It supplies stop order and timetable arrival
+  times for each trip.
+
+data/filtered/stops.txt
+  133 stop records with names and coordinates.
+
+data/filtered/shapes.txt
+  1,218 ordered shape points used for route geometry and distance.
+
+data/raw/agency.txt, attributions.txt, calendar.txt, fare_attributes.txt,
+fare_rules.txt, feed_info.txt, routes.txt, shapes.txt, stop_times.txt,
+stops.txt, translations.txt, trips.txt
+  Original GTFS input/feed tables. The raw directory is ignored by Git because
+  it is large; it is not read at runtime by Java. The filtered subset is the
+  runtime dataset. The especially large tables are shapes, stop_times, and
+  fare_rules.
+
+scripts/filter_gtfs.py
+  Pandas preprocessing script. It reads raw routes/trips/stop_times/shapes/
+  stops, selects route IDs 7857, 1037, 4995, and 4754, keeps ten trips per
+  route, removes trips without shapes, filters dependent rows, sorts stop and
+  shape sequences, and writes five filtered files. It is an offline data
+  preparation step, not a service.
+
+scripts/matplot.py
+  Offline visualization helper. It selects one trip per shape, plots shape
+  longitude/latitude lines and red stop points in a 2x4 Matplotlib grid. It
+  helps validate the filtered geometry.
+
+
+10. BUILD, RUN, AND OPERATIONS
+------------------------------
+
+Requirements:
+  JDK 21, Maven 3.9+, Python/pandas/matplotlib for optional preprocessing,
+  and Kafka 3.9 in KRaft mode.
+
+Docker Kafka:
+  docker compose up -d kafka
+  The compose file creates the broker, but topics may need explicit creation:
+    kafka-topics --create --topic bus.positions --partitions 6 \
+      --bootstrap-server localhost:9092
+    kafka-topics --create --topic bus.eta --partitions 6 \
+      --bootstrap-server localhost:9092
+    kafka-topics --create --topic bus.alerts --partitions 3 \
+      --bootstrap-server localhost:9092
+
+Build:
+  mvn clean package
+
+Run from repository root because data/filtered is a relative path:
+  java -jar eta-service/target/eta-service-0.1.0.jar
+  java -jar gateway/target/gateway-0.1.0.jar
+  java -jar simulator/target/simulator-0.1.0.jar
+
+Open:
+  http://localhost:8081
+  http://localhost:8081/app.html
+
+Useful flags:
+  simulator ... --bustracker.sim.incidents-enabled=false
+  eta-service ... --server.port=8082
+
+Windows note:
+  Kafka log cleanup can fail when Windows locks files. The README suggests
+  increasing log.retention.hours and effectively disabling frequent cleanup in
+  server.properties for local development.
+
+target/ directories:
+  Generated Maven classes, status lists, copied resources, jars, and original
+  jars. They are build outputs, ignored by Git, and should not be hand-edited.
+  The checked workspace may contain them, but source and POM files are the
+  authoritative project inputs.
+
+
+11. DESIGN STRENGTHS AND TRADEOFFS
+----------------------------------
+Strengths:
+  - Clear event-driven separation between simulation, computation, and UI.
+  - Shared immutable records prevent event contract duplication.
+  - Kafka keying gives per-vehicle ordering and horizontal consumer scaling.
+  - ETA publishes both baseline and corrected values, making the model
+    explainable instead of presenting an unexplained number.
+  - Timestamp and restart guards protect in-memory state from stale events.
+  - SSE is a simple fit for one-way live browser updates.
+  - Bounded alert history and stale-bus filtering prevent unbounded UI state.
+  - GTFS snapping and cumulative shape distances create a useful common spatial
+    coordinate system.
+
+Tradeoffs/limitations:
+  - In-memory state disappears on restart; pace and alert history are lost.
+  - One broker and replication factor 1 are not fault tolerant.
+  - No schema registry, retries, DLQ, or explicit delivery/error strategy for
+    every producer send.
+  - Pace is a simple per-bus EMA, not a trained or time-of-day model.
+  - Incidents are not fed directly to ETA, so the model reacts after delay.
+  - The planner supports direct rides only and uses representative trips.
+  - There are no automated tests in the current repository.
+  - The raw GTFS source is unofficial and may have gaps or approximate times.
+  - Static pages use CDN dependencies, which is an external runtime dependency.
+
+
+12. INTERVIEW EXPLANATIONS AND QUESTIONS
+-----------------------------------------
+
+Q: Why Kafka instead of a direct HTTP call?
+A: Positions are a high-frequency stream with independent consumers. Kafka
+  decouples the simulator/feed from ETA computation and the gateway, buffers
+  events, preserves per-key ordering, allows consumer groups to scale, and
+  lets a new consumer replay from an offset. HTTP would tightly couple timing
+  and availability.
+
+Q: Why use vehicleId as the Kafka key?
+A: The ETA state is per vehicle. Keying by vehicle routes all events for that
+  vehicle to one partition, preserving order and avoiding cross-thread state
+  coordination. It does not promise global ordering.
+
+Q: How does the ETA model work mathematically?
+A: Interpolate the timetable at the bus's current shape distance to get
+  remaining scheduled seconds. Divide by an effective pace ratio. The ratio
+  starts at 1.0 and is updated after completed segments using an alpha=.4 EMA
+  of planned duration / actual duration, clamped to [.3, 3.0]. A slower bus has
+  pace below 1 and therefore a larger corrected ETA.
+
+Q: Why keep the timetable baseline?
+A: It is a transparent comparison point and is useful when there is little
+  observed history. Publishing both baseline and corrected values makes model
+  impact measurable through MAE.
+
+Q: How are arrivals inferred between reports?
+A: When a distance interval crosses a stop, the processor computes the fraction
+  of the interval at which the stop was crossed and interpolates between the
+  previous and current event timestamps.
+
+Q: How are duplicate events handled?
+A: VehicleState stores lastTs. Events with timestamp <= lastTs are dropped;
+  events older by the restart gap reset state instead of poisoning it.
+
+Q: How does a ghost bus differ from a delayed bus?
+A: A delayed bus is still reporting but moving slowly. A ghost bus has stopped
+  producing events, so the scanner detects silence in stream time and emits a
+  critical alert.
+
+Q: Why does the gateway use random consumer groups?
+A: It is a fan-out service. Every gateway instance needs every ETA/alert event
+  to update its own connected browsers. A shared group would distribute events
+  and produce incomplete views.
+
+Q: Why SSE instead of WebSockets?
+A: Browser traffic is server-to-client only, so SSE is simpler, automatically
+  reconnectable through EventSource, and maps naturally to named eta/alert/reset
+  events. WebSockets would be justified if bidirectional interaction were
+  required.
+
+Q: What happens if ETA service scales horizontally?
+A: Kafka rebalances the stable eta-service group. Position partitions move
+  between instances. Per-vehicle keying keeps a vehicle's ordered stream in one
+  partition, but in-memory state moves with partition ownership and is not
+  durable across crashes/rebalances. Production scaling would need state
+  recovery or external persistence.
+
+Q: What would you improve for production?
+A: Add multiple Kafka brokers and replication, schema registry/versioned event
+  contracts, retries and DLQs, producer error callbacks, health/metrics,
+  persistent vehicle state and alert history, replay/recovery strategy,
+  authentication/rate limiting, real GPS ingestion, segment/time-of-day models,
+  transfer-aware planning, automated tests, and packaged frontend dependencies.
+
+Q: How would a real BMTC feed fit?
+A: Replace SimulatorService with a feed adapter that maps GPS/GTFS-Realtime
+  records to VehiclePosition. Keep vehicleId, tripId, route metadata, shape
+  distance, status, and event timestamp populated; ETA and gateway contracts
+  remain unchanged.
+
+Q: What is the most important caveat when presenting the accuracy numbers?
+A: They are simulator measurements, not real-world BMTC accuracy. The README
+  reports better corrected MAE in sample runs, but real traffic, GPS quality,
+  schedule quality, and incident behavior could differ substantially.
+
+
+13. QUICK FILE CHECKLIST
+------------------------
+
+Tracked/runtime source files:
+  README.md
+  pom.xml
+  docker-compose.yml
+  .gitignore
+  common/pom.xml
+  common/src/main/java/com/mohith/bustracker/common/{BusAlert,EtaUpdate,
+    StopEta,Topics,VehiclePosition}.java
+  common/src/main/java/com/mohith/bustracker/common/gtfs/{Geo,GtfsLoader,
+    GtfsModel}.java
+  simulator/pom.xml
+  simulator/src/main/java/com/mohith/bustracker/simulator/SimulatorApplication.java
+  simulator/src/main/java/com/mohith/bustracker/simulator/config/SimulatorConfig.java
+  simulator/src/main/java/com/mohith/bustracker/simulator/engine/{Breakdown,
+    Incident,IncidentPlan,RouteGeometry,SimBus}.java
+  simulator/src/main/java/com/mohith/bustracker/simulator/producer/SimulatorService.java
+  simulator/src/main/resources/application.yml
+  eta-service/pom.xml
+  eta-service/src/main/java/com/mohith/bustracker/eta/EtaApplication.java
+  eta-service/src/main/java/com/mohith/bustracker/eta/config/EtaConfig.java
+  eta-service/src/main/java/com/mohith/bustracker/eta/consumer/{GhostBusScanner,
+    PositionListener}.java
+  eta-service/src/main/java/com/mohith/bustracker/eta/service/{AccuracyTracker,
+    EtaProcessor,TripSchedule,VehicleState}.java
+  eta-service/src/main/resources/application.yml
+  gateway/pom.xml
+  gateway/src/main/java/com/mohith/bustracker/gateway/GatewayApplication.java
+  gateway/src/main/java/com/mohith/bustracker/gateway/GatewayConfig.java
+  gateway/src/main/java/com/mohith/bustracker/gateway/consumer/FeedListener.java
+  gateway/src/main/java/com/mohith/bustracker/gateway/web/{ApiController,
+    StreamHub,TransitIndex}.java
+  gateway/src/main/resources/application.yml
+  gateway/src/main/resources/static/{index,app}.html
+  scripts/filter_gtfs.py
+  scripts/matplot.py
+  data/filtered/{routes,shapes,stop_times,stops,trips}.txt
+  docs/demo.gif
+
+Ignored/local/generated files:
+  data/raw/*.txt is original large input and is intentionally ignored.
+  */target/** contains generated classes, jars, copied resources, and Maven
+  status metadata. It is reproducible with mvn clean package and is not source.
+
+
+END OF GUIDE
