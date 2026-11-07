@@ -101,7 +101,7 @@ footer p{margin:0;max-width:640px}
     <span class="sp"></span>
     <a class="l" href="/app.html">Live map</a>
     <a class="l" href="#how">How it works</a>
-    <a class="l" href="https://github.com/MoxOmega88/bus-tracker">GitHub</a>
+    <a class="l" href="https://github.com/MoxOmega88/BusTracker">GitHub</a>
   </nav>
 
   <header class="hero">
@@ -166,8 +166,9 @@ footer p{margin:0;max-width:640px}
 const $ = id => document.getElementById(id);
 const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const COLORS = {'171':'#3da5ff','500':'#ff7a45','276':'#3ddc97','K-2':'#c77dff'};
-const SPARE = ['#ffd166','#4cc9f0','#f72585','#b8f2e6'];
-const colorOf = l => COLORS[l] || (COLORS[l] = SPARE[Object.keys(COLORS).length % SPARE.length]);
+const hue = s => { let h = 0; for (const c of s) h = (h * 31 + c.charCodeAt(0)) >>> 0; return h % 360; };
+const colorOf = l => COLORS[l] || (COLORS[l] = `hsl(${hue(l)} 78% 62%)`);
+
 const minsText = s => s < 30 ? 'NOW' : (Math.round(s / 60) || 1) + ' MIN';
 
 /* live numbers and the departure board */

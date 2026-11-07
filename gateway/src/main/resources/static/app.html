@@ -110,10 +110,13 @@ main{flex:1;display:flex;min-height:0;margin-top:4px}
 
 .bus-wrap{transition:transform 1s linear}
 .zooming .bus-wrap{transition:none!important}
-.bus{background:var(--c);color:#0a0e13;font:800 11px var(--display);border-radius:12px;text-align:center;line-height:20px;height:24px;border:2px solid #0a0e13;box-shadow:0 0 0 1px rgba(255,255,255,.35),0 2px 6px rgba(0,0,0,.6)}
-.bus.delay{animation:pulse 1.3s infinite;box-shadow:0 0 0 3px var(--amber),0 2px 6px rgba(0,0,0,.6)}
-.bus.ghost{background:#59616f;color:#cbd2dc;outline:2px dashed var(--red);outline-offset:2px}
-.bus.sel{box-shadow:0 0 0 3px #fff,0 2px 6px rgba(0,0,0,.6)}
+.bus{position:relative;width:44px;height:26px;filter:drop-shadow(0 2px 3px rgba(0,0,0,.6))}
+.bus svg{display:block}
+.bus svg.flip{transform:scaleX(-1)}
+.bnum{position:absolute;left:50%;top:-12px;transform:translateX(-50%);background:#0a0e13;color:var(--c);font:800 11px/14px var(--display);padding:0 5px;border-radius:7px;border:1px solid var(--c);white-space:nowrap}
+.bus.delay{animation:pulse 1.3s infinite;filter:drop-shadow(0 0 7px var(--amber))}
+.bus.ghost{opacity:.65;filter:grayscale(1);outline:2px dashed var(--red);outline-offset:2px;border-radius:6px}
+.bus.sel{outline:2px solid #fff;outline-offset:3px;border-radius:6px}
 @keyframes pulse{50%{transform:scale(1.14)}}
 .pin{width:26px;height:26px;border-radius:50% 50% 50% 0;transform:rotate(-45deg);background:var(--amber);border:2px solid #0a0e13;display:grid;place-items:center}
 .pin b{transform:rotate(45deg);color:#0a0e13;font:800 12px var(--display)}
@@ -143,9 +146,7 @@ main{flex:1;display:flex;min-height:0;margin-top:4px}
   #busCard{width:auto;left:8px;right:8px;bottom:8px}
   .brand .kn{display:none}
 }
-.cb{appearance:none;-webkit-appearance:none;width:20px;height:20px;flex:none;margin:0;border:2px solid var(--c);border-radius:4px;background:transparent;cursor:pointer;display:grid;place-items:center}
-.cb:checked{background:var(--c)}
-.cb:checked::after{content:"";width:5px;height:10px;border:solid #0a0e13;border-width:0 3px 3px 0;transform:rotate(45deg) translate(-1px,-1px)}
+.cb{width:20px;height:20px;flex:none;margin:0;accent-color:var(--c);cursor:pointer}transform:rotate(45deg) translate(-1px,-1px)}
 .route-row{cursor:pointer}
 </style>
 </head>
@@ -168,6 +169,7 @@ main{flex:1;display:flex;min-height:0;margin-top:4px}
 
     <section class="pane" id="tab-routes">
       <p class="hint">Tick the routes you want on the map. Solid line: one direction. Dashed: the other. Click a bus for its next stops.</p>
+      <div style="margin-bottom:10px"><button class="only" id="clear-routes" type="button">Hide all</button></div>
       <div id="route-list"></div>
       <div class="foot-note"><span id="count">0</span> buses reporting</div>
     </section>
@@ -210,11 +212,11 @@ const $ = id => document.getElementById(id);
 const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const label = n => String(n).split(' ')[0];
 const PALETTE = {'171':'#3da5ff','500':'#ff7a45','276':'#3ddc97','K-2':'#c77dff'};
-const SPARE = ['#ffd166','#4cc9f0','#f72585','#b8f2e6','#9bf6ff'];
-const colorOf = n => PALETTE[label(n)] || (PALETTE[label(n)] = SPARE[Object.keys(PALETTE).length % SPARE.length]);
+const hue = s => { let h = 0; for (const c of s) h = (h * 31 + c.charCodeAt(0)) >>> 0; return h % 360; };
+const colorOf = n => { const l = label(n); return PALETTE[l] || (PALETTE[l] = `hsl(${hue(l)} 78% 62%)`); };
 const mmss = s => { s = Math.max(0, Math.round(s)); return Math.floor(s / 60) + ':' + String(s % 60).padStart(2, '0'); };
 const minsText = s => s < 30 ? 'NOW' : (Math.round(s / 60) || 1) + ' MIN';
-const MAX_VISIBLE = 4;
+const MAX_VISIBLE = 5;
 
 const routes = {};      // route label -> { label, color, group, visible, dirs, names }
 const buses = {};       // vehicleId -> { d, marker, ghost, sig }
@@ -252,7 +254,9 @@ function updateBadge() { const b = $('badge'); b.textContent = unread; b.classLi
 function ensureRoute(routeName) {
   const l = label(routeName);
   if (!routes[l]) {
-    routes[l] = { label: l, color: colorOf(routeName), group: L.layerGroup().addTo(map), visible: true, dirs: [], names: new Set([routeName]) };
+    const visible = Object.keys(routes).length < MAX_VISIBLE;   // only the first few start on the map
+    routes[l] = { label: l, color: colorOf(routeName), group: L.layerGroup(), visible, dirs: [], names: new Set([routeName]) };
+    if (visible) routes[l].group.addTo(map);
   }
   return routes[l];
 }
@@ -317,29 +321,43 @@ function renderRouteList() {
 setInterval(renderRouteList, 2000);
 
 /* ---------- buses ---------- */
-function icon(d, ghost, sel) {
-  const cls = ['bus']; if (ghost) cls.push('ghost'); else if (d.delayed) cls.push('delay'); if (sel) cls.push('sel');
-  return L.divIcon({ className: 'bus-wrap', iconSize: [40, 24], iconAnchor: [20, 12],
-    html: `<div class="${cls.join(' ')}" style="--c:${colorOf(d.routeName)}">${esc(label(d.routeName))}</div>` });
+const sigOf = (b, id) => `${b.ghost}|${b.d.delayed}|${id === selected}|${b.flip}`;
+function icon(d, ghost, sel, flip) {
+  const cls = ghost ? ' ghost' : d.delayed ? ' delay' : '';
+  const c = colorOf(d.routeName), dk = '#0a0e13';
+  return L.divIcon({ className: 'bus-wrap', iconSize: [44, 26], iconAnchor: [22, 13],
+    html: `<div class="bus${cls}${sel ? ' sel' : ''}" style="--c:${c}"><span class="bnum">${esc(label(d.routeName))}</span>
+      <svg viewBox="0 0 44 26" width="44" height="26" class="${flip ? 'flip' : ''}">
+        <rect x="2" y="3" width="38" height="16" rx="4" fill="${c}" stroke="${dk}" stroke-width="2"/>
+        <rect x="6" y="6" width="6" height="5" rx="1" fill="${dk}" opacity=".8"/>
+        <rect x="14" y="6" width="6" height="5" rx="1" fill="${dk}" opacity=".8"/>
+        <rect x="22" y="6" width="6" height="5" rx="1" fill="${dk}" opacity=".8"/>
+        <rect x="31" y="6" width="7" height="8" rx="1" fill="${dk}" opacity=".8"/>
+        <circle cx="12" cy="20" r="3.5" fill="${dk}" stroke="#fff" stroke-width="1.2"/>
+        <circle cx="31" cy="20" r="3.5" fill="${dk}" stroke="#fff" stroke-width="1.2"/>
+      </svg></div>` });
 }
 function refreshIcon(id) {
   const b = buses[id]; if (!b) return;
-  const sig = `${b.ghost}|${b.d.delayed}|${id === selected}`;
+  const sig = sigOf(b, id);
   if (sig === b.sig) return;
-  b.sig = sig; b.marker.setIcon(icon(b.d, b.ghost, id === selected));
+  b.sig = sig; b.marker.setIcon(icon(b.d, b.ghost, id === selected, b.flip));
 }
 function onEta(d) {
   simClock = Math.max(simClock, d.timestamp);
   let b = buses[d.vehicleId];
   if (!b) {
     const r = ensureRoute(d.routeName);
-    b = { d, ghost: false, sig: `false|${d.delayed}|false`,
-          marker: L.marker([d.lat, d.lon], { icon: icon(d, false, false), keyboard: false })
-                   .bindTooltip(`${d.routeName} · ${d.vehicleId}`, { direction: 'top', offset: [0, -10] }) };
+    b = { d, ghost: false, flip: false, sig: '',
+          marker: L.marker([d.lat, d.lon], { icon: icon(d, false, false, false), keyboard: false })
+                   .bindTooltip(`${d.routeName} · ${d.vehicleId}`, { direction: 'top', offset: [0, -16] }) };
+    b.sig = sigOf(b, d.vehicleId);
     b.marker.on('click', () => selectBus(d.vehicleId));
     r.group.addLayer(b.marker);
     buses[d.vehicleId] = b;
   }
+  const dx = d.lon - b.d.lon;
+  if (Math.abs(dx) > 1e-5) b.flip = dx < 0;   // face the direction of travel
   b.d = d; b.ghost = false;
   b.marker.setLatLng([d.lat, d.lon]);
   refreshIcon(d.vehicleId);

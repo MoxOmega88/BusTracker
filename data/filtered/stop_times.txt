@@ -468,3 +468,1389 @@ trip_id,arrival_time,departure_time,stop_id,stop_sequence,stop_headsign
 49697,09:01:11,09:01:11,20738,27,Mysore Road Bus Station
 49697,09:03:59,09:03:59,20626,28,Mysore Road Bus Station
 49697,09:04:59,09:04:59,21042,29,Mysore Road Bus Station
+695,05:10:00,05:10:00,21172_PF10,1,Banashankari Bus Station
+695,05:13:15,05:13:15,20857,2,Banashankari Bus Station
+695,05:17:17,05:17:17,21520,3,Banashankari Bus Station
+695,05:19:53,05:19:53,21574,4,Banashankari Bus Station
+695,05:22:02,05:22:02,21193,5,Banashankari Bus Station
+695,05:26:08,05:26:08,23674,6,Banashankari Bus Station
+695,05:30:07,05:30:07,20927,7,Banashankari Bus Station
+695,05:31:41,05:31:41,21166_PF1,8,Banashankari Bus Station
+695,05:33:49,05:33:49,23825,9,Banashankari Bus Station
+695,05:35:53,05:35:53,21565,10,Banashankari Bus Station
+695,05:37:51,05:37:51,21603,11,Banashankari Bus Station
+695,05:40:27,05:40:27,21458,12,Banashankari Bus Station
+695,05:42:59,05:42:59,21593,13,Banashankari Bus Station
+695,05:46:06,05:46:06,21447,14,Banashankari Bus Station
+695,05:49:14,05:49:14,21544_PF1,15,Banashankari Bus Station
+695,05:52:14,05:52:14,21543,16,Banashankari Bus Station
+695,05:54:39,05:54:39,21449,17,Banashankari Bus Station
+695,05:56:37,05:56:37,21148,18,Banashankari Bus Station
+695,06:00:00,06:00:00,20623_PF2,19,Banashankari Bus Station
+696,05:30:00,05:30:00,21172_PF10,1,Banashankari Bus Station
+696,05:33:15,05:33:15,20857,2,Banashankari Bus Station
+696,05:37:17,05:37:17,21520,3,Banashankari Bus Station
+696,05:39:53,05:39:53,21574,4,Banashankari Bus Station
+696,05:42:02,05:42:02,21193,5,Banashankari Bus Station
+696,05:46:08,05:46:08,23674,6,Banashankari Bus Station
+696,05:50:07,05:50:07,20927,7,Banashankari Bus Station
+696,05:51:41,05:51:41,21166_PF1,8,Banashankari Bus Station
+696,05:53:49,05:53:49,23825,9,Banashankari Bus Station
+696,05:55:53,05:55:53,21565,10,Banashankari Bus Station
+696,05:57:51,05:57:51,21603,11,Banashankari Bus Station
+696,06:00:27,06:00:27,21458,12,Banashankari Bus Station
+696,06:02:59,06:02:59,21593,13,Banashankari Bus Station
+696,06:06:06,06:06:06,21447,14,Banashankari Bus Station
+696,06:09:14,06:09:14,21544_PF1,15,Banashankari Bus Station
+696,06:12:14,06:12:14,21543,16,Banashankari Bus Station
+696,06:14:39,06:14:39,21449,17,Banashankari Bus Station
+696,06:16:37,06:16:37,21148,18,Banashankari Bus Station
+696,06:20:00,06:20:00,20623_PF2,19,Banashankari Bus Station
+697,06:10:00,06:10:00,21172_PF10,1,Banashankari Bus Station
+697,06:13:34,06:13:34,20857,2,Banashankari Bus Station
+697,06:18:01,06:18:01,21520,3,Banashankari Bus Station
+697,06:20:52,06:20:52,21574,4,Banashankari Bus Station
+697,06:23:14,06:23:14,21193,5,Banashankari Bus Station
+697,06:27:45,06:27:45,23674,6,Banashankari Bus Station
+697,06:32:08,06:32:08,20927,7,Banashankari Bus Station
+697,06:33:52,06:33:52,21166_PF1,8,Banashankari Bus Station
+697,06:36:12,06:36:12,23825,9,Banashankari Bus Station
+697,06:38:28,06:38:28,21565,10,Banashankari Bus Station
+697,06:40:39,06:40:39,21603,11,Banashankari Bus Station
+697,06:43:30,06:43:30,21458,12,Banashankari Bus Station
+697,06:46:17,06:46:17,21593,13,Banashankari Bus Station
+697,06:49:43,06:49:43,21447,14,Banashankari Bus Station
+697,06:53:10,06:53:10,21544_PF1,15,Banashankari Bus Station
+697,06:56:27,06:56:27,21543,16,Banashankari Bus Station
+697,06:59:07,06:59:07,21449,17,Banashankari Bus Station
+697,07:01:16,07:01:16,21148,18,Banashankari Bus Station
+697,07:04:59,07:04:59,20623_PF2,19,Banashankari Bus Station
+771,05:20:00,05:20:00,20623_PF2,1,Shivajinagara Bus Station
+771,05:22:15,05:22:15,21149,2,Shivajinagara Bus Station
+771,05:24:14,05:24:14,21448,3,Shivajinagara Bus Station
+771,05:25:55,05:25:55,21444,4,Shivajinagara Bus Station
+771,05:27:04,05:27:04,21542,5,Shivajinagara Bus Station
+771,05:29:29,05:29:29,21544_PF1,6,Shivajinagara Bus Station
+771,05:31:08,05:31:08,21446,7,Shivajinagara Bus Station
+771,05:33:28,05:33:28,21563,8,Shivajinagara Bus Station
+771,05:34:17,05:34:17,21592,9,Shivajinagara Bus Station
+771,05:36:46,05:36:46,21457,10,Shivajinagara Bus Station
+771,05:39:21,05:39:21,21602,11,Shivajinagara Bus Station
+771,05:40:45,05:40:45,21564,12,Shivajinagara Bus Station
+771,05:43:08,05:43:08,20563,13,Shivajinagara Bus Station
+771,05:45:15,05:45:15,21281,14,Shivajinagara Bus Station
+771,05:47:53,05:47:53,21166_PF2,15,Shivajinagara Bus Station
+771,05:49:35,05:49:35,20928,16,Shivajinagara Bus Station
+771,05:55:13,05:55:13,21125,17,Shivajinagara Bus Station
+771,05:57:46,05:57:46,21194,18,Shivajinagara Bus Station
+771,05:58:34,05:58:34,23433,19,Shivajinagara Bus Station
+771,06:00:35,06:00:35,21608,20,Shivajinagara Bus Station
+771,06:02:11,06:02:11,21572,21,Shivajinagara Bus Station
+771,06:04:59,06:04:59,21172_PF10,22,Shivajinagara Bus Station
+772,05:50:00,05:50:00,20623_PF2,1,Shivajinagara Bus Station
+772,05:52:45,05:52:45,21149,2,Shivajinagara Bus Station
+772,05:55:11,05:55:11,21448,3,Shivajinagara Bus Station
+772,05:57:14,05:57:14,21444,4,Shivajinagara Bus Station
+772,05:58:38,05:58:38,21542,5,Shivajinagara Bus Station
+772,06:01:35,06:01:35,21544_PF1,6,Shivajinagara Bus Station
+772,06:03:36,06:03:36,21446,7,Shivajinagara Bus Station
+772,06:06:28,06:06:28,21563,8,Shivajinagara Bus Station
+772,06:07:27,06:07:27,21592,9,Shivajinagara Bus Station
+772,06:10:29,06:10:29,21457,10,Shivajinagara Bus Station
+772,06:13:40,06:13:40,21602,11,Shivajinagara Bus Station
+772,06:15:22,06:15:22,21564,12,Shivajinagara Bus Station
+772,06:18:17,06:18:17,20563,13,Shivajinagara Bus Station
+772,06:20:52,06:20:52,21281,14,Shivajinagara Bus Station
+772,06:24:05,06:24:05,21166_PF2,15,Shivajinagara Bus Station
+772,06:26:10,06:26:10,20928,16,Shivajinagara Bus Station
+772,06:33:03,06:33:03,21125,17,Shivajinagara Bus Station
+772,06:36:10,06:36:10,21194,18,Shivajinagara Bus Station
+772,06:37:08,06:37:08,23433,19,Shivajinagara Bus Station
+772,06:39:36,06:39:36,21608,20,Shivajinagara Bus Station
+772,06:41:34,06:41:34,21572,21,Shivajinagara Bus Station
+772,06:44:59,06:44:59,21172_PF10,22,Shivajinagara Bus Station
+773,06:00:00,06:00:00,20623_PF2,1,Shivajinagara Bus Station
+773,06:02:45,06:02:45,21149,2,Shivajinagara Bus Station
+773,06:05:11,06:05:11,21448,3,Shivajinagara Bus Station
+773,06:07:14,06:07:14,21444,4,Shivajinagara Bus Station
+773,06:08:38,06:08:38,21542,5,Shivajinagara Bus Station
+773,06:11:35,06:11:35,21544_PF1,6,Shivajinagara Bus Station
+773,06:13:36,06:13:36,21446,7,Shivajinagara Bus Station
+773,06:16:28,06:16:28,21563,8,Shivajinagara Bus Station
+773,06:17:27,06:17:27,21592,9,Shivajinagara Bus Station
+773,06:20:29,06:20:29,21457,10,Shivajinagara Bus Station
+773,06:23:40,06:23:40,21602,11,Shivajinagara Bus Station
+773,06:25:22,06:25:22,21564,12,Shivajinagara Bus Station
+773,06:28:17,06:28:17,20563,13,Shivajinagara Bus Station
+773,06:30:52,06:30:52,21281,14,Shivajinagara Bus Station
+773,06:34:05,06:34:05,21166_PF2,15,Shivajinagara Bus Station
+773,06:36:10,06:36:10,20928,16,Shivajinagara Bus Station
+773,06:43:03,06:43:03,21125,17,Shivajinagara Bus Station
+773,06:46:10,06:46:10,21194,18,Shivajinagara Bus Station
+773,06:47:08,06:47:08,23433,19,Shivajinagara Bus Station
+773,06:49:36,06:49:36,21608,20,Shivajinagara Bus Station
+773,06:51:34,06:51:34,21572,21,Shivajinagara Bus Station
+773,06:54:59,06:54:59,21172_PF10,22,Shivajinagara Bus Station
+11059,04:00:00,04:00:00,20944_PF6C,1,Jalahalli Cross
+11059,04:03:51,04:03:51,21123,2,Jalahalli Cross
+11059,04:05:05,04:05:05,21272,3,Jalahalli Cross
+11059,04:06:04,04:06:04,23479,4,Jalahalli Cross
+11059,04:07:27,04:07:27,35403,5,Jalahalli Cross
+11059,04:10:11,04:10:11,21043,6,Jalahalli Cross
+11059,04:12:33,04:12:33,21057,7,Jalahalli Cross
+11059,04:14:33,04:14:33,21042,8,Jalahalli Cross
+11059,04:17:25,04:17:25,20739,9,Jalahalli Cross
+11059,04:18:48,04:18:48,40440,10,Jalahalli Cross
+11059,04:20:31,04:20:31,20613,11,Jalahalli Cross
+11059,04:22:27,04:22:27,39679,12,Jalahalli Cross
+11059,04:23:52,04:23:52,35395_PF5,13,Jalahalli Cross
+11059,04:24:53,04:24:53,21011,14,Jalahalli Cross
+11059,04:26:48,04:26:48,21266,15,Jalahalli Cross
+11059,04:29:04,04:29:04,21013,16,Jalahalli Cross
+11059,04:30:43,04:30:43,20600,17,Jalahalli Cross
+11059,04:33:17,04:33:17,20930,18,Jalahalli Cross
+11059,04:36:08,04:36:08,20906,19,Jalahalli Cross
+11059,04:40:35,04:40:35,21204,20,Jalahalli Cross
+11059,04:42:16,04:42:16,20937,21,Jalahalli Cross
+11059,04:44:54,04:44:54,39572,22,Jalahalli Cross
+11059,04:47:05,04:47:05,21206,23,Jalahalli Cross
+11059,04:48:57,04:48:57,26277,24,Jalahalli Cross
+11059,04:51:19,04:51:19,32914,25,Jalahalli Cross
+11059,04:52:44,04:52:44,33862,26,Jalahalli Cross
+11059,04:53:40,04:53:40,33739,27,Jalahalli Cross
+11059,04:55:00,04:55:00,38616,28,Jalahalli Cross
+11059,04:55:36,04:55:36,38617,29,Jalahalli Cross
+11059,04:58:01,04:58:01,21055,30,Jalahalli Cross
+11059,04:59:50,04:59:50,20827,31,Jalahalli Cross
+11059,05:01:30,05:01:30,20824,32,Jalahalli Cross
+11059,05:03:08,05:03:08,21024,33,Jalahalli Cross
+11059,05:04:45,05:04:45,21080,34,Jalahalli Cross
+11059,05:07:14,05:07:14,20566,35,Jalahalli Cross
+11059,05:09:07,05:09:07,20684,36,Jalahalli Cross
+11059,05:11:33,05:11:33,21068,37,Jalahalli Cross
+11059,05:13:06,05:13:06,21136,38,Jalahalli Cross
+11059,05:15:20,05:15:20,21236,39,Jalahalli Cross
+11059,05:19:59,05:19:59,20870,40,Jalahalli Cross
+11060,04:10:00,04:10:00,20944_PF6C,1,Jalahalli Cross
+11060,04:13:51,04:13:51,21123,2,Jalahalli Cross
+11060,04:15:05,04:15:05,21272,3,Jalahalli Cross
+11060,04:16:04,04:16:04,23479,4,Jalahalli Cross
+11060,04:17:27,04:17:27,35403,5,Jalahalli Cross
+11060,04:20:11,04:20:11,21043,6,Jalahalli Cross
+11060,04:22:33,04:22:33,21057,7,Jalahalli Cross
+11060,04:24:33,04:24:33,21042,8,Jalahalli Cross
+11060,04:27:25,04:27:25,20739,9,Jalahalli Cross
+11060,04:28:48,04:28:48,40440,10,Jalahalli Cross
+11060,04:30:31,04:30:31,20613,11,Jalahalli Cross
+11060,04:32:27,04:32:27,39679,12,Jalahalli Cross
+11060,04:33:52,04:33:52,35395_PF5,13,Jalahalli Cross
+11060,04:34:53,04:34:53,21011,14,Jalahalli Cross
+11060,04:36:48,04:36:48,21266,15,Jalahalli Cross
+11060,04:39:04,04:39:04,21013,16,Jalahalli Cross
+11060,04:40:43,04:40:43,20600,17,Jalahalli Cross
+11060,04:43:17,04:43:17,20930,18,Jalahalli Cross
+11060,04:46:08,04:46:08,20906,19,Jalahalli Cross
+11060,04:50:35,04:50:35,21204,20,Jalahalli Cross
+11060,04:52:16,04:52:16,20937,21,Jalahalli Cross
+11060,04:54:54,04:54:54,39572,22,Jalahalli Cross
+11060,04:57:05,04:57:05,21206,23,Jalahalli Cross
+11060,04:58:57,04:58:57,26277,24,Jalahalli Cross
+11060,05:01:19,05:01:19,32914,25,Jalahalli Cross
+11060,05:02:44,05:02:44,33862,26,Jalahalli Cross
+11060,05:03:40,05:03:40,33739,27,Jalahalli Cross
+11060,05:05:00,05:05:00,38616,28,Jalahalli Cross
+11060,05:05:36,05:05:36,38617,29,Jalahalli Cross
+11060,05:08:01,05:08:01,21055,30,Jalahalli Cross
+11060,05:09:50,05:09:50,20827,31,Jalahalli Cross
+11060,05:11:30,05:11:30,20824,32,Jalahalli Cross
+11060,05:13:08,05:13:08,21024,33,Jalahalli Cross
+11060,05:14:45,05:14:45,21080,34,Jalahalli Cross
+11060,05:17:14,05:17:14,20566,35,Jalahalli Cross
+11060,05:19:07,05:19:07,20684,36,Jalahalli Cross
+11060,05:21:33,05:21:33,21068,37,Jalahalli Cross
+11060,05:23:06,05:23:06,21136,38,Jalahalli Cross
+11060,05:25:20,05:25:20,21236,39,Jalahalli Cross
+11060,05:29:59,05:29:59,20870,40,Jalahalli Cross
+11061,04:15:00,04:15:00,20944_PF6C,1,Jalahalli Cross
+11061,04:17:53,04:17:53,21123,2,Jalahalli Cross
+11061,04:18:49,04:18:49,21272,3,Jalahalli Cross
+11061,04:19:33,04:19:33,23479,4,Jalahalli Cross
+11061,04:20:35,04:20:35,35403,5,Jalahalli Cross
+11061,04:22:38,04:22:38,21043,6,Jalahalli Cross
+11061,04:24:25,04:24:25,21057,7,Jalahalli Cross
+11061,04:25:54,04:25:54,21042,8,Jalahalli Cross
+11061,04:28:03,04:28:03,20739,9,Jalahalli Cross
+11061,04:29:06,04:29:06,40440,10,Jalahalli Cross
+11061,04:30:23,04:30:23,20613,11,Jalahalli Cross
+11061,04:31:50,04:31:50,39679,12,Jalahalli Cross
+11061,04:32:54,04:32:54,35395_PF5,13,Jalahalli Cross
+11061,04:33:40,04:33:40,21011,14,Jalahalli Cross
+11061,04:35:06,04:35:06,21266,15,Jalahalli Cross
+11061,04:36:48,04:36:48,21013,16,Jalahalli Cross
+11061,04:38:02,04:38:02,20600,17,Jalahalli Cross
+11061,04:39:57,04:39:57,20930,18,Jalahalli Cross
+11061,04:42:06,04:42:06,20906,19,Jalahalli Cross
+11061,04:45:26,04:45:26,21204,20,Jalahalli Cross
+11061,04:46:42,04:46:42,20937,21,Jalahalli Cross
+11061,04:48:41,04:48:41,39572,22,Jalahalli Cross
+11061,04:50:18,04:50:18,21206,23,Jalahalli Cross
+11061,04:51:42,04:51:42,26277,24,Jalahalli Cross
+11061,04:53:29,04:53:29,32914,25,Jalahalli Cross
+11061,04:54:33,04:54:33,33862,26,Jalahalli Cross
+11061,04:55:15,04:55:15,33739,27,Jalahalli Cross
+11061,04:56:15,04:56:15,38616,28,Jalahalli Cross
+11061,04:56:42,04:56:42,38617,29,Jalahalli Cross
+11061,04:58:31,04:58:31,21055,30,Jalahalli Cross
+11061,04:59:52,04:59:52,20827,31,Jalahalli Cross
+11061,05:01:08,05:01:08,20824,32,Jalahalli Cross
+11061,05:02:21,05:02:21,21024,33,Jalahalli Cross
+11061,05:03:33,05:03:33,21080,34,Jalahalli Cross
+11061,05:05:25,05:05:25,20566,35,Jalahalli Cross
+11061,05:06:50,05:06:50,20684,36,Jalahalli Cross
+11061,05:08:40,05:08:40,21068,37,Jalahalli Cross
+11061,05:09:50,05:09:50,21136,38,Jalahalli Cross
+11061,05:11:30,05:11:30,21236,39,Jalahalli Cross
+11061,05:14:59,05:14:59,20870,40,Jalahalli Cross
+11183,04:30:00,04:30:00,20870,1,KR Market (Kalasipalya)
+11183,04:31:31,04:31:31,21210,2,KR Market (Kalasipalya)
+11183,04:33:49,04:33:49,21237,3,KR Market (Kalasipalya)
+11183,04:35:30,04:35:30,21137,4,KR Market (Kalasipalya)
+11183,04:36:53,04:36:53,21069,5,KR Market (Kalasipalya)
+11183,04:38:34,04:38:34,20685,6,KR Market (Kalasipalya)
+11183,04:40:08,04:40:08,20567,7,KR Market (Kalasipalya)
+11183,04:41:32,04:41:32,21114,8,KR Market (Kalasipalya)
+11183,04:42:40,04:42:40,21081,9,KR Market (Kalasipalya)
+11183,04:43:54,04:43:54,21023,10,KR Market (Kalasipalya)
+11183,04:45:12,04:45:12,20825,11,KR Market (Kalasipalya)
+11183,04:46:33,04:46:33,20826,12,KR Market (Kalasipalya)
+11183,04:47:57,04:47:57,21054,13,KR Market (Kalasipalya)
+11183,04:49:28,04:49:28,21262,14,KR Market (Kalasipalya)
+11183,04:50:41,04:50:41,20874,15,KR Market (Kalasipalya)
+11183,04:52:59,04:52:59,21205,16,KR Market (Kalasipalya)
+11183,04:55:33,04:55:33,20936,17,KR Market (Kalasipalya)
+11183,04:57:44,04:57:44,21203,18,KR Market (Kalasipalya)
+11183,05:00:44,05:00:44,20905,19,KR Market (Kalasipalya)
+11183,05:02:52,05:02:52,20929,20,KR Market (Kalasipalya)
+11183,05:04:18,05:04:18,40335,21,KR Market (Kalasipalya)
+11183,05:05:34,05:05:34,20599,22,KR Market (Kalasipalya)
+11183,05:07:17,05:07:17,21269,23,KR Market (Kalasipalya)
+11183,05:08:37,05:08:37,21623,24,KR Market (Kalasipalya)
+11183,05:10:10,05:10:10,21010,25,KR Market (Kalasipalya)
+11183,05:10:46,05:10:46,35395_PF1,26,KR Market (Kalasipalya)
+11183,05:13:28,05:13:28,35427,27,KR Market (Kalasipalya)
+11183,05:15:07,05:15:07,20738,28,KR Market (Kalasipalya)
+11183,05:16:57,05:16:57,20626,29,KR Market (Kalasipalya)
+11183,05:18:34,05:18:34,21056,30,KR Market (Kalasipalya)
+11183,05:20:33,05:20:33,21044,31,KR Market (Kalasipalya)
+11183,05:22:29,05:22:29,35393,32,KR Market (Kalasipalya)
+11183,05:26:23,05:26:23,35396,33,KR Market (Kalasipalya)
+11183,05:27:13,05:27:13,21124,34,KR Market (Kalasipalya)
+11183,05:30:00,05:30:00,20944_PF6C,35,KR Market (Kalasipalya)
+11184,05:25:00,05:25:00,20870,1,KR Market (Kalasipalya)
+11184,05:27:17,05:27:17,21210,2,KR Market (Kalasipalya)
+11184,05:30:44,05:30:44,21237,3,KR Market (Kalasipalya)
+11184,05:33:15,05:33:15,21137,4,KR Market (Kalasipalya)
+11184,05:35:20,05:35:20,21069,5,KR Market (Kalasipalya)
+11184,05:37:52,05:37:52,20685,6,KR Market (Kalasipalya)
+11184,05:40:13,05:40:13,20567,7,KR Market (Kalasipalya)
+11184,05:42:18,05:42:18,21114,8,KR Market (Kalasipalya)
+11184,05:44:00,05:44:00,21081,9,KR Market (Kalasipalya)
+11184,05:45:52,05:45:52,21023,10,KR Market (Kalasipalya)
+11184,05:47:49,05:47:49,20825,11,KR Market (Kalasipalya)
+11184,05:49:49,05:49:49,20826,12,KR Market (Kalasipalya)
+11184,05:51:56,05:51:56,21054,13,KR Market (Kalasipalya)
+11184,05:54:13,05:54:13,21262,14,KR Market (Kalasipalya)
+11184,05:56:02,05:56:02,20874,15,KR Market (Kalasipalya)
+11184,05:59:29,05:59:29,21205,16,KR Market (Kalasipalya)
+11184,06:03:20,06:03:20,20936,17,KR Market (Kalasipalya)
+11184,06:06:37,06:06:37,21203,18,KR Market (Kalasipalya)
+11184,06:11:06,06:11:06,20905,19,KR Market (Kalasipalya)
+11184,06:14:18,06:14:18,20929,20,KR Market (Kalasipalya)
+11184,06:16:27,06:16:27,40335,21,KR Market (Kalasipalya)
+11184,06:18:21,06:18:21,20599,22,KR Market (Kalasipalya)
+11184,06:20:56,06:20:56,21269,23,KR Market (Kalasipalya)
+11184,06:22:55,06:22:55,21623,24,KR Market (Kalasipalya)
+11184,06:25:15,06:25:15,21010,25,KR Market (Kalasipalya)
+11184,06:26:09,06:26:09,35395_PF1,26,KR Market (Kalasipalya)
+11184,06:30:13,06:30:13,35427,27,KR Market (Kalasipalya)
+11184,06:32:40,06:32:40,20738,28,KR Market (Kalasipalya)
+11184,06:35:26,06:35:26,20626,29,KR Market (Kalasipalya)
+11184,06:37:52,06:37:52,21056,30,KR Market (Kalasipalya)
+11184,06:40:49,06:40:49,21044,31,KR Market (Kalasipalya)
+11184,06:43:44,06:43:44,35393,32,KR Market (Kalasipalya)
+11184,06:49:35,06:49:35,35396,33,KR Market (Kalasipalya)
+11184,06:50:50,06:50:50,21124,34,KR Market (Kalasipalya)
+11184,06:55:00,06:55:00,20944_PF6C,35,KR Market (Kalasipalya)
+11185,05:35:00,05:35:00,20870,1,KR Market (Kalasipalya)
+11185,05:37:17,05:37:17,21210,2,KR Market (Kalasipalya)
+11185,05:40:44,05:40:44,21237,3,KR Market (Kalasipalya)
+11185,05:43:15,05:43:15,21137,4,KR Market (Kalasipalya)
+11185,05:45:20,05:45:20,21069,5,KR Market (Kalasipalya)
+11185,05:47:52,05:47:52,20685,6,KR Market (Kalasipalya)
+11185,05:50:13,05:50:13,20567,7,KR Market (Kalasipalya)
+11185,05:52:18,05:52:18,21114,8,KR Market (Kalasipalya)
+11185,05:54:00,05:54:00,21081,9,KR Market (Kalasipalya)
+11185,05:55:52,05:55:52,21023,10,KR Market (Kalasipalya)
+11185,05:57:49,05:57:49,20825,11,KR Market (Kalasipalya)
+11185,05:59:49,05:59:49,20826,12,KR Market (Kalasipalya)
+11185,06:01:56,06:01:56,21054,13,KR Market (Kalasipalya)
+11185,06:04:13,06:04:13,21262,14,KR Market (Kalasipalya)
+11185,06:06:02,06:06:02,20874,15,KR Market (Kalasipalya)
+11185,06:09:29,06:09:29,21205,16,KR Market (Kalasipalya)
+11185,06:13:20,06:13:20,20936,17,KR Market (Kalasipalya)
+11185,06:16:37,06:16:37,21203,18,KR Market (Kalasipalya)
+11185,06:21:06,06:21:06,20905,19,KR Market (Kalasipalya)
+11185,06:24:18,06:24:18,20929,20,KR Market (Kalasipalya)
+11185,06:26:27,06:26:27,40335,21,KR Market (Kalasipalya)
+11185,06:28:21,06:28:21,20599,22,KR Market (Kalasipalya)
+11185,06:30:56,06:30:56,21269,23,KR Market (Kalasipalya)
+11185,06:32:55,06:32:55,21623,24,KR Market (Kalasipalya)
+11185,06:35:15,06:35:15,21010,25,KR Market (Kalasipalya)
+11185,06:36:09,06:36:09,35395_PF1,26,KR Market (Kalasipalya)
+11185,06:40:13,06:40:13,35427,27,KR Market (Kalasipalya)
+11185,06:42:40,06:42:40,20738,28,KR Market (Kalasipalya)
+11185,06:45:26,06:45:26,20626,29,KR Market (Kalasipalya)
+11185,06:47:52,06:47:52,21056,30,KR Market (Kalasipalya)
+11185,06:50:49,06:50:49,21044,31,KR Market (Kalasipalya)
+11185,06:53:44,06:53:44,35393,32,KR Market (Kalasipalya)
+11185,06:59:35,06:59:35,35396,33,KR Market (Kalasipalya)
+11185,07:00:50,07:00:50,21124,34,KR Market (Kalasipalya)
+11185,07:05:00,07:05:00,20944_PF6C,35,KR Market (Kalasipalya)
+4201,05:20:00,05:20:00,20921,1,Jigani APC Circle
+4201,05:24:20,05:24:20,20981,2,Jigani APC Circle
+4201,05:25:21,05:25:21,20939,3,Jigani APC Circle
+4201,05:26:44,05:26:44,21195,4,Jigani APC Circle
+4201,05:28:11,05:28:11,20728,5,Jigani APC Circle
+4201,05:29:24,05:29:24,21196,6,Jigani APC Circle
+4201,05:31:02,05:31:02,20927,7,Jigani APC Circle
+4201,05:32:00,05:32:00,21166_PF8,8,Jigani APC Circle
+4201,05:33:13,05:33:13,21280,9,Jigani APC Circle
+4201,05:34:46,05:34:46,20560,10,Jigani APC Circle
+4201,05:36:03,05:36:03,20965,11,Jigani APC Circle
+4201,05:37:04,05:37:04,21064,12,Jigani APC Circle
+4201,05:38:52,05:38:52,35108,13,Jigani APC Circle
+4201,05:41:18,05:41:18,22744,14,Jigani APC Circle
+4201,05:42:39,05:42:39,35767,15,Jigani APC Circle
+4201,05:43:40,05:43:40,22745,16,Jigani APC Circle
+4201,05:45:27,05:45:27,23575,17,Jigani APC Circle
+4201,05:47:20,05:47:20,35076,18,Jigani APC Circle
+4201,05:49:36,05:49:36,23577,19,Jigani APC Circle
+4201,05:50:56,05:50:56,23578,20,Jigani APC Circle
+4201,05:52:24,05:52:24,35120,21,Jigani APC Circle
+4201,05:53:00,05:53:00,23145,22,Jigani APC Circle
+4201,05:54:03,05:54:03,35109,23,Jigani APC Circle
+4201,05:55:34,05:55:34,22749,24,Jigani APC Circle
+4201,05:57:56,05:57:56,23584,25,Jigani APC Circle
+4201,05:59:07,05:59:07,35161,26,Jigani APC Circle
+4201,06:00:32,06:00:32,23586,27,Jigani APC Circle
+4201,06:01:59,06:01:59,23587,28,Jigani APC Circle
+4201,06:03:51,06:03:51,23588,29,Jigani APC Circle
+4201,06:05:55,06:05:55,35130,30,Jigani APC Circle
+4201,06:07:00,06:07:00,22752,31,Jigani APC Circle
+4201,06:08:31,06:08:31,35093,32,Jigani APC Circle
+4201,06:11:16,06:11:16,35062,33,Jigani APC Circle
+4201,06:12:22,06:12:22,23060,34,Jigani APC Circle
+4201,06:13:41,06:13:41,23779,35,Jigani APC Circle
+4201,06:15:31,06:15:31,23780,36,Jigani APC Circle
+4201,06:16:03,06:16:03,39749,37,Jigani APC Circle
+4201,06:16:51,06:16:51,23781,38,Jigani APC Circle
+4201,06:17:43,06:17:43,35145,39,Jigani APC Circle
+4201,06:18:50,06:18:50,24076,40,Jigani APC Circle
+4201,06:20:55,06:20:55,24077,41,Jigani APC Circle
+4201,06:23:18,06:23:18,22779,42,Jigani APC Circle
+4201,06:24:29,06:24:29,24079,43,Jigani APC Circle
+4201,06:26:08,06:26:08,24080,44,Jigani APC Circle
+4201,06:29:54,06:29:54,24081,45,Jigani APC Circle
+4201,06:32:30,06:32:30,35085,46,Jigani APC Circle
+4201,06:34:37,06:34:37,35299,47,Jigani APC Circle
+4201,06:35:48,06:35:48,24084,48,Jigani APC Circle
+4201,06:37:04,06:37:04,24085,49,Jigani APC Circle
+4201,06:40:00,06:40:00,35167,50,Jigani APC Circle
+4202,06:20:00,06:20:00,20921,1,Jigani APC Circle
+4202,06:24:37,06:24:37,20981,2,Jigani APC Circle
+4202,06:25:41,06:25:41,20939,3,Jigani APC Circle
+4202,06:27:09,06:27:09,21195,4,Jigani APC Circle
+4202,06:28:42,06:28:42,20728,5,Jigani APC Circle
+4202,06:29:59,06:29:59,21196,6,Jigani APC Circle
+4202,06:31:44,06:31:44,20927,7,Jigani APC Circle
+4202,06:32:45,06:32:45,21166_PF8,8,Jigani APC Circle
+4202,06:34:03,06:34:03,21280,9,Jigani APC Circle
+4202,06:35:42,06:35:42,20560,10,Jigani APC Circle
+4202,06:37:03,06:37:03,20965,11,Jigani APC Circle
+4202,06:38:08,06:38:08,21064,12,Jigani APC Circle
+4202,06:40:03,06:40:03,35108,13,Jigani APC Circle
+4202,06:42:38,06:42:38,22744,14,Jigani APC Circle
+4202,06:44:04,06:44:04,35767,15,Jigani APC Circle
+4202,06:45:09,06:45:09,22745,16,Jigani APC Circle
+4202,06:47:03,06:47:03,23575,17,Jigani APC Circle
+4202,06:49:02,06:49:02,35076,18,Jigani APC Circle
+4202,06:51:27,06:51:27,23577,19,Jigani APC Circle
+4202,06:52:52,06:52:52,23578,20,Jigani APC Circle
+4202,06:54:26,06:54:26,35120,21,Jigani APC Circle
+4202,06:55:04,06:55:04,23145,22,Jigani APC Circle
+4202,06:56:11,06:56:11,35109,23,Jigani APC Circle
+4202,06:57:47,06:57:47,22749,24,Jigani APC Circle
+4202,07:00:18,07:00:18,23584,25,Jigani APC Circle
+4202,07:01:34,07:01:34,35161,26,Jigani APC Circle
+4202,07:03:04,07:03:04,23586,27,Jigani APC Circle
+4202,07:04:36,07:04:36,23587,28,Jigani APC Circle
+4202,07:06:35,07:06:35,23588,29,Jigani APC Circle
+4202,07:08:47,07:08:47,35130,30,Jigani APC Circle
+4202,07:09:57,07:09:57,22752,31,Jigani APC Circle
+4202,07:11:33,07:11:33,35093,32,Jigani APC Circle
+4202,07:14:28,07:14:28,35062,33,Jigani APC Circle
+4202,07:15:38,07:15:38,23060,34,Jigani APC Circle
+4202,07:17:02,07:17:02,23779,35,Jigani APC Circle
+4202,07:18:59,07:18:59,23780,36,Jigani APC Circle
+4202,07:19:33,07:19:33,39749,37,Jigani APC Circle
+4202,07:20:24,07:20:24,23781,38,Jigani APC Circle
+4202,07:21:19,07:21:19,35145,39,Jigani APC Circle
+4202,07:22:30,07:22:30,24076,40,Jigani APC Circle
+4202,07:24:44,07:24:44,24077,41,Jigani APC Circle
+4202,07:27:15,07:27:15,22779,42,Jigani APC Circle
+4202,07:28:31,07:28:31,24079,43,Jigani APC Circle
+4202,07:30:16,07:30:16,24080,44,Jigani APC Circle
+4202,07:34:17,07:34:17,24081,45,Jigani APC Circle
+4202,07:37:02,07:37:02,35085,46,Jigani APC Circle
+4202,07:39:17,07:39:17,35299,47,Jigani APC Circle
+4202,07:40:32,07:40:32,24084,48,Jigani APC Circle
+4202,07:41:53,07:41:53,24085,49,Jigani APC Circle
+4202,07:44:59,07:44:59,35167,50,Jigani APC Circle
+4203,06:35:00,06:35:00,20921,1,Jigani APC Circle
+4203,06:40:26,06:40:26,20981,2,Jigani APC Circle
+4203,06:41:41,06:41:41,20939,3,Jigani APC Circle
+4203,06:43:25,06:43:25,21195,4,Jigani APC Circle
+4203,06:45:14,06:45:14,20728,5,Jigani APC Circle
+4203,06:46:45,06:46:45,21196,6,Jigani APC Circle
+4203,06:48:48,06:48:48,20927,7,Jigani APC Circle
+4203,06:50:00,06:50:00,21166_PF8,8,Jigani APC Circle
+4203,06:51:32,06:51:32,21280,9,Jigani APC Circle
+4203,06:53:28,06:53:28,20560,10,Jigani APC Circle
+4203,06:55:03,06:55:03,20965,11,Jigani APC Circle
+4203,06:56:20,06:56:20,21064,12,Jigani APC Circle
+4203,06:58:35,06:58:35,35108,13,Jigani APC Circle
+4203,07:01:38,07:01:38,22744,14,Jigani APC Circle
+4203,07:03:19,07:03:19,35767,15,Jigani APC Circle
+4203,07:04:36,07:04:36,22745,16,Jigani APC Circle
+4203,07:06:49,07:06:49,23575,17,Jigani APC Circle
+4203,07:09:10,07:09:10,35076,18,Jigani APC Circle
+4203,07:12:00,07:12:00,23577,19,Jigani APC Circle
+4203,07:13:40,07:13:40,23578,20,Jigani APC Circle
+4203,07:15:31,07:15:31,35120,21,Jigani APC Circle
+4203,07:16:15,07:16:15,23145,22,Jigani APC Circle
+4203,07:17:34,07:17:34,35109,23,Jigani APC Circle
+4203,07:19:27,07:19:27,22749,24,Jigani APC Circle
+4203,07:22:25,07:22:25,23584,25,Jigani APC Circle
+4203,07:23:54,07:23:54,35161,26,Jigani APC Circle
+4203,07:25:40,07:25:40,23586,27,Jigani APC Circle
+4203,07:27:28,07:27:28,23587,28,Jigani APC Circle
+4203,07:29:48,07:29:48,23588,29,Jigani APC Circle
+4203,07:32:24,07:32:24,35130,30,Jigani APC Circle
+4203,07:33:45,07:33:45,22752,31,Jigani APC Circle
+4203,07:35:39,07:35:39,35093,32,Jigani APC Circle
+4203,07:39:05,07:39:05,35062,33,Jigani APC Circle
+4203,07:40:27,07:40:27,23060,34,Jigani APC Circle
+4203,07:42:06,07:42:06,23779,35,Jigani APC Circle
+4203,07:44:24,07:44:24,23780,36,Jigani APC Circle
+4203,07:45:04,07:45:04,39749,37,Jigani APC Circle
+4203,07:46:04,07:46:04,23781,38,Jigani APC Circle
+4203,07:47:09,07:47:09,35145,39,Jigani APC Circle
+4203,07:48:32,07:48:32,24076,40,Jigani APC Circle
+4203,07:51:09,07:51:09,24077,41,Jigani APC Circle
+4203,07:54:08,07:54:08,22779,42,Jigani APC Circle
+4203,07:55:37,07:55:37,24079,43,Jigani APC Circle
+4203,07:57:40,07:57:40,24080,44,Jigani APC Circle
+4203,08:02:23,08:02:23,24081,45,Jigani APC Circle
+4203,08:05:38,08:05:38,35085,46,Jigani APC Circle
+4203,08:08:16,08:08:16,35299,47,Jigani APC Circle
+4203,08:09:45,08:09:45,24084,48,Jigani APC Circle
+4203,08:11:20,08:11:20,24085,49,Jigani APC Circle
+4203,08:14:59,08:14:59,35167,50,Jigani APC Circle
+4251,05:00:00,05:00:00,22785,1,Kempegowda Bus Station
+4251,05:02:46,05:02:46,24225,2,Kempegowda Bus Station
+4251,05:03:58,05:03:58,24226,3,Kempegowda Bus Station
+4251,05:05:10,05:05:10,35299,4,Kempegowda Bus Station
+4251,05:07:12,05:07:12,35300,5,Kempegowda Bus Station
+4251,05:09:46,05:09:46,24229,6,Kempegowda Bus Station
+4251,05:13:17,05:13:17,24230,7,Kempegowda Bus Station
+4251,05:14:52,05:14:52,24231,8,Kempegowda Bus Station
+4251,05:15:58,05:15:58,22780,9,Kempegowda Bus Station
+4251,05:18:17,05:18:17,24233,10,Kempegowda Bus Station
+4251,05:20:15,05:20:15,24234,11,Kempegowda Bus Station
+4251,05:21:25,05:21:25,35140,12,Kempegowda Bus Station
+4251,05:22:07,05:22:07,24131,13,Kempegowda Bus Station
+4251,05:23:25,05:23:25,24132,14,Kempegowda Bus Station
+4251,05:25:04,05:25:04,24133,15,Kempegowda Bus Station
+4251,05:26:40,05:26:40,24134,16,Kempegowda Bus Station
+4251,05:27:25,05:27:25,35281,17,Kempegowda Bus Station
+4251,05:30:07,05:30:07,35133,18,Kempegowda Bus Station
+4251,05:31:34,05:31:34,22760,19,Kempegowda Bus Station
+4251,05:32:28,05:32:28,35230,20,Kempegowda Bus Station
+4251,05:34:30,05:34:30,23863,21,Kempegowda Bus Station
+4251,05:36:24,05:36:24,23864,22,Kempegowda Bus Station
+4251,05:37:41,05:37:41,23865,23,Kempegowda Bus Station
+4251,05:39:01,05:39:01,35231,24,Kempegowda Bus Station
+4251,05:40:14,05:40:14,23867,25,Kempegowda Bus Station
+4251,05:42:21,05:42:21,22763,26,Kempegowda Bus Station
+4251,05:43:55,05:43:55,35232,27,Kempegowda Bus Station
+4251,05:45:01,05:45:01,23147,28,Kempegowda Bus Station
+4251,05:45:43,05:45:43,35156,29,Kempegowda Bus Station
+4251,05:46:51,05:46:51,23870,30,Kempegowda Bus Station
+4251,05:48:08,05:48:08,23871,31,Kempegowda Bus Station
+4251,05:50:16,05:50:16,35233,32,Kempegowda Bus Station
+4251,05:52:01,05:52:01,23873,33,Kempegowda Bus Station
+4251,05:53:40,05:53:40,23874,34,Kempegowda Bus Station
+4251,05:55:51,05:55:51,22768,35,Kempegowda Bus Station
+4251,05:58:29,05:58:29,35057,36,Kempegowda Bus Station
+4251,05:59:50,05:59:50,21065,37,Kempegowda Bus Station
+4251,06:01:23,06:01:23,20966,38,Kempegowda Bus Station
+4251,06:02:14,06:02:14,20563,39,Kempegowda Bus Station
+4251,06:03:29,06:03:29,21281,40,Kempegowda Bus Station
+4251,06:05:02,06:05:02,21166_PF2,41,Kempegowda Bus Station
+4251,06:06:02,06:06:02,20928,42,Kempegowda Bus Station
+4251,06:08:59,06:08:59,22667,43,Kempegowda Bus Station
+4251,06:10:14,06:10:14,20725,44,Kempegowda Bus Station
+4251,06:12:04,06:12:04,35383,45,Kempegowda Bus Station
+4251,06:14:59,06:14:59,20922,46,Kempegowda Bus Station
+4252,05:30:00,05:30:00,22785,1,Kempegowda Bus Station
+4252,05:33:30,05:33:30,24225,2,Kempegowda Bus Station
+4252,05:35:01,05:35:01,24226,3,Kempegowda Bus Station
+4252,05:36:33,05:36:33,35299,4,Kempegowda Bus Station
+4252,05:39:07,05:39:07,35300,5,Kempegowda Bus Station
+4252,05:42:22,05:42:22,24229,6,Kempegowda Bus Station
+4252,05:46:49,05:46:49,24230,7,Kempegowda Bus Station
+4252,05:48:50,05:48:50,24231,8,Kempegowda Bus Station
+4252,05:50:13,05:50:13,22780,9,Kempegowda Bus Station
+4252,05:53:10,05:53:10,24233,10,Kempegowda Bus Station
+4252,05:55:40,05:55:40,24234,11,Kempegowda Bus Station
+4252,05:57:08,05:57:08,35140,12,Kempegowda Bus Station
+4252,05:58:01,05:58:01,24131,13,Kempegowda Bus Station
+4252,05:59:40,05:59:40,24132,14,Kempegowda Bus Station
+4252,06:01:45,06:01:45,24133,15,Kempegowda Bus Station
+4252,06:03:47,06:03:47,24134,16,Kempegowda Bus Station
+4252,06:04:44,06:04:44,35281,17,Kempegowda Bus Station
+4252,06:08:09,06:08:09,35133,18,Kempegowda Bus Station
+4252,06:10:00,06:10:00,22760,19,Kempegowda Bus Station
+4252,06:11:08,06:11:08,35230,20,Kempegowda Bus Station
+4252,06:13:42,06:13:42,23863,21,Kempegowda Bus Station
+4252,06:16:06,06:16:06,23864,22,Kempegowda Bus Station
+4252,06:17:43,06:17:43,23865,23,Kempegowda Bus Station
+4252,06:19:26,06:19:26,35231,24,Kempegowda Bus Station
+4252,06:20:58,06:20:58,23867,25,Kempegowda Bus Station
+4252,06:23:39,06:23:39,22763,26,Kempegowda Bus Station
+4252,06:25:38,06:25:38,35232,27,Kempegowda Bus Station
+4252,06:27:02,06:27:02,23147,28,Kempegowda Bus Station
+4252,06:27:54,06:27:54,35156,29,Kempegowda Bus Station
+4252,06:29:21,06:29:21,23870,30,Kempegowda Bus Station
+4252,06:30:58,06:30:58,23871,31,Kempegowda Bus Station
+4252,06:33:40,06:33:40,35233,32,Kempegowda Bus Station
+4252,06:35:53,06:35:53,23873,33,Kempegowda Bus Station
+4252,06:37:59,06:37:59,23874,34,Kempegowda Bus Station
+4252,06:40:44,06:40:44,22768,35,Kempegowda Bus Station
+4252,06:44:05,06:44:05,35057,36,Kempegowda Bus Station
+4252,06:45:47,06:45:47,21065,37,Kempegowda Bus Station
+4252,06:47:45,06:47:45,20966,38,Kempegowda Bus Station
+4252,06:48:50,06:48:50,20563,39,Kempegowda Bus Station
+4252,06:50:24,06:50:24,21281,40,Kempegowda Bus Station
+4252,06:52:23,06:52:23,21166_PF2,41,Kempegowda Bus Station
+4252,06:53:39,06:53:39,20928,42,Kempegowda Bus Station
+4252,06:57:23,06:57:23,22667,43,Kempegowda Bus Station
+4252,06:58:57,06:58:57,20725,44,Kempegowda Bus Station
+4252,07:01:18,07:01:18,35383,45,Kempegowda Bus Station
+4252,07:05:00,07:05:00,20922,46,Kempegowda Bus Station
+4253,06:45:00,06:45:00,22785,1,Kempegowda Bus Station
+4253,06:48:52,06:48:52,24225,2,Kempegowda Bus Station
+4253,06:50:33,06:50:33,24226,3,Kempegowda Bus Station
+4253,06:52:14,06:52:14,35299,4,Kempegowda Bus Station
+4253,06:55:05,06:55:05,35300,5,Kempegowda Bus Station
+4253,06:58:40,06:58:40,24229,6,Kempegowda Bus Station
+4253,07:03:36,07:03:36,24230,7,Kempegowda Bus Station
+4253,07:05:49,07:05:49,24231,8,Kempegowda Bus Station
+4253,07:07:21,07:07:21,22780,9,Kempegowda Bus Station
+4253,07:10:36,07:10:36,24233,10,Kempegowda Bus Station
+4253,07:13:22,07:13:22,24234,11,Kempegowda Bus Station
+4253,07:14:59,07:14:59,35140,12,Kempegowda Bus Station
+4253,07:15:58,07:15:58,24131,13,Kempegowda Bus Station
+4253,07:17:47,07:17:47,24132,14,Kempegowda Bus Station
+4253,07:20:06,07:20:06,24133,15,Kempegowda Bus Station
+4253,07:22:21,07:22:21,24134,16,Kempegowda Bus Station
+4253,07:23:23,07:23:23,35281,17,Kempegowda Bus Station
+4253,07:27:10,07:27:10,35133,18,Kempegowda Bus Station
+4253,07:29:12,07:29:12,22760,19,Kempegowda Bus Station
+4253,07:30:28,07:30:28,35230,20,Kempegowda Bus Station
+4253,07:33:18,07:33:18,23863,21,Kempegowda Bus Station
+4253,07:35:57,07:35:57,23864,22,Kempegowda Bus Station
+4253,07:37:45,07:37:45,23865,23,Kempegowda Bus Station
+4253,07:39:38,07:39:38,35231,24,Kempegowda Bus Station
+4253,07:41:20,07:41:20,23867,25,Kempegowda Bus Station
+4253,07:44:17,07:44:17,22763,26,Kempegowda Bus Station
+4253,07:46:30,07:46:30,35232,27,Kempegowda Bus Station
+4253,07:48:02,07:48:02,23147,28,Kempegowda Bus Station
+4253,07:49:00,07:49:00,35156,29,Kempegowda Bus Station
+4253,07:50:36,07:50:36,23870,30,Kempegowda Bus Station
+4253,07:52:24,07:52:24,23871,31,Kempegowda Bus Station
+4253,07:55:22,07:55:22,35233,32,Kempegowda Bus Station
+4253,07:57:49,07:57:49,23873,33,Kempegowda Bus Station
+4253,08:00:08,08:00:08,23874,34,Kempegowda Bus Station
+4253,08:03:11,08:03:11,22768,35,Kempegowda Bus Station
+4253,08:06:53,08:06:53,35057,36,Kempegowda Bus Station
+4253,08:08:46,08:08:46,21065,37,Kempegowda Bus Station
+4253,08:10:56,08:10:56,20966,38,Kempegowda Bus Station
+4253,08:12:08,08:12:08,20563,39,Kempegowda Bus Station
+4253,08:13:52,08:13:52,21281,40,Kempegowda Bus Station
+4253,08:16:03,08:16:03,21166_PF2,41,Kempegowda Bus Station
+4253,08:17:27,08:17:27,20928,42,Kempegowda Bus Station
+4253,08:21:35,08:21:35,22667,43,Kempegowda Bus Station
+4253,08:23:19,08:23:19,20725,44,Kempegowda Bus Station
+4253,08:25:54,08:25:54,35383,45,Kempegowda Bus Station
+4253,08:29:59,08:29:59,20922,46,Kempegowda Bus Station
+26077,00:20:00,00:20:00,23485,1,Electronic City KIA
+26077,00:21:09,00:21:09,38417,2,Electronic City KIA
+26077,00:35:26,00:35:26,35807,3,Electronic City KIA
+26077,00:36:47,00:36:47,35745,4,Electronic City KIA
+26077,00:37:58,00:37:58,28088,5,Electronic City KIA
+26077,00:43:18,00:43:18,39284,6,Electronic City KIA
+26077,00:48:01,00:48:01,39283,7,Electronic City KIA
+26077,00:51:26,00:51:26,39281,8,Electronic City KIA
+26077,00:54:40,00:54:40,39277,9,Electronic City KIA
+26077,01:00:19,01:00:19,39275,10,Electronic City KIA
+26077,01:02:26,01:02:26,39272,11,Electronic City KIA
+26077,01:07:22,01:07:22,39271,12,Electronic City KIA
+26077,01:11:46,01:11:46,39270,13,Electronic City KIA
+26077,01:16:08,01:16:08,39268,14,Electronic City KIA
+26077,01:17:56,01:17:56,20823,15,Electronic City KIA
+26077,01:23:07,01:23:07,22593,16,Electronic City KIA
+26077,01:25:46,01:25:46,20884,17,Electronic City KIA
+26077,01:30:18,01:30:18,20903,18,Electronic City KIA
+26077,01:32:58,01:32:58,20618,19,Electronic City KIA
+26077,01:37:38,01:37:38,20614,20,Electronic City KIA
+26077,01:39:28,01:39:28,20914,21,Electronic City KIA
+26077,01:41:45,01:41:45,21229,22,Electronic City KIA
+26077,01:43:33,01:43:33,21112,23,Electronic City KIA
+26077,01:47:59,01:47:59,20977,24,Electronic City KIA
+26077,01:51:49,01:51:49,20762,25,Electronic City KIA
+26077,01:55:41,01:55:41,23194,26,Electronic City KIA
+26077,02:00:07,02:00:07,20894,27,Electronic City KIA
+26077,02:07:37,02:07:37,20639,28,Electronic City KIA
+26077,02:08:50,02:08:50,20888,29,Electronic City KIA
+26077,02:13:08,02:13:08,20597,30,Electronic City KIA
+26077,02:15:22,02:15:22,20748,31,Electronic City KIA
+26077,02:18:43,02:18:43,21176,32,Electronic City KIA
+26077,02:20:05,02:20:05,35768,33,Electronic City KIA
+26077,02:23:04,02:23:04,20674,34,Electronic City KIA
+26077,02:24:08,02:24:08,39873,35,Electronic City KIA
+26077,02:25:44,02:25:44,20783,36,Electronic City KIA
+26077,02:27:38,02:27:38,20950,37,Electronic City KIA
+26077,02:30:11,02:30:11,39871,38,Electronic City KIA
+26077,02:30:50,02:30:50,21181,39,Electronic City KIA
+26077,02:33:24,02:33:24,20840,40,Electronic City KIA
+26077,02:35:30,02:35:30,39868,41,Electronic City KIA
+26077,02:37:08,02:37:08,22380,42,Electronic City KIA
+26077,02:38:00,02:38:00,20934,43,Electronic City KIA
+26077,02:39:33,02:39:33,20732,44,Electronic City KIA
+26077,02:40:00,02:40:00,38203,45,Electronic City KIA
+26078,00:40:00,00:40:00,23485,1,Electronic City KIA
+26078,00:41:09,00:41:09,38417,2,Electronic City KIA
+26078,00:55:26,00:55:26,35807,3,Electronic City KIA
+26078,00:56:47,00:56:47,35745,4,Electronic City KIA
+26078,00:57:58,00:57:58,28088,5,Electronic City KIA
+26078,01:03:18,01:03:18,39284,6,Electronic City KIA
+26078,01:08:01,01:08:01,39283,7,Electronic City KIA
+26078,01:11:26,01:11:26,39281,8,Electronic City KIA
+26078,01:14:40,01:14:40,39277,9,Electronic City KIA
+26078,01:20:19,01:20:19,39275,10,Electronic City KIA
+26078,01:22:26,01:22:26,39272,11,Electronic City KIA
+26078,01:27:22,01:27:22,39271,12,Electronic City KIA
+26078,01:31:46,01:31:46,39270,13,Electronic City KIA
+26078,01:36:08,01:36:08,39268,14,Electronic City KIA
+26078,01:37:56,01:37:56,20823,15,Electronic City KIA
+26078,01:43:07,01:43:07,22593,16,Electronic City KIA
+26078,01:45:46,01:45:46,20884,17,Electronic City KIA
+26078,01:50:18,01:50:18,20903,18,Electronic City KIA
+26078,01:52:58,01:52:58,20618,19,Electronic City KIA
+26078,01:57:38,01:57:38,20614,20,Electronic City KIA
+26078,01:59:28,01:59:28,20914,21,Electronic City KIA
+26078,02:01:45,02:01:45,21229,22,Electronic City KIA
+26078,02:03:33,02:03:33,21112,23,Electronic City KIA
+26078,02:07:59,02:07:59,20977,24,Electronic City KIA
+26078,02:11:49,02:11:49,20762,25,Electronic City KIA
+26078,02:15:41,02:15:41,23194,26,Electronic City KIA
+26078,02:20:07,02:20:07,20894,27,Electronic City KIA
+26078,02:27:37,02:27:37,20639,28,Electronic City KIA
+26078,02:28:50,02:28:50,20888,29,Electronic City KIA
+26078,02:33:08,02:33:08,20597,30,Electronic City KIA
+26078,02:35:22,02:35:22,20748,31,Electronic City KIA
+26078,02:38:43,02:38:43,21176,32,Electronic City KIA
+26078,02:40:05,02:40:05,35768,33,Electronic City KIA
+26078,02:43:04,02:43:04,20674,34,Electronic City KIA
+26078,02:44:08,02:44:08,39873,35,Electronic City KIA
+26078,02:45:44,02:45:44,20783,36,Electronic City KIA
+26078,02:47:38,02:47:38,20950,37,Electronic City KIA
+26078,02:50:11,02:50:11,39871,38,Electronic City KIA
+26078,02:50:50,02:50:50,21181,39,Electronic City KIA
+26078,02:53:24,02:53:24,20840,40,Electronic City KIA
+26078,02:55:30,02:55:30,39868,41,Electronic City KIA
+26078,02:57:08,02:57:08,22380,42,Electronic City KIA
+26078,02:58:00,02:58:00,20934,43,Electronic City KIA
+26078,02:59:33,02:59:33,20732,44,Electronic City KIA
+26078,03:00:00,03:00:00,38203,45,Electronic City KIA
+26079,00:50:00,00:50:00,23485,1,Electronic City KIA
+26079,00:51:14,00:51:14,38417,2,Electronic City KIA
+26079,01:06:32,01:06:32,35807,3,Electronic City KIA
+26079,01:07:59,01:07:59,35745,4,Electronic City KIA
+26079,01:09:15,01:09:15,28088,5,Electronic City KIA
+26079,01:14:58,01:14:58,39284,6,Electronic City KIA
+26079,01:20:01,01:20:01,39283,7,Electronic City KIA
+26079,01:23:40,01:23:40,39281,8,Electronic City KIA
+26079,01:27:08,01:27:08,39277,9,Electronic City KIA
+26079,01:33:11,01:33:11,39275,10,Electronic City KIA
+26079,01:35:28,01:35:28,39272,11,Electronic City KIA
+26079,01:40:45,01:40:45,39271,12,Electronic City KIA
+26079,01:45:28,01:45:28,39270,13,Electronic City KIA
+26079,01:50:09,01:50:09,39268,14,Electronic City KIA
+26079,01:52:05,01:52:05,20823,15,Electronic City KIA
+26079,01:57:37,01:57:37,22593,16,Electronic City KIA
+26079,02:00:28,02:00:28,20884,17,Electronic City KIA
+26079,02:05:19,02:05:19,20903,18,Electronic City KIA
+26079,02:08:11,02:08:11,20618,19,Electronic City KIA
+26079,02:13:11,02:13:11,20614,20,Electronic City KIA
+26079,02:15:08,02:15:08,20914,21,Electronic City KIA
+26079,02:17:35,02:17:35,21229,22,Electronic City KIA
+26079,02:19:31,02:19:31,21112,23,Electronic City KIA
+26079,02:24:16,02:24:16,20977,24,Electronic City KIA
+26079,02:28:23,02:28:23,20762,25,Electronic City KIA
+26079,02:32:31,02:32:31,23194,26,Electronic City KIA
+26079,02:37:17,02:37:17,20894,27,Electronic City KIA
+26079,02:45:18,02:45:18,20639,28,Electronic City KIA
+26079,02:46:37,02:46:37,20888,29,Electronic City KIA
+26079,02:51:12,02:51:12,20597,30,Electronic City KIA
+26079,02:53:36,02:53:36,20748,31,Electronic City KIA
+26079,02:57:12,02:57:12,21176,32,Electronic City KIA
+26079,02:58:40,02:58:40,35768,33,Electronic City KIA
+26079,03:01:51,03:01:51,20674,34,Electronic City KIA
+26079,03:03:00,03:03:00,39873,35,Electronic City KIA
+26079,03:04:43,03:04:43,20783,36,Electronic City KIA
+26079,03:06:45,03:06:45,20950,37,Electronic City KIA
+26079,03:09:29,03:09:29,39871,38,Electronic City KIA
+26079,03:10:10,03:10:10,21181,39,Electronic City KIA
+26079,03:12:56,03:12:56,20840,40,Electronic City KIA
+26079,03:15:10,03:15:10,39868,41,Electronic City KIA
+26079,03:16:56,03:16:56,22380,42,Electronic City KIA
+26079,03:17:52,03:17:52,20934,43,Electronic City KIA
+26079,03:19:31,03:19:31,20732,44,Electronic City KIA
+26079,03:19:59,03:19:59,38203,45,Electronic City KIA
+26009,00:10:00,00:10:00,38203,1,Kempegowda International Airport
+26009,00:11:04,00:11:04,21180,2,Kempegowda International Airport
+26009,00:12:56,00:12:56,21934,3,Kempegowda International Airport
+26009,00:15:17,00:15:17,20935,4,Kempegowda International Airport
+26009,00:16:04,00:16:04,21090,5,Kempegowda International Airport
+26009,00:17:22,00:17:22,39867,6,Kempegowda International Airport
+26009,00:19:08,00:19:08,20841,7,Kempegowda International Airport
+26009,00:21:10,00:21:10,21182,8,Kempegowda International Airport
+26009,00:22:01,00:22:01,39870,9,Kempegowda International Airport
+26009,00:24:20,00:24:20,20951,10,Kempegowda International Airport
+26009,00:25:56,00:25:56,20784,11,Kempegowda International Airport
+26009,00:27:20,00:27:20,39872,12,Kempegowda International Airport
+26009,00:28:09,00:28:09,20675,13,Kempegowda International Airport
+26009,00:31:14,00:31:14,37850,14,Kempegowda International Airport
+26009,00:32:26,00:32:26,21177,15,Kempegowda International Airport
+26009,00:35:17,00:35:17,20749,16,Kempegowda International Airport
+26009,00:37:17,00:37:17,20598,17,Kempegowda International Airport
+26009,00:40:43,00:40:43,20889,18,Kempegowda International Airport
+26009,00:42:35,00:42:35,20638,19,Kempegowda International Airport
+26009,00:48:49,00:48:49,20895,20,Kempegowda International Airport
+26009,00:52:48,00:52:48,22670,21,Kempegowda International Airport
+26009,00:56:16,00:56:16,20761,22,Kempegowda International Airport
+26009,00:59:34,00:59:34,20978,23,Kempegowda International Airport
+26009,01:03:11,01:03:11,21113,24,Kempegowda International Airport
+26009,01:05:03,01:05:03,21228,25,Kempegowda International Airport
+26009,01:07:04,01:07:04,20915,26,Kempegowda International Airport
+26009,01:08:39,01:08:39,22651,27,Kempegowda International Airport
+26009,01:12:43,01:12:43,20617,28,Kempegowda International Airport
+26009,01:15:07,01:15:07,20904,29,Kempegowda International Airport
+26009,01:19:09,01:19:09,20885,30,Kempegowda International Airport
+26009,01:21:26,01:21:26,21252,31,Kempegowda International Airport
+26009,01:26:22,01:26:22,25819,32,Kempegowda International Airport
+26009,01:27:53,01:27:53,33931,33,Kempegowda International Airport
+26009,01:27:56,01:27:56,38168,34,Kempegowda International Airport
+26009,01:31:42,01:31:42,39269,35,Kempegowda International Airport
+26009,01:35:33,01:35:33,35151,36,Kempegowda International Airport
+26009,01:39:54,01:39:54,39273,37,Kempegowda International Airport
+26009,01:41:47,01:41:47,39274,38,Kempegowda International Airport
+26009,01:46:37,01:46:37,39276,39,Kempegowda International Airport
+26009,01:49:32,01:49:32,39280,40,Kempegowda International Airport
+26009,01:52:29,01:52:29,39282,41,Kempegowda International Airport
+26009,01:56:38,01:56:38,39285,42,Kempegowda International Airport
+26009,02:01:20,02:01:20,34443,43,Kempegowda International Airport
+26009,02:03:53,02:03:53,35806,44,Kempegowda International Airport
+26009,02:09:35,02:09:35,37968,45,Kempegowda International Airport
+26009,02:12:25,02:12:25,37969,46,Kempegowda International Airport
+26009,02:15:00,02:15:00,35805,47,Kempegowda International Airport
+26010,00:30:00,00:30:00,38203,1,Kempegowda International Airport
+26010,00:31:12,00:31:12,21180,2,Kempegowda International Airport
+26010,00:33:17,00:33:17,21934,3,Kempegowda International Airport
+26010,00:35:55,00:35:55,20935,4,Kempegowda International Airport
+26010,00:36:47,00:36:47,21090,5,Kempegowda International Airport
+26010,00:38:15,00:38:15,39867,6,Kempegowda International Airport
+26010,00:40:14,00:40:14,20841,7,Kempegowda International Airport
+26010,00:42:30,00:42:30,21182,8,Kempegowda International Airport
+26010,00:43:27,00:43:27,39870,9,Kempegowda International Airport
+26010,00:46:04,00:46:04,20951,10,Kempegowda International Airport
+26010,00:47:51,00:47:51,20784,11,Kempegowda International Airport
+26010,00:49:25,00:49:25,39872,12,Kempegowda International Airport
+26010,00:50:20,00:50:20,20675,13,Kempegowda International Airport
+26010,00:53:47,00:53:47,37850,14,Kempegowda International Airport
+26010,00:55:08,00:55:08,21177,15,Kempegowda International Airport
+26010,00:58:19,00:58:19,20749,16,Kempegowda International Airport
+26010,01:00:33,01:00:33,20598,17,Kempegowda International Airport
+26010,01:04:24,01:04:24,20889,18,Kempegowda International Airport
+26010,01:06:29,01:06:29,20638,19,Kempegowda International Airport
+26010,01:13:29,01:13:29,20895,20,Kempegowda International Airport
+26010,01:17:57,01:17:57,22670,21,Kempegowda International Airport
+26010,01:21:49,01:21:49,20761,22,Kempegowda International Airport
+26010,01:25:31,01:25:31,20978,23,Kempegowda International Airport
+26010,01:29:34,01:29:34,21113,24,Kempegowda International Airport
+26010,01:31:39,01:31:39,21228,25,Kempegowda International Airport
+26010,01:33:55,01:33:55,20915,26,Kempegowda International Airport
+26010,01:35:41,01:35:41,22651,27,Kempegowda International Airport
+26010,01:40:15,01:40:15,20617,28,Kempegowda International Airport
+26010,01:42:56,01:42:56,20904,29,Kempegowda International Airport
+26010,01:47:27,01:47:27,20885,30,Kempegowda International Airport
+26010,01:50:00,01:50:00,21252,31,Kempegowda International Airport
+26010,01:55:32,01:55:32,25819,32,Kempegowda International Airport
+26010,01:57:14,01:57:14,33931,33,Kempegowda International Airport
+26010,01:57:17,01:57:17,38168,34,Kempegowda International Airport
+26010,02:01:30,02:01:30,39269,35,Kempegowda International Airport
+26010,02:05:49,02:05:49,35151,36,Kempegowda International Airport
+26010,02:10:41,02:10:41,39273,37,Kempegowda International Airport
+26010,02:12:47,02:12:47,39274,38,Kempegowda International Airport
+26010,02:18:13,02:18:13,39276,39,Kempegowda International Airport
+26010,02:21:28,02:21:28,39280,40,Kempegowda International Airport
+26010,02:24:47,02:24:47,39282,41,Kempegowda International Airport
+26010,02:29:26,02:29:26,39285,42,Kempegowda International Airport
+26010,02:34:42,02:34:42,34443,43,Kempegowda International Airport
+26010,02:37:33,02:37:33,35806,44,Kempegowda International Airport
+26010,02:43:57,02:43:57,37968,45,Kempegowda International Airport
+26010,02:47:06,02:47:06,37969,46,Kempegowda International Airport
+26010,02:49:59,02:49:59,35805,47,Kempegowda International Airport
+26011,01:00:00,01:00:00,38203,1,Kempegowda International Airport
+26011,01:01:01,01:01:01,21180,2,Kempegowda International Airport
+26011,01:02:49,01:02:49,21934,3,Kempegowda International Airport
+26011,01:05:04,01:05:04,20935,4,Kempegowda International Airport
+26011,01:05:49,01:05:49,21090,5,Kempegowda International Airport
+26011,01:07:04,01:07:04,39867,6,Kempegowda International Airport
+26011,01:08:46,01:08:46,20841,7,Kempegowda International Airport
+26011,01:10:43,01:10:43,21182,8,Kempegowda International Airport
+26011,01:11:32,01:11:32,39870,9,Kempegowda International Airport
+26011,01:13:46,01:13:46,20951,10,Kempegowda International Airport
+26011,01:15:18,01:15:18,20784,11,Kempegowda International Airport
+26011,01:16:39,01:16:39,39872,12,Kempegowda International Airport
+26011,01:17:25,01:17:25,20675,13,Kempegowda International Airport
+26011,01:20:23,01:20:23,37850,14,Kempegowda International Airport
+26011,01:21:33,01:21:33,21177,15,Kempegowda International Airport
+26011,01:24:17,01:24:17,20749,16,Kempegowda International Airport
+26011,01:26:11,01:26:11,20598,17,Kempegowda International Airport
+26011,01:29:29,01:29:29,20889,18,Kempegowda International Airport
+26011,01:31:17,01:31:17,20638,19,Kempegowda International Airport
+26011,01:37:16,01:37:16,20895,20,Kempegowda International Airport
+26011,01:41:06,01:41:06,22670,21,Kempegowda International Airport
+26011,01:44:25,01:44:25,20761,22,Kempegowda International Airport
+26011,01:47:35,01:47:35,20978,23,Kempegowda International Airport
+26011,01:51:04,01:51:04,21113,24,Kempegowda International Airport
+26011,01:52:51,01:52:51,21228,25,Kempegowda International Airport
+26011,01:54:47,01:54:47,20915,26,Kempegowda International Airport
+26011,01:56:18,01:56:18,22651,27,Kempegowda International Airport
+26011,02:00:13,02:00:13,20617,28,Kempegowda International Airport
+26011,02:02:31,02:02:31,20904,29,Kempegowda International Airport
+26011,02:06:23,02:06:23,20885,30,Kempegowda International Airport
+26011,02:08:34,02:08:34,21252,31,Kempegowda International Airport
+26011,02:13:19,02:13:19,25819,32,Kempegowda International Airport
+26011,02:14:46,02:14:46,33931,33,Kempegowda International Airport
+26011,02:14:49,02:14:49,38168,34,Kempegowda International Airport
+26011,02:18:26,02:18:26,39269,35,Kempegowda International Airport
+26011,02:22:07,02:22:07,35151,36,Kempegowda International Airport
+26011,02:26:18,02:26:18,39273,37,Kempegowda International Airport
+26011,02:28:06,02:28:06,39274,38,Kempegowda International Airport
+26011,02:32:45,02:32:45,39276,39,Kempegowda International Airport
+26011,02:35:33,02:35:33,39280,40,Kempegowda International Airport
+26011,02:38:23,02:38:23,39282,41,Kempegowda International Airport
+26011,02:42:22,02:42:22,39285,42,Kempegowda International Airport
+26011,02:46:53,02:46:53,34443,43,Kempegowda International Airport
+26011,02:49:19,02:49:19,35806,44,Kempegowda International Airport
+26011,02:54:48,02:54:48,37968,45,Kempegowda International Airport
+26011,02:57:31,02:57:31,37969,46,Kempegowda International Airport
+26011,03:00:00,03:00:00,35805,47,Kempegowda International Airport
+3250,06:15:00,06:15:00,22462,1,KR Market (Kalasipalya)
+3250,06:15:51,06:15:51,22392,2,KR Market (Kalasipalya)
+3250,06:19:54,06:19:54,22500,3,KR Market (Kalasipalya)
+3250,06:22:31,06:22:31,21867,4,KR Market (Kalasipalya)
+3250,06:24:11,06:24:11,22630,5,KR Market (Kalasipalya)
+3250,06:27:20,06:27:20,21814,6,KR Market (Kalasipalya)
+3250,06:29:14,06:29:14,22547,7,KR Market (Kalasipalya)
+3250,06:30:36,06:30:36,23909,8,KR Market (Kalasipalya)
+3250,06:32:01,06:32:01,35237,9,KR Market (Kalasipalya)
+3250,06:35:45,06:35:45,39633,10,KR Market (Kalasipalya)
+3250,06:37:14,06:37:14,35243,11,KR Market (Kalasipalya)
+3250,06:41:10,06:41:10,35238,12,KR Market (Kalasipalya)
+3250,06:44:27,06:44:27,35239,13,KR Market (Kalasipalya)
+3250,06:46:57,06:46:57,28169,14,KR Market (Kalasipalya)
+3250,06:47:16,06:47:16,23058,15,KR Market (Kalasipalya)
+3250,06:50:46,06:50:46,23914,16,KR Market (Kalasipalya)
+3250,06:54:04,06:54:04,35240,17,KR Market (Kalasipalya)
+3250,06:56:09,06:56:09,23392,18,KR Market (Kalasipalya)
+3250,06:58:11,06:58:11,23916,19,KR Market (Kalasipalya)
+3250,07:01:04,07:01:04,23917,20,KR Market (Kalasipalya)
+3250,07:04:19,07:04:19,23918,21,KR Market (Kalasipalya)
+3250,07:07:06,07:07:06,35771,22,KR Market (Kalasipalya)
+3250,07:11:43,07:11:43,24000,23,KR Market (Kalasipalya)
+3250,07:15:40,07:15:40,23920,24,KR Market (Kalasipalya)
+3250,07:16:58,07:16:58,22892,25,KR Market (Kalasipalya)
+3250,07:18:11,07:18:11,23921,26,KR Market (Kalasipalya)
+3250,07:20:13,07:20:13,23333,27,KR Market (Kalasipalya)
+3250,07:22:07,07:22:07,23383,28,KR Market (Kalasipalya)
+3250,07:23:55,07:23:55,35369,29,KR Market (Kalasipalya)
+3250,07:25:18,07:25:18,20881,30,KR Market (Kalasipalya)
+3250,07:28:09,07:28:09,21034,31,KR Market (Kalasipalya)
+3250,07:30:06,07:30:06,20642,32,KR Market (Kalasipalya)
+3250,07:31:16,07:31:16,21065,33,KR Market (Kalasipalya)
+3250,07:33:10,07:33:10,20966,34,KR Market (Kalasipalya)
+3250,07:34:41,07:34:41,22929,35,KR Market (Kalasipalya)
+3250,07:36:34,07:36:34,23922,36,KR Market (Kalasipalya)
+3250,07:39:13,07:39:13,20967,37,KR Market (Kalasipalya)
+3250,07:42:37,07:42:37,21232,38,KR Market (Kalasipalya)
+3250,07:44:59,07:44:59,20944_PF3,39,KR Market (Kalasipalya)
+3251,06:45:00,06:45:00,22462,1,KR Market (Kalasipalya)
+3251,06:45:51,06:45:51,22392,2,KR Market (Kalasipalya)
+3251,06:49:54,06:49:54,22500,3,KR Market (Kalasipalya)
+3251,06:52:31,06:52:31,21867,4,KR Market (Kalasipalya)
+3251,06:54:11,06:54:11,22630,5,KR Market (Kalasipalya)
+3251,06:57:20,06:57:20,21814,6,KR Market (Kalasipalya)
+3251,06:59:14,06:59:14,22547,7,KR Market (Kalasipalya)
+3251,07:00:36,07:00:36,23909,8,KR Market (Kalasipalya)
+3251,07:02:01,07:02:01,35237,9,KR Market (Kalasipalya)
+3251,07:05:45,07:05:45,39633,10,KR Market (Kalasipalya)
+3251,07:07:14,07:07:14,35243,11,KR Market (Kalasipalya)
+3251,07:11:10,07:11:10,35238,12,KR Market (Kalasipalya)
+3251,07:14:27,07:14:27,35239,13,KR Market (Kalasipalya)
+3251,07:16:57,07:16:57,28169,14,KR Market (Kalasipalya)
+3251,07:17:16,07:17:16,23058,15,KR Market (Kalasipalya)
+3251,07:20:46,07:20:46,23914,16,KR Market (Kalasipalya)
+3251,07:24:04,07:24:04,35240,17,KR Market (Kalasipalya)
+3251,07:26:09,07:26:09,23392,18,KR Market (Kalasipalya)
+3251,07:28:11,07:28:11,23916,19,KR Market (Kalasipalya)
+3251,07:31:04,07:31:04,23917,20,KR Market (Kalasipalya)
+3251,07:34:19,07:34:19,23918,21,KR Market (Kalasipalya)
+3251,07:37:06,07:37:06,35771,22,KR Market (Kalasipalya)
+3251,07:41:43,07:41:43,24000,23,KR Market (Kalasipalya)
+3251,07:45:40,07:45:40,23920,24,KR Market (Kalasipalya)
+3251,07:46:58,07:46:58,22892,25,KR Market (Kalasipalya)
+3251,07:48:11,07:48:11,23921,26,KR Market (Kalasipalya)
+3251,07:50:13,07:50:13,23333,27,KR Market (Kalasipalya)
+3251,07:52:07,07:52:07,23383,28,KR Market (Kalasipalya)
+3251,07:53:55,07:53:55,35369,29,KR Market (Kalasipalya)
+3251,07:55:18,07:55:18,20881,30,KR Market (Kalasipalya)
+3251,07:58:09,07:58:09,21034,31,KR Market (Kalasipalya)
+3251,08:00:06,08:00:06,20642,32,KR Market (Kalasipalya)
+3251,08:01:16,08:01:16,21065,33,KR Market (Kalasipalya)
+3251,08:03:10,08:03:10,20966,34,KR Market (Kalasipalya)
+3251,08:04:41,08:04:41,22929,35,KR Market (Kalasipalya)
+3251,08:06:34,08:06:34,23922,36,KR Market (Kalasipalya)
+3251,08:09:13,08:09:13,20967,37,KR Market (Kalasipalya)
+3251,08:12:37,08:12:37,21232,38,KR Market (Kalasipalya)
+3251,08:14:59,08:14:59,20944_PF3,39,KR Market (Kalasipalya)
+3252,07:55:00,07:55:00,22462,1,KR Market (Kalasipalya)
+3252,07:55:56,07:55:56,22392,2,KR Market (Kalasipalya)
+3252,08:00:26,08:00:26,22500,3,KR Market (Kalasipalya)
+3252,08:03:22,08:03:22,21867,4,KR Market (Kalasipalya)
+3252,08:05:12,08:05:12,22630,5,KR Market (Kalasipalya)
+3252,08:08:42,08:08:42,21814,6,KR Market (Kalasipalya)
+3252,08:10:49,08:10:49,22547,7,KR Market (Kalasipalya)
+3252,08:12:20,08:12:20,23909,8,KR Market (Kalasipalya)
+3252,08:13:55,08:13:55,35237,9,KR Market (Kalasipalya)
+3252,08:18:03,08:18:03,39633,10,KR Market (Kalasipalya)
+3252,08:19:42,08:19:42,35243,11,KR Market (Kalasipalya)
+3252,08:24:04,08:24:04,35238,12,KR Market (Kalasipalya)
+3252,08:27:44,08:27:44,35239,13,KR Market (Kalasipalya)
+3252,08:30:30,08:30:30,28169,14,KR Market (Kalasipalya)
+3252,08:30:51,08:30:51,23058,15,KR Market (Kalasipalya)
+3252,08:34:45,08:34:45,23914,16,KR Market (Kalasipalya)
+3252,08:38:24,08:38:24,35240,17,KR Market (Kalasipalya)
+3252,08:40:44,08:40:44,23392,18,KR Market (Kalasipalya)
+3252,08:42:59,08:42:59,23916,19,KR Market (Kalasipalya)
+3252,08:46:11,08:46:11,23917,20,KR Market (Kalasipalya)
+3252,08:49:48,08:49:48,23918,21,KR Market (Kalasipalya)
+3252,08:52:54,08:52:54,35771,22,KR Market (Kalasipalya)
+3252,08:58:02,08:58:02,24000,23,KR Market (Kalasipalya)
+3252,09:02:24,09:02:24,23920,24,KR Market (Kalasipalya)
+3252,09:03:52,09:03:52,22892,25,KR Market (Kalasipalya)
+3252,09:05:12,09:05:12,23921,26,KR Market (Kalasipalya)
+3252,09:07:28,09:07:28,23333,27,KR Market (Kalasipalya)
+3252,09:09:35,09:09:35,23383,28,KR Market (Kalasipalya)
+3252,09:11:35,09:11:35,35369,29,KR Market (Kalasipalya)
+3252,09:13:07,09:13:07,20881,30,KR Market (Kalasipalya)
+3252,09:16:17,09:16:17,21034,31,KR Market (Kalasipalya)
+3252,09:18:27,09:18:27,20642,32,KR Market (Kalasipalya)
+3252,09:19:44,09:19:44,21065,33,KR Market (Kalasipalya)
+3252,09:21:51,09:21:51,20966,34,KR Market (Kalasipalya)
+3252,09:23:32,09:23:32,22929,35,KR Market (Kalasipalya)
+3252,09:25:37,09:25:37,23922,36,KR Market (Kalasipalya)
+3252,09:28:35,09:28:35,20967,37,KR Market (Kalasipalya)
+3252,09:32:21,09:32:21,21232,38,KR Market (Kalasipalya)
+3252,09:35:00,09:35:00,20944_PF3,39,KR Market (Kalasipalya)
+3224,05:00:00,05:00:00,20944_PF3,1,Sarjapura
+3224,05:00:57,05:00:57,20987,2,Sarjapura
+3224,05:01:57,05:01:57,35139,3,Sarjapura
+3224,05:04:22,05:04:22,23666,4,Sarjapura
+3224,05:06:08,05:06:08,23825,5,Sarjapura
+3224,05:07:44,05:07:44,23661,6,Sarjapura
+3224,05:09:01,05:09:01,20965,7,Sarjapura
+3224,05:09:58,05:09:58,21064,8,Sarjapura
+3224,05:11:19,05:11:19,20643,9,Sarjapura
+3224,05:12:41,05:12:41,21033,10,Sarjapura
+3224,05:14:54,05:14:54,20880,11,Sarjapura
+3224,05:15:55,05:15:55,21191,12,Sarjapura
+3224,05:17:32,05:17:32,21275,13,Sarjapura
+3224,05:18:48,05:18:48,20952,14,Sarjapura
+3224,05:20:22,05:20:22,23893,15,Sarjapura
+3224,05:21:23,05:21:23,23894,16,Sarjapura
+3224,05:22:22,05:22:22,23895,17,Sarjapura
+3224,05:25:42,05:25:42,35769,18,Sarjapura
+3224,05:29:05,05:29:05,20851,19,Sarjapura
+3224,05:31:31,05:31:31,23896,20,Sarjapura
+3224,05:33:53,05:33:53,23897,21,Sarjapura
+3224,05:36:07,05:36:07,23898,22,Sarjapura
+3224,05:37:42,05:37:42,23390,23,Sarjapura
+3224,05:39:23,05:39:23,35104,24,Sarjapura
+3224,05:41:58,05:41:58,23900,25,Sarjapura
+3224,05:44:41,05:44:41,23901,26,Sarjapura
+3224,05:44:55,05:44:55,34475,27,Sarjapura
+3224,05:46:56,05:46:56,35072,28,Sarjapura
+3224,05:49:29,05:49:29,35124,29,Sarjapura
+3224,05:52:35,05:52:35,35131,30,Sarjapura
+3224,05:53:45,05:53:45,39632,31,Sarjapura
+3224,05:56:41,05:56:41,35149,32,Sarjapura
+3224,05:57:47,05:57:47,23906,33,Sarjapura
+3224,05:58:51,05:58:51,22546,34,Sarjapura
+3224,06:00:21,06:00:21,21813,35,Sarjapura
+3224,06:02:48,06:02:48,22629,36,Sarjapura
+3224,06:04:07,06:04:07,21866,37,Sarjapura
+3224,06:06:13,06:06:13,22497,38,Sarjapura
+3224,06:09:24,06:09:24,22391,39,Sarjapura
+3224,06:10:00,06:10:00,23907,40,Sarjapura
+3225,06:30:00,06:30:00,20944_PF3,1,Sarjapura
+3225,06:31:06,06:31:06,20987,2,Sarjapura
+3225,06:32:14,06:32:14,35139,3,Sarjapura
+3225,06:34:59,06:34:59,23666,4,Sarjapura
+3225,06:37:01,06:37:01,23825,5,Sarjapura
+3225,06:38:50,06:38:50,23661,6,Sarjapura
+3225,06:40:18,06:40:18,20965,7,Sarjapura
+3225,06:41:23,06:41:23,21064,8,Sarjapura
+3225,06:42:56,06:42:56,20643,9,Sarjapura
+3225,06:44:29,06:44:29,21033,10,Sarjapura
+3225,06:47:01,06:47:01,20880,11,Sarjapura
+3225,06:48:12,06:48:12,21191,12,Sarjapura
+3225,06:50:03,06:50:03,21275,13,Sarjapura
+3225,06:51:29,06:51:29,20952,14,Sarjapura
+3225,06:53:17,06:53:17,23893,15,Sarjapura
+3225,06:54:27,06:54:27,23894,16,Sarjapura
+3225,06:55:34,06:55:34,23895,17,Sarjapura
+3225,06:59:22,06:59:22,35769,18,Sarjapura
+3225,07:03:15,07:03:15,20851,19,Sarjapura
+3225,07:06:01,07:06:01,23896,20,Sarjapura
+3225,07:08:43,07:08:43,23897,21,Sarjapura
+3225,07:11:16,07:11:16,23898,22,Sarjapura
+3225,07:13:05,07:13:05,23390,23,Sarjapura
+3225,07:15:01,07:15:01,35104,24,Sarjapura
+3225,07:17:58,07:17:58,23900,25,Sarjapura
+3225,07:21:04,07:21:04,23901,26,Sarjapura
+3225,07:21:20,07:21:20,34475,27,Sarjapura
+3225,07:23:39,07:23:39,35072,28,Sarjapura
+3225,07:26:33,07:26:33,35124,29,Sarjapura
+3225,07:30:06,07:30:06,35131,30,Sarjapura
+3225,07:31:26,07:31:26,39632,31,Sarjapura
+3225,07:34:47,07:34:47,35149,32,Sarjapura
+3225,07:36:02,07:36:02,23906,33,Sarjapura
+3225,07:37:15,07:37:15,22546,34,Sarjapura
+3225,07:38:58,07:38:58,21813,35,Sarjapura
+3225,07:41:47,07:41:47,22629,36,Sarjapura
+3225,07:43:17,07:43:17,21866,37,Sarjapura
+3225,07:45:41,07:45:41,22497,38,Sarjapura
+3225,07:49:19,07:49:19,22391,39,Sarjapura
+3225,07:50:00,07:50:00,23907,40,Sarjapura
+3226,06:50:00,06:50:00,20944_PF3,1,Sarjapura
+3226,06:51:06,06:51:06,20987,2,Sarjapura
+3226,06:52:14,06:52:14,35139,3,Sarjapura
+3226,06:54:59,06:54:59,23666,4,Sarjapura
+3226,06:57:01,06:57:01,23825,5,Sarjapura
+3226,06:58:50,06:58:50,23661,6,Sarjapura
+3226,07:00:18,07:00:18,20965,7,Sarjapura
+3226,07:01:23,07:01:23,21064,8,Sarjapura
+3226,07:02:56,07:02:56,20643,9,Sarjapura
+3226,07:04:29,07:04:29,21033,10,Sarjapura
+3226,07:07:01,07:07:01,20880,11,Sarjapura
+3226,07:08:12,07:08:12,21191,12,Sarjapura
+3226,07:10:03,07:10:03,21275,13,Sarjapura
+3226,07:11:29,07:11:29,20952,14,Sarjapura
+3226,07:13:17,07:13:17,23893,15,Sarjapura
+3226,07:14:27,07:14:27,23894,16,Sarjapura
+3226,07:15:34,07:15:34,23895,17,Sarjapura
+3226,07:19:22,07:19:22,35769,18,Sarjapura
+3226,07:23:15,07:23:15,20851,19,Sarjapura
+3226,07:26:01,07:26:01,23896,20,Sarjapura
+3226,07:28:43,07:28:43,23897,21,Sarjapura
+3226,07:31:16,07:31:16,23898,22,Sarjapura
+3226,07:33:05,07:33:05,23390,23,Sarjapura
+3226,07:35:01,07:35:01,35104,24,Sarjapura
+3226,07:37:58,07:37:58,23900,25,Sarjapura
+3226,07:41:04,07:41:04,23901,26,Sarjapura
+3226,07:41:20,07:41:20,34475,27,Sarjapura
+3226,07:43:39,07:43:39,35072,28,Sarjapura
+3226,07:46:33,07:46:33,35124,29,Sarjapura
+3226,07:50:06,07:50:06,35131,30,Sarjapura
+3226,07:51:26,07:51:26,39632,31,Sarjapura
+3226,07:54:47,07:54:47,35149,32,Sarjapura
+3226,07:56:02,07:56:02,23906,33,Sarjapura
+3226,07:57:15,07:57:15,22546,34,Sarjapura
+3226,07:58:58,07:58:58,21813,35,Sarjapura
+3226,08:01:47,08:01:47,22629,36,Sarjapura
+3226,08:03:17,08:03:17,21866,37,Sarjapura
+3226,08:05:41,08:05:41,22497,38,Sarjapura
+3226,08:09:19,08:09:19,22391,39,Sarjapura
+3226,08:10:00,08:10:00,23907,40,Sarjapura
+8845,04:00:00,04:00:00,22462,1,Mayohall G-2
+8845,04:00:51,04:00:51,22392,2,Mayohall G-2
+8845,04:04:56,04:04:56,22500,3,Mayohall G-2
+8845,04:07:35,04:07:35,21867,4,Mayohall G-2
+8845,04:09:15,04:09:15,22630,5,Mayohall G-2
+8845,04:12:25,04:12:25,21814,6,Mayohall G-2
+8845,04:14:21,04:14:21,22547,7,Mayohall G-2
+8845,04:15:43,04:15:43,23909,8,Mayohall G-2
+8845,04:17:09,04:17:09,35237,9,Mayohall G-2
+8845,04:20:54,04:20:54,39633,10,Mayohall G-2
+8845,04:22:24,04:22:24,35243,11,Mayohall G-2
+8845,04:26:22,04:26:22,35238,12,Mayohall G-2
+8845,04:29:41,04:29:41,35239,13,Mayohall G-2
+8845,04:32:12,04:32:12,28169,14,Mayohall G-2
+8845,04:32:31,04:32:31,23058,15,Mayohall G-2
+8845,04:36:03,04:36:03,23914,16,Mayohall G-2
+8845,04:39:22,04:39:22,35240,17,Mayohall G-2
+8845,04:41:29,04:41:29,23392,18,Mayohall G-2
+8845,04:43:31,04:43:31,23916,19,Mayohall G-2
+8845,04:46:26,04:46:26,23917,20,Mayohall G-2
+8845,04:49:42,04:49:42,23918,21,Mayohall G-2
+8845,04:51:19,04:51:19,38204,22,Mayohall G-2
+8845,04:52:31,04:52:31,35771,23,Mayohall G-2
+8845,04:57:10,04:57:10,24000,24,Mayohall G-2
+8845,05:01:09,05:01:09,23920,25,Mayohall G-2
+8845,05:02:28,05:02:28,22892,26,Mayohall G-2
+8845,05:04:02,05:04:02,23942,27,Mayohall G-2
+8845,05:06:23,05:06:23,23943,28,Mayohall G-2
+8845,05:08:07,05:08:07,35137,29,Mayohall G-2
+8845,05:09:15,05:09:15,35100,30,Mayohall G-2
+8845,05:10:22,05:10:22,23946,31,Mayohall G-2
+8845,05:12:13,05:12:13,23947,32,Mayohall G-2
+8845,05:13:20,05:13:20,23948,33,Mayohall G-2
+8845,05:14:32,05:14:32,34400,34,Mayohall G-2
+8845,05:15:38,05:15:38,23950,35,Mayohall G-2
+8845,05:16:15,05:16:15,23951,36,Mayohall G-2
+8845,05:18:37,05:18:37,23190,37,Mayohall G-2
+8845,05:20:24,05:20:24,22755,38,Mayohall G-2
+8845,05:21:46,05:21:46,22693,39,Mayohall G-2
+8845,05:25:00,05:25:00,37119,40,Mayohall G-2
+8846,04:45:00,04:45:00,22462,1,Mayohall G-2
+8846,04:45:48,04:45:48,22392,2,Mayohall G-2
+8846,04:49:38,04:49:38,22500,3,Mayohall G-2
+8846,04:52:08,04:52:08,21867,4,Mayohall G-2
+8846,04:53:42,04:53:42,22630,5,Mayohall G-2
+8846,04:56:42,04:56:42,21814,6,Mayohall G-2
+8846,04:58:30,04:58:30,22547,7,Mayohall G-2
+8846,04:59:48,04:59:48,23909,8,Mayohall G-2
+8846,05:01:09,05:01:09,35237,9,Mayohall G-2
+8846,05:04:41,05:04:41,39633,10,Mayohall G-2
+8846,05:06:05,05:06:05,35243,11,Mayohall G-2
+8846,05:09:49,05:09:49,35238,12,Mayohall G-2
+8846,05:12:56,05:12:56,35239,13,Mayohall G-2
+8846,05:15:18,05:15:18,28169,14,Mayohall G-2
+8846,05:15:36,05:15:36,23058,15,Mayohall G-2
+8846,05:18:56,05:18:56,23914,16,Mayohall G-2
+8846,05:22:03,05:22:03,35240,17,Mayohall G-2
+8846,05:24:02,05:24:02,23392,18,Mayohall G-2
+8846,05:25:58,05:25:58,23916,19,Mayohall G-2
+8846,05:28:42,05:28:42,23917,20,Mayohall G-2
+8846,05:31:47,05:31:47,23918,21,Mayohall G-2
+8846,05:33:18,05:33:18,38204,22,Mayohall G-2
+8846,05:34:26,05:34:26,35771,23,Mayohall G-2
+8846,05:38:49,05:38:49,24000,24,Mayohall G-2
+8846,05:42:33,05:42:33,23920,25,Mayohall G-2
+8846,05:43:48,05:43:48,22892,26,Mayohall G-2
+8846,05:45:16,05:45:16,23942,27,Mayohall G-2
+8846,05:47:29,05:47:29,23943,28,Mayohall G-2
+8846,05:49:06,05:49:06,35137,29,Mayohall G-2
+8846,05:50:10,05:50:10,35100,30,Mayohall G-2
+8846,05:51:14,05:51:14,23946,31,Mayohall G-2
+8846,05:52:58,05:52:58,23947,32,Mayohall G-2
+8846,05:54:01,05:54:01,23948,33,Mayohall G-2
+8846,05:55:09,05:55:09,34400,34,Mayohall G-2
+8846,05:56:11,05:56:11,23950,35,Mayohall G-2
+8846,05:56:46,05:56:46,23951,36,Mayohall G-2
+8846,05:59:00,05:59:00,23190,37,Mayohall G-2
+8846,06:00:40,06:00:40,22755,38,Mayohall G-2
+8846,06:01:57,06:01:57,22693,39,Mayohall G-2
+8846,06:05:00,06:05:00,37119,40,Mayohall G-2
+8847,05:20:00,05:20:00,22462,1,Mayohall G-2
+8847,05:20:54,05:20:54,22392,2,Mayohall G-2
+8847,05:25:13,05:25:13,22500,3,Mayohall G-2
+8847,05:28:02,05:28:02,21867,4,Mayohall G-2
+8847,05:29:48,05:29:48,22630,5,Mayohall G-2
+8847,05:33:09,05:33:09,21814,6,Mayohall G-2
+8847,05:35:12,05:35:12,22547,7,Mayohall G-2
+8847,05:36:39,05:36:39,23909,8,Mayohall G-2
+8847,05:38:10,05:38:10,35237,9,Mayohall G-2
+8847,05:42:08,05:42:08,39633,10,Mayohall G-2
+8847,05:43:43,05:43:43,35243,11,Mayohall G-2
+8847,05:47:55,05:47:55,35238,12,Mayohall G-2
+8847,05:51:26,05:51:26,35239,13,Mayohall G-2
+8847,05:54:05,05:54:05,28169,14,Mayohall G-2
+8847,05:54:26,05:54:26,23058,15,Mayohall G-2
+8847,05:58:11,05:58:11,23914,16,Mayohall G-2
+8847,06:01:41,06:01:41,35240,17,Mayohall G-2
+8847,06:03:55,06:03:55,23392,18,Mayohall G-2
+8847,06:06:05,06:06:05,23916,19,Mayohall G-2
+8847,06:09:10,06:09:10,23917,20,Mayohall G-2
+8847,06:12:37,06:12:37,23918,21,Mayohall G-2
+8847,06:14:20,06:14:20,38204,22,Mayohall G-2
+8847,06:15:36,06:15:36,35771,23,Mayohall G-2
+8847,06:20:32,06:20:32,24000,24,Mayohall G-2
+8847,06:24:45,06:24:45,23920,25,Mayohall G-2
+8847,06:26:09,06:26:09,22892,26,Mayohall G-2
+8847,06:27:48,06:27:48,23942,27,Mayohall G-2
+8847,06:30:17,06:30:17,23943,28,Mayohall G-2
+8847,06:32:07,06:32:07,35137,29,Mayohall G-2
+8847,06:33:19,06:33:19,35100,30,Mayohall G-2
+8847,06:34:31,06:34:31,23946,31,Mayohall G-2
+8847,06:36:28,06:36:28,23947,32,Mayohall G-2
+8847,06:37:39,06:37:39,23948,33,Mayohall G-2
+8847,06:38:55,06:38:55,34400,34,Mayohall G-2
+8847,06:40:05,06:40:05,23950,35,Mayohall G-2
+8847,06:40:44,06:40:44,23951,36,Mayohall G-2
+8847,06:43:15,06:43:15,23190,37,Mayohall G-2
+8847,06:45:08,06:45:08,22755,38,Mayohall G-2
+8847,06:46:34,06:46:34,22693,39,Mayohall G-2
+8847,06:50:00,06:50:00,37119,40,Mayohall G-2
+8800,05:30:00,05:30:00,37119,1,Sarjapura
+8800,05:32:25,05:32:25,22058,2,Sarjapura
+8800,05:36:06,05:36:06,23930,3,Sarjapura
+8800,05:38:53,05:38:53,23931,4,Sarjapura
+8800,05:39:40,05:39:40,23932,5,Sarjapura
+8800,05:41:01,05:41:01,35059,6,Sarjapura
+8800,05:42:11,05:42:11,23934,7,Sarjapura
+8800,05:43:54,05:43:54,23823,8,Sarjapura
+8800,05:45:53,05:45:53,23935,9,Sarjapura
+8800,05:47:09,05:47:09,35267,10,Sarjapura
+8800,05:49:09,05:49:09,35103,11,Sarjapura
+8800,05:50:36,05:50:36,23938,12,Sarjapura
+8800,05:53:18,05:53:18,23939,13,Sarjapura
+8800,05:55:19,05:55:19,23894,14,Sarjapura
+8800,05:56:50,05:56:50,23895,15,Sarjapura
+8800,06:01:57,06:01:57,35769,16,Sarjapura
+8800,06:07:09,06:07:09,20851,17,Sarjapura
+8800,06:08:59,06:08:59,30401,18,Sarjapura
+8800,06:10:53,06:10:53,23896,19,Sarjapura
+8800,06:14:31,06:14:31,23897,20,Sarjapura
+8800,06:17:57,06:17:57,23898,21,Sarjapura
+8800,06:20:23,06:20:23,23390,22,Sarjapura
+8800,06:22:59,06:22:59,35104,23,Sarjapura
+8800,06:26:57,06:26:57,23900,24,Sarjapura
+8800,06:31:07,06:31:07,23901,25,Sarjapura
+8800,06:31:29,06:31:29,34475,26,Sarjapura
+8800,06:34:35,06:34:35,35072,27,Sarjapura
+8800,06:38:29,06:38:29,35124,28,Sarjapura
+8800,06:43:16,06:43:16,35131,29,Sarjapura
+8800,06:45:02,06:45:02,39632,30,Sarjapura
+8800,06:49:34,06:49:34,35149,31,Sarjapura
+8800,06:51:14,06:51:14,23906,32,Sarjapura
+8800,06:52:52,06:52:52,22546,33,Sarjapura
+8800,06:55:11,06:55:11,21813,34,Sarjapura
+8800,06:58:57,06:58:57,22629,35,Sarjapura
+8800,07:00:58,07:00:58,21866,36,Sarjapura
+8800,07:04:12,07:04:12,22497,37,Sarjapura
+8800,07:09:05,07:09:05,22391,38,Sarjapura
+8800,07:10:00,07:10:00,23907,39,Sarjapura
+8801,05:45:00,05:45:00,37119,1,Sarjapura
+8801,05:47:03,05:47:03,22058,2,Sarjapura
+8801,05:50:11,05:50:11,23930,3,Sarjapura
+8801,05:52:33,05:52:33,23931,4,Sarjapura
+8801,05:53:13,05:53:13,23932,5,Sarjapura
+8801,05:54:22,05:54:22,35059,6,Sarjapura
+8801,05:55:21,05:55:21,23934,7,Sarjapura
+8801,05:56:49,05:56:49,23823,8,Sarjapura
+8801,05:58:30,05:58:30,23935,9,Sarjapura
+8801,05:59:34,05:59:34,35267,10,Sarjapura
+8801,06:01:17,06:01:17,35103,11,Sarjapura
+8801,06:02:30,06:02:30,23938,12,Sarjapura
+8801,06:04:49,06:04:49,23939,13,Sarjapura
+8801,06:06:31,06:06:31,23894,14,Sarjapura
+8801,06:07:49,06:07:49,23895,15,Sarjapura
+8801,06:12:09,06:12:09,35769,16,Sarjapura
+8801,06:16:35,06:16:35,20851,17,Sarjapura
+8801,06:18:08,06:18:08,30401,18,Sarjapura
+8801,06:19:45,06:19:45,23896,19,Sarjapura
+8801,06:22:50,06:22:50,23897,20,Sarjapura
+8801,06:25:45,06:25:45,23898,21,Sarjapura
+8801,06:27:50,06:27:50,23390,22,Sarjapura
+8801,06:30:02,06:30:02,35104,23,Sarjapura
+8801,06:33:25,06:33:25,23900,24,Sarjapura
+8801,06:36:57,06:36:57,23901,25,Sarjapura
+8801,06:37:15,06:37:15,34475,26,Sarjapura
+8801,06:39:54,06:39:54,35072,27,Sarjapura
+8801,06:43:13,06:43:13,35124,28,Sarjapura
+8801,06:47:16,06:47:16,35131,29,Sarjapura
+8801,06:48:47,06:48:47,39632,30,Sarjapura
+8801,06:52:38,06:52:38,35149,31,Sarjapura
+8801,06:54:03,06:54:03,23906,32,Sarjapura
+8801,06:55:27,06:55:27,22546,33,Sarjapura
+8801,06:57:24,06:57:24,21813,34,Sarjapura
+8801,07:00:36,07:00:36,22629,35,Sarjapura
+8801,07:02:19,07:02:19,21866,36,Sarjapura
+8801,07:05:04,07:05:04,22497,37,Sarjapura
+8801,07:09:14,07:09:14,22391,38,Sarjapura
+8801,07:09:59,07:09:59,23907,39,Sarjapura
+8802,06:15:00,06:15:00,37119,1,Sarjapura
+8802,06:17:03,06:17:03,22058,2,Sarjapura
+8802,06:20:11,06:20:11,23930,3,Sarjapura
+8802,06:22:33,06:22:33,23931,4,Sarjapura
+8802,06:23:13,06:23:13,23932,5,Sarjapura
+8802,06:24:22,06:24:22,35059,6,Sarjapura
+8802,06:25:21,06:25:21,23934,7,Sarjapura
+8802,06:26:49,06:26:49,23823,8,Sarjapura
+8802,06:28:30,06:28:30,23935,9,Sarjapura
+8802,06:29:34,06:29:34,35267,10,Sarjapura
+8802,06:31:17,06:31:17,35103,11,Sarjapura
+8802,06:32:30,06:32:30,23938,12,Sarjapura
+8802,06:34:49,06:34:49,23939,13,Sarjapura
+8802,06:36:31,06:36:31,23894,14,Sarjapura
+8802,06:37:49,06:37:49,23895,15,Sarjapura
+8802,06:42:09,06:42:09,35769,16,Sarjapura
+8802,06:46:35,06:46:35,20851,17,Sarjapura
+8802,06:48:08,06:48:08,30401,18,Sarjapura
+8802,06:49:45,06:49:45,23896,19,Sarjapura
+8802,06:52:50,06:52:50,23897,20,Sarjapura
+8802,06:55:45,06:55:45,23898,21,Sarjapura
+8802,06:57:50,06:57:50,23390,22,Sarjapura
+8802,07:00:02,07:00:02,35104,23,Sarjapura
+8802,07:03:25,07:03:25,23900,24,Sarjapura
+8802,07:06:57,07:06:57,23901,25,Sarjapura
+8802,07:07:15,07:07:15,34475,26,Sarjapura
+8802,07:09:54,07:09:54,35072,27,Sarjapura
+8802,07:13:13,07:13:13,35124,28,Sarjapura
+8802,07:17:16,07:17:16,35131,29,Sarjapura
+8802,07:18:47,07:18:47,39632,30,Sarjapura
+8802,07:22:38,07:22:38,35149,31,Sarjapura
+8802,07:24:03,07:24:03,23906,32,Sarjapura
+8802,07:25:27,07:25:27,22546,33,Sarjapura
+8802,07:27:24,07:27:24,21813,34,Sarjapura
+8802,07:30:36,07:30:36,22629,35,Sarjapura
+8802,07:32:19,07:32:19,21866,36,Sarjapura
+8802,07:35:04,07:35:04,22497,37,Sarjapura
+8802,07:39:14,07:39:14,22391,38,Sarjapura
+8802,07:39:59,07:39:59,23907,39,Sarjapura
