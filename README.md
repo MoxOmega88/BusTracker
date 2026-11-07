@@ -15,6 +15,7 @@ Bengaluru's buses rarely run to the timetable. This project replays buses over *
 - **Direct-route finder**: from stop A to stop B on a single bus (no transfers), with the live buses that will make the trip.
 - **Alerts**: delays, road blocks and buses that stop reporting.
 - **Landing page** with live counters, driven by the same stream.
+- **Accounts and personalization**: optional username/password or Google sign-in, saved Home/Work/Other stops, and nearby-route filtering.
 
 ## Architecture
 
@@ -127,6 +128,48 @@ java -jar simulator/target/simulator-0.1.0.jar
 
 Open **http://localhost:8081** (landing page) or **http://localhost:8081/app.html** (live map).
 
+### Accounts, MongoDB Atlas, and Google sign-in
+
+Account features are optional and disabled by default. When enabled, the gateway stores user accounts and saved places in MongoDB Atlas. Passwords are stored as BCrypt hashes, and successful sign-ins receive a JWT stored in the browser for authenticated API requests.
+
+Before starting the gateway, set these environment variables:
+
+| Variable | Required | Description |
+|---|---|---|
+| `AUTH_ENABLED` | Yes | Set to `true` to enable login, signup, and saved places |
+| `MONGODB_URI` | Yes when auth is enabled | MongoDB Atlas connection string, including the database name |
+| `JWT_SECRET` | Yes when auth is enabled | A random secret of at least 32 characters |
+| `GOOGLE_CLIENT_ID` | No | Google OAuth client ID; omit it to use username/password only |
+
+PowerShell:
+
+```powershell
+$env:AUTH_ENABLED = "true"
+$env:MONGODB_URI = "mongodb+srv://<user>:<password>@<cluster>/<database>?retryWrites=true&w=majority"
+$env:JWT_SECRET = "<random-secret-at-least-32-characters>"
+$env:GOOGLE_CLIENT_ID = "<google-client-id>" # optional
+java -jar gateway\target\gateway-0.1.0.jar
+```
+
+Git Bash:
+
+```bash
+export AUTH_ENABLED=true
+export MONGODB_URI='mongodb+srv://<user>:<password>@<cluster>/<database>?retryWrites=true&w=majority'
+export JWT_SECRET='<random-secret-at-least-32-characters>'
+export GOOGLE_CLIENT_ID='<google-client-id>' # optional
+java -jar gateway/target/gateway-0.1.0.jar
+```
+
+The Atlas connection string must include a database name, and the Atlas network-access rules must allow the machine running the gateway to connect. Never commit these values or place them directly in `application.yml`.
+
+When authentication is enabled:
+
+1. Use **Sign up** to create a local account, or use Google sign-in if `GOOGLE_CLIENT_ID` is configured.
+2. Open the profile menu on the live map and save up to three stops labelled **Home**, **Work**, and **Other**.
+3. The saved stops are shown as map pins, and routes with stops within 800 metres are selected first.
+4. Places can be edited or removed from the profile menu at any time.
+
 Useful flags:
 
 ```bash
@@ -153,6 +196,13 @@ java -jar eta-service/target/eta-service-0.1.0.jar --server.port=8082
 | `GET /api/arrivals?ids=` | Next buses reaching the given stop ids |
 | `GET /api/plan?from=&to=` | Direct rides between two stops, with live buses |
 | `GET /api/stats` | Live counters and a mini arrivals board |
+| `GET /api/config` | Reports whether accounts and Google sign-in are enabled |
+| `POST /api/auth/signup` | Create a username/password account |
+| `POST /api/auth/login` | Sign in with username/password |
+| `POST /api/auth/google` | Sign in with a verified Google ID token |
+| `GET /api/me` | Get the authenticated user profile |
+| `PUT /api/me/places` | Save Home, Work, and Other stops |
+| `GET /api/me/nearby?radius=800` | Find nearby routes for saved places |
 
 ## Data
 
@@ -182,11 +232,11 @@ bus-tracker/
 ├── common/        shared events, topic names, GTFS model and loader
 ├── simulator/     bus physics, incidents, Kafka producer
 ├── eta-service/   ETA model, delay and ghost detection, accuracy tracking
-├── gateway/       Kafka consumers, SSE, REST APIs, web UI (static/)
+├── gateway/       Kafka consumers, SSE, REST APIs, optional auth, web UI (static/)
 ├── data/filtered/ filtered GTFS for the 4 demo routes
 └── scripts/       filter_gtfs.py
 ```
 
 ## Tech
 
-Java 21 · Spring Boot 3 · Spring for Apache Kafka · Apache Kafka (KRaft) · GTFS · Server-Sent Events · Leaflet · Maven multi-module
+Java 21 · Spring Boot 3 · Spring for Apache Kafka · Apache Kafka (KRaft) · MongoDB Atlas · Google Identity Services · JWT · GTFS · Server-Sent Events · Leaflet · Maven multi-module
