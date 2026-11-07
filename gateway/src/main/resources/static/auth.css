@@ -1,0 +1,48 @@
+:root{--bg:#0a0e13;--panel:#10161e;--panel2:#161e29;--line:#243040;--text:#e9eef5;--muted:#8793a6;--amber:#ffb300;--red:#ff4d5e;
+  --display:'Bricolage Grotesque',system-ui,sans-serif;--body:'DM Sans',system-ui,sans-serif}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg);color:var(--text);font:16px/1.5 var(--body);display:flex;flex-direction:column;min-height:100vh}
+a{color:inherit}
+.stripe{height:6px;background:linear-gradient(90deg,#3da5ff 0 25%,#ff7a45 25% 50%,#3ddc97 50% 75%,#c77dff 75%)}
+.bar{display:flex;align-items:center;justify-content:space-between;padding:18px 28px}
+.brand{font:800 20px var(--display);letter-spacing:.03em;text-decoration:none}
+.back{font-size:14px;color:var(--muted);text-decoration:none}
+.back:hover{color:var(--text)}
+
+.stage{flex:1;display:grid;grid-template-columns:1.05fr 1fr;gap:56px;align-items:center;max-width:1100px;width:100%;margin:0 auto;padding:20px 28px 56px}
+.pitch h1{font:800 clamp(44px,6vw,80px)/.95 var(--display);letter-spacing:-.03em;margin:0 0 18px}
+.pitch h1 em{font-style:normal;color:var(--amber)}
+.pitch p{color:#c3ccd9;max-width:440px;margin:0 0 26px}
+.perks{list-style:none;margin:0;padding:0;border-top:1px solid var(--line);max-width:440px}
+.perks li{display:flex;gap:14px;padding:12px 0;border-bottom:1px solid var(--line);font-size:15px;color:#c3ccd9}
+.perks b{font:800 13px var(--display);color:var(--amber);letter-spacing:.1em;padding-top:2px}
+
+.card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:30px 28px;box-shadow:0 18px 50px rgba(0,0,0,.45)}
+.card h2{font:800 28px/1.1 var(--display);margin:0 0 4px;letter-spacing:-.01em}
+.card .sub{color:var(--muted);font-size:14px;margin:0 0 22px}
+.f{margin-bottom:14px}
+.f label{display:block;font:700 11px var(--body);letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+.f input{width:100%;background:var(--bg);color:var(--text);border:1px solid var(--line);border-radius:6px;padding:11px 12px;font:15px var(--body);outline:none}
+.f input:focus{border-color:var(--amber)}
+.f small{display:block;margin-top:5px;color:var(--muted);font-size:12px}
+.err{min-height:20px;color:var(--red);font-size:13.5px;margin:2px 0 8px}
+.btn{width:100%;background:var(--amber);color:#0a0e13;border:0;border-radius:6px;padding:13px;font:800 15px var(--display);letter-spacing:.04em;cursor:pointer;box-shadow:4px 4px 0 #7a5600;transition:transform .12s,box-shadow .12s}
+.btn:hover{transform:translate(-1px,-1px);box-shadow:5px 5px 0 #7a5600}
+.btn:active{transform:translate(3px,3px);box-shadow:1px 1px 0 #7a5600}
+.btn:disabled{opacity:.6;cursor:wait}
+.or{display:flex;align-items:center;gap:12px;color:var(--muted);font-size:12px;letter-spacing:.14em;margin:20px 0 16px}
+.or::before,.or::after{content:"";flex:1;height:1px;background:var(--line)}
+#g-btn{display:flex;justify-content:center;min-height:44px}
+.switch{margin:22px 0 0;font-size:14px;color:var(--muted);text-align:center}
+.switch a{color:var(--amber);font-weight:700}
+.guest{display:block;text-align:center;margin-top:12px;font-size:14px;color:var(--muted);text-decoration:none}
+.guest:hover{color:var(--text)}
+.note{border:1px dashed var(--line);border-radius:8px;padding:16px;color:var(--muted);font-size:14px}
+.note a{color:var(--amber)}
+.hidden{display:none!important}
+
+@media (max-width:860px){
+  .stage{grid-template-columns:1fr;gap:28px;padding-top:4px}
+  .pitch{display:none}
+}

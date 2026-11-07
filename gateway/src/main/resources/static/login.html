@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Log in · Bus Tracker</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;800&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/auth.css">
+</head>
+<body>
+<div class="stripe"></div>
+<header class="bar"><a class="brand" href="/">BUS TRACKER</a><a class="back" href="/">← Back to home</a></header>
+
+<main class="stage">
+  <section class="pitch">
+    <h1>Welcome <em>back.</em></h1>
+    <p>Pick up where you left off, with your own stops and the routes near you first.</p>
+    <ul class="perks">
+      <li><b>01</b>Home and work stops, saved to your account</li>
+      <li><b>02</b>Routes within 800 m of them shown first</li>
+      <li><b>03</b>The same live map, and it works without an account too</li>
+    </ul>
+  </section>
+
+  <section class="card">
+    <div id="disabled" class="note hidden">Accounts are switched off on this server. <a href="/app.html">Open the live map</a> instead.</div>
+    <div id="panel">
+      <h2>Log in</h2>
+      <p class="sub">Use your username and password.</p>
+      <div class="f"><label for="user">Username</label><input id="user" autocomplete="username" autofocus></div>
+      <div class="f"><label for="pass">Password</label><input id="pass" type="password" autocomplete="current-password"></div>
+      <div class="err" id="err" role="alert"></div>
+      <button class="btn" id="go" type="button">LOG IN</button>
+      <div id="google" class="hidden"><div class="or">OR</div><div id="g-btn"></div></div>
+      <p class="switch">New here? <a href="/signup.html">Create an account</a></p>
+      <a class="guest" href="/app.html">Continue without an account →</a>
+    </div>
+  </section>
+</main>
+<div class="stripe"></div>
+
+<script>
+(() => {
+'use strict';
+const $ = id => document.getElementById(id);
+const store = {
+  get: k => { try { return localStorage.getItem(k); } catch (e) { return null; } },
+  set: (k, v) => { try { localStorage.setItem(k, v); } catch (e) {} },
+  del: k => { try { localStorage.removeItem(k); } catch (e) {} }
+};
+const post = (url, body) => fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
+const err = m => { $('err').textContent = m || ''; };
+
+async function done(r) {
+  if (!r.ok) { const e = await r.json().catch(() => ({})); err(e.message || 'Something went wrong'); return false; }
+  const d = await r.json();
+  store.set('bp_token', d.token);
+  location.href = '/app.html';
+  return true;
+}
+async function submit() {
+  err('');
+  const username = $('user').value.trim(), password = $('pass').value;
+  if (!username || !password) { err('Enter your username and password'); return; }
+  $('go').disabled = true;
+  try {
+    if (!(await done(await post('/api/auth/login', { username, password })))) $('go').disabled = false;
+  } catch (e) { err('Could not reach the server'); $('go').disabled = false; }
+}
+
+(async () => {
+  let cfg;
+  try { cfg = await (await fetch('/api/config')).json(); } catch (e) { cfg = { authEnabled: false }; }
+  if (!cfg.authEnabled) { $('panel').classList.add('hidden'); $('disabled').classList.remove('hidden'); return; }
+
+  const t = store.get('bp_token');
+  if (t) {   // already signed in: straight to the map
+    const r = await fetch('/api/me', { headers: { Authorization: 'Bearer ' + t } }).catch(() => null);
+    if (r && r.ok) { location.replace('/app.html'); return; }
+    store.del('bp_token');
+  }
+
+  $('go').onclick = submit;
+  document.querySelectorAll('input').forEach(i => i.addEventListener('keydown', e => { if (e.key === 'Enter') submit(); }));
+
+  if (cfg.googleClientId) {
+    $('google').classList.remove('hidden');
+    const s = document.createElement('script');
+    s.src = 'https://accounts.google.com/gsi/client'; s.async = true;
+    s.onload = () => {
+      google.accounts.id.initialize({ client_id: cfg.googleClientId,
+        callback: async resp => { err(''); await done(await post('/api/auth/google', { credential: resp.credential })); } });
+      google.accounts.id.renderButton($('g-btn'), { theme: 'filled_black', size: 'large', text: 'continue_with', width: 300 });
+    };
+    document.head.appendChild(s);
+  }
+})();
+})();
+</script>
+</body>
+</html>

@@ -9,6 +9,11 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;800&family=DM+Sans:wght@400;500;700&family=DotGothic16&family=Noto+Sans+Kannada:wght@600;700&display=swap" rel="stylesheet">
 <style>
+
+  .hidden{display:none!important}
+.acct{display:flex;align-items:center;gap:22px}
+.navbtn{font:800 13px var(--display);letter-spacing:.04em;text-decoration:none;padding:9px 16px;border:2px solid var(--amber);border-radius:6px;color:var(--amber)}
+.navbtn:hover{background:var(--amber);color:#0a0e13}
 :root{--bg:#0a0e13;--panel:#10161e;--line:#243040;--text:#e9eef5;--muted:#8793a6;--amber:#ffb300;
   --display:'Bricolage Grotesque',system-ui,sans-serif;--body:'DM Sans',system-ui,sans-serif;--led:'DotGothic16','Courier New',monospace}
 *{box-sizing:border-box}
@@ -24,6 +29,10 @@ a{color:inherit}
 .nav .sp{flex:1}
 .nav a.l{font-size:14px;color:var(--muted);text-decoration:none;letter-spacing:.04em}
 .nav a.l:hover{color:var(--text)}
+.hidden{display:none!important}
+.acct{display:flex;align-items:center;gap:22px}
+.navbtn{font:800 13px var(--display);letter-spacing:.04em;text-decoration:none;padding:9px 16px;border:2px solid var(--amber);border-radius:6px;color:var(--amber)}
+.navbtn:hover{background:var(--amber);color:#0a0e13}
 
 .hero{display:grid;grid-template-columns:1.02fr 1fr;gap:40px;align-items:center;min-height:calc(100vh - 86px);padding-bottom:40px}
 .eyebrow{display:inline-flex;align-items:center;gap:9px;font:700 12px var(--body);letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin:0 0 22px}
@@ -100,9 +109,13 @@ footer p{margin:0;max-width:640px}
     <a class="brand" href="/">BUS TRACKER</a>
     <span class="sp"></span>
     <a class="l" href="/app.html">Live map</a>
-    <a class="l" href="/app.html#signin">Sign in</a>
     <a class="l" href="#how">How it works</a>
     <a class="l" href="https://github.com/MoxOmega88/BusTracker">GitHub</a>
+    <span id="acct" class="acct hidden">
+      <a class="l" href="/login.html">Log in</a>
+      <a class="navbtn" href="/signup.html">Sign up</a>
+    </span>
+    <a id="acct-user" class="navbtn hidden" href="/app.html"></a>
   </nav>
 
   <header class="hero">
@@ -113,8 +126,9 @@ footer p{margin:0;max-width:640px}
       <p class="lede">Bengaluru's buses never run to the timetable. This tracker streams bus positions through Apache Kafka, works out how late each bus really is, and tells you when it will actually turn up.</p>
       <div class="cta">
         <a class="btn primary" href="/app.html">OPEN THE LIVE MAP →</a>
-        <a class="btn" href="#how">HOW IT WORKS</a>
+        <a class="btn" id="cta-signup" href="/signup.html">CREATE AN ACCOUNT</a>
       </div>
+      <p class="fine" id="cta-note" style="margin-bottom:10px">No account needed to watch the buses. <a href="/login.html" style="color:var(--amber)">Log in</a> to save your home and work stops and see nearby routes first.</p>
       <p class="fine">Routes, stops and timetables are real BMTC data. Bus positions are simulated, and the system is built so a real GPS feed can replace the simulator.</p>
     </div>
     <div class="art">
@@ -233,6 +247,24 @@ poll(); setInterval(poll, 2000);
   function frame(now) { const dt = Math.min(.05, (now - last) / 1000 || 0); last = now; draw(dt); requestAnimationFrame(frame); }
   build(); addEventListener('resize', build);
   if (!reduce) requestAnimationFrame(frame);
+})();
+
+(async () => {
+  let cfg; try { cfg = await (await fetch('/api/config')).json(); } catch (e) { return; }
+  if (!cfg.authEnabled) { ['cta-signup', 'cta-note'].forEach(i => $(i) && $(i).remove()); return; }
+  let t = null, me = null;
+  try { t = localStorage.getItem('bp_token'); } catch (e) {}
+  if (t) {
+    const r = await fetch('/api/me', { headers: { Authorization: 'Bearer ' + t } }).catch(() => null);
+    if (r && r.ok) me = await r.json();
+  }
+  if (me) {
+    $('acct-user').textContent = me.displayName + ' →';
+    $('acct-user').classList.remove('hidden');
+    ['cta-signup', 'cta-note'].forEach(i => $(i) && $(i).remove());
+  } else {
+    $('acct').classList.remove('hidden');
+  }
 })();
 </script>
 </body>

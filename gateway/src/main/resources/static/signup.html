@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sign up · Bus Tracker</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;800&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/auth.css">
+</head>
+<body>
+<div class="stripe"></div>
+<header class="bar"><a class="brand" href="/">BUS TRACKER</a><a class="back" href="/">← Back to home</a></header>
+
+<main class="stage">
+  <section class="pitch">
+    <h1>Your stops, <em>saved.</em></h1>
+    <p>Tell us where you live and work, and the routes that pass nearby come first every time you open the map.</p>
+    <ul class="perks">
+      <li><b>01</b>Save up to three stops: home, work and one more</li>
+      <li><b>02</b>See the routes within 800 m of them straight away</li>
+      <li><b>03</b>Change them any time from the profile menu on the map</li>
+    </ul>
+  </section>
+
+  <section class="card">
+    <div id="disabled" class="note hidden">Accounts are switched off on this server. <a href="/app.html">Open the live map</a> instead.</div>
+    <div id="panel">
+      <h2>Create your account</h2>
+      <p class="sub">It takes a few seconds. You'll pick your stops on the map next.</p>
+      <div class="f"><label for="user">Username</label><input id="user" autocomplete="username" autofocus><small>3-60 characters: letters, digits and . _ - @</small></div>
+      <div class="f"><label for="name">Display name</label><input id="name" autocomplete="nickname" maxlength="40"></div>
+      <div class="f"><label for="pass">Password</label><input id="pass" type="password" autocomplete="new-password"><small>At least 8 characters</small></div>
+      <div class="f"><label for="pass2">Confirm password</label><input id="pass2" type="password" autocomplete="new-password"></div>
+      <div class="err" id="err" role="alert"></div>
+      <button class="btn" id="go" type="button">CREATE ACCOUNT</button>
+      <div id="google" class="hidden"><div class="or">OR</div><div id="g-btn"></div></div>
+      <p class="switch">Already registered? <a href="/login.html">Log in</a></p>
+      <a class="guest" href="/app.html">Continue without an account →</a>
+    </div>
+  </section>
+</main>
+<div class="stripe"></div>
+
+<script>
+(() => {
+'use strict';
+const $ = id => document.getElementById(id);
+const store = {
+  get: k => { try { return localStorage.getItem(k); } catch (e) { return null; } },
+  set: (k, v) => { try { localStorage.setItem(k, v); } catch (e) {} },
+  del: k => { try { localStorage.removeItem(k); } catch (e) {} }
+};
+const post = (url, body) => fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
+const err = m => { $('err').textContent = m || ''; };
+
+async function done(r) {
+  if (!r.ok) { const e = await r.json().catch(() => ({})); err(e.message || 'Something went wrong'); return false; }
+  const d = await r.json();
+  store.set('bp_token', d.token);
+  location.href = '/app.html';   // the map opens the profile menu so new users can set their stops
+  return true;
+}
+async function submit() {
+  err('');
+  const username = $('user').value.trim(), displayName = $('name').value.trim();
+  const password = $('pass').value, again = $('pass2').value;
+  if (!/^[a-zA-Z0-9_.@-]{3,60}$/.test(username)) { err('Username: 3-60 characters, letters, digits and . _ - @'); return; }
+  if (password.length < 8) { err('Password must be at least 8 characters'); return; }
+  if (password !== again) { err('The two passwords do not match'); return; }
+  $('go').disabled = true;
+  try {
+    if (!(await done(await post('/api/auth/signup', { username, password, displayName })))) $('go').disabled = false;
+  } catch (e) { err('Could not reach the server'); $('go').disabled = false; }
+}
+
+(async () => {
+  let cfg;
+  try { cfg = await (await fetch('/api/config')).json(); } catch (e) { cfg = { authEnabled: false }; }
+  if (!cfg.authEnabled) { $('panel').classList.add('hidden'); $('disabled').classList.remove('hidden'); return; }
+
+  const t = store.get('bp_token');
+  if (t) {
+    const r = await fetch('/api/me', { headers: { Authorization: 'Bearer ' + t } }).catch(() => null);
+    if (r && r.ok) { location.replace('/app.html'); return; }
+    store.del('bp_token');
+  }
+
+  $('go').onclick = submit;
+  document.querySelectorAll('input').forEach(i => i.addEventListener('keydown', e => { if (e.key === 'Enter') submit(); }));
+
+  if (cfg.googleClientId) {
+    $('google').classList.remove('hidden');
+    const s = document.createElement('script');
+    s.src = 'https://accounts.google.com/gsi/client'; s.async = true;
+    s.onload = () => {
+      google.accounts.id.initialize({ client_id: cfg.googleClientId,
+        callback: async resp => { err(''); await done(await post('/api/auth/google', { credential: resp.credential })); } });
+      google.accounts.id.renderButton($('g-btn'), { theme: 'filled_black', size: 'large', text: 'signup_with', width: 300 });
+    };
+    document.head.appendChild(s);
+  }
+})();
+})();
+</script>
+</body>
+</html>

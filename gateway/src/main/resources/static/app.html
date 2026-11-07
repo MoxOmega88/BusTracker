@@ -32,6 +32,20 @@ button{font:inherit;color:inherit;cursor:pointer}
 .status i{width:8px;height:8px;border-radius:50%;background:var(--red)}
 .status.live i{background:var(--mint);animation:ping 2s infinite}
 @keyframes ping{0%{box-shadow:0 0 0 0 rgba(61,220,151,.6)}70%,100%{box-shadow:0 0 0 8px rgba(61,220,151,0)}}
+#profile{position:relative}
+.prof-btn{display:flex;align-items:center;gap:9px;background:var(--panel2);border:1px solid var(--line);border-radius:22px;padding:3px 14px 3px 3px;cursor:pointer;font:700 13px var(--body);color:var(--text)}
+.prof-btn:hover{border-color:var(--amber)}
+.avatar{width:28px;height:28px;border-radius:50%;background:var(--amber);color:#0a0e13;display:grid;place-items:center;font:800 14px var(--display);flex:none}
+.prof-name{max-width:130px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.login-btn{display:inline-block;text-decoration:none;color:#0a0e13;background:var(--amber);font:800 12px var(--display);letter-spacing:.04em;padding:9px 14px;border-radius:6px;box-shadow:3px 3px 0 #7a5600}
+.login-btn:active{transform:translate(2px,2px);box-shadow:1px 1px 0 #7a5600}
+.menu{position:fixed;top:62px;right:12px;width:360px;max-width:calc(100vw - 24px);max-height:calc(100vh - 80px);overflow-y:auto;z-index:3000;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:16px;box-shadow:0 16px 40px rgba(0,0,0,.6)}
+.menu .who{display:flex;align-items:center;gap:12px;margin-bottom:16px}
+.menu .who .avatar{width:40px;height:40px;font-size:18px}
+.who-name{font-weight:700}
+.who-sub{color:var(--muted);font-size:12px}
+.menu .sug{position:static;margin-top:4px}
+@media (max-width:800px){.prof-name{display:none}.prof-btn{padding-right:3px}.login-btn{font-size:11px;padding:7px 10px}}
 
 main{flex:1;display:flex;min-height:0;margin-top:4px}
 #side{width:400px;flex:none;background:var(--panel);border-right:1px solid var(--line);display:flex;flex-direction:column;min-height:0}
@@ -120,6 +134,8 @@ main{flex:1;display:flex;min-height:0;margin-top:4px}
 @keyframes pulse{50%{transform:scale(1.14)}}
 .pin{width:26px;height:26px;border-radius:50% 50% 50% 0;transform:rotate(-45deg);background:var(--amber);border:2px solid #0a0e13;display:grid;place-items:center}
 .pin b{transform:rotate(45deg);color:#0a0e13;font:800 12px var(--display)}
+.pin.place{background:#3ddc97;animation:ring 2s infinite}
+@keyframes ring{0%{box-shadow:0 0 0 0 rgba(61,220,151,.55)}70%,100%{box-shadow:0 0 0 12px rgba(61,220,151,0)}}
 
 #busCard{position:absolute;left:16px;bottom:16px;width:390px;max-width:calc(100% - 32px);z-index:900;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:14px;box-shadow:0 10px 30px rgba(0,0,0,.55)}
 #busCard .x{position:absolute;top:8px;right:10px;background:none;border:0;color:var(--muted);font-size:20px;line-height:1}
@@ -156,6 +172,7 @@ main{flex:1;display:flex;min-height:0;margin-top:4px}
   <span class="sp"></span>
   <div class="clock"><span class="tag">SIM 10×</span><span id="clock" class="led">--:--:--</span></div>
   <div class="status" id="status"><i></i><span id="status-text">Connecting</span></div>
+  <div id="profile" class="hidden"></div>
 </header>
 
 <main>
@@ -165,7 +182,6 @@ main{flex:1;display:flex;min-height:0;margin-top:4px}
       <button class="tab" data-tab="stops">Stops</button>
       <button class="tab" data-tab="plan">Plan</button>
       <button class="tab" data-tab="alerts">Alerts<span class="badge hidden" id="badge">0</span></button>
-      <button class="tab" data-tab="me">Me</button>
     </nav>
 
     <section class="pane" id="tab-routes">
@@ -197,7 +213,6 @@ main{flex:1;display:flex;min-height:0;margin-top:4px}
       <div id="alert-list"><p class="empty" id="no-alerts">No alerts yet.</p></div>
     </section>
 
-    <section class="pane hidden" id="tab-me"><div id="me-out"></div></section>
   </aside>
 
   <div id="mapwrap">
@@ -515,106 +530,99 @@ setInterval(() => {
 }, 2000);
 document.addEventListener('keydown', e => { if (e.key === 'Escape') $('busCard').querySelector('.x')?.click(); });
 
-/* ---------- accounts ---------- */
-let cfg = { authEnabled: false, googleClientId: '' }, token = null, me = null, nearby = [], authMode = 'login';
+/* ---------- account: profile button and menu ---------- */
+let cfg = { authEnabled: false }, token = null, me = null, nearby = [];
 try { token = localStorage.getItem('bp_token'); } catch (e) {}
 const setToken = t => { token = t; try { t ? localStorage.setItem('bp_token', t) : localStorage.removeItem('bp_token'); } catch (e) {} };
 const authed = (url, opts = {}) => fetch(url, { ...opts, headers: { 'Content-Type': 'application/json', ...(token ? { Authorization: 'Bearer ' + token } : {}) } });
-const postJson = (url, body) => fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
+const initial = n => (Array.from(n || '?')[0] || '?').toUpperCase();
 
 async function initAuth() {
   try { cfg = await (await fetch('/api/config')).json(); } catch (e) { return; }
-  if (!cfg.authEnabled) { document.querySelector('[data-tab="me"]').classList.add('hidden'); return; }
-  if (cfg.googleClientId) {
-    const s = document.createElement('script');
-    s.src = 'https://accounts.google.com/gsi/client'; s.async = true; s.onload = () => { if (!me) renderMe(); };
-    document.head.appendChild(s);
-  }
+  if (!cfg.authEnabled) return;
   if (token) {
     const r = await authed('/api/me');
     if (r.ok) { me = await r.json(); await loadNearby(true); } else setToken(null);
+    }
+    renderProfile();
+  let prompted = false;
+  try { prompted = sessionStorage.getItem('bp_prompted') === '1'; } catch (e) {}
+  if (me && !(me.places || []).length && !prompted) {
+    try { sessionStorage.setItem('bp_prompted', '1'); } catch (e) {}
+    openMenu();
   }
-  renderMe();
-  if (location.hash === '#signin') showTab('me');
 }
 
-function renderMe() {
-  const box = $('me-out');
-  if (!me) {
-    const up = authMode === 'signup';
-    box.innerHTML = `<p class="hint">${up ? 'Create an account' : 'Sign in'} to save your home and work stops and see the routes near you first.</p>
-      <div class="field"><label class="lbl" for="au-user">Username</label><input id="au-user" autocomplete="username"></div>
-      ${up ? '<div class="field"><label class="lbl" for="au-name">Display name</label><input id="au-name"></div>' : ''}
-      <div class="field"><label class="lbl" for="au-pass">Password</label><input id="au-pass" type="password" autocomplete="${up ? 'new-password' : 'current-password'}"></div>
-      <div id="au-err" class="hint" style="color:var(--red)"></div>
-      <button class="go" id="au-go" style="margin:6px 0 10px">${up ? 'CREATE ACCOUNT' : 'SIGN IN'}</button>
-      <button class="only" id="au-switch" style="width:100%">${up ? 'I already have an account' : 'New here? Create an account'}</button>
-      <div id="g-btn" style="margin-top:14px"></div>`;
-    $('au-go').onclick = authSubmit;
-    $('au-switch').onclick = () => { authMode = up ? 'login' : 'signup'; renderMe(); };
-    box.querySelectorAll('input').forEach(i => i.addEventListener('keydown', e => { if (e.key === 'Enter') authSubmit(); }));
-    drawGoogle();
-    return;
-  }
-  const byLabel = Object.fromEntries((me.places || []).map(p => [p.label, p.stopName]));
-  box.innerHTML = `<div class="row"><div><div class="strong">${esc(me.displayName)}</div>
-      <div class="muted">${me.google ? 'Google account' : esc(me.username)}</div></div><button class="only" id="signout">Sign out</button></div>
-    <label class="lbl" style="margin-top:18px">My places (nearest bus stop)</label>
-    ${['Home', 'Work', 'Other'].map((l, i) => `<div class="field"><input data-label="${l}" id="pl-${i}" placeholder="${l} stop" value="${esc(byLabel[l] || '')}" autocomplete="off"><ul class="sug" id="pl-sug-${i}"></ul></div>`).join('')}
-    <div id="pl-err" class="hint" style="color:var(--red)"></div>
-    <button class="go" id="pl-save" style="margin-top:4px">SAVE &amp; SHOW MY ROUTES</button>
-    <div id="near-out"></div>`;
-  $('signout').onclick = () => { setToken(null); me = null; nearby = []; renderMe(); };
+let placePins = [];
+function drawPlacePins() {
+  placePins.forEach(m => map.removeLayer(m));
+  placePins = [];
+  if (!me) return;
+  (me.places || []).forEach(p => {
+    const letter = esc(String(p.label || '?').charAt(0).toUpperCase());
+    const m = L.marker([p.lat, p.lon], {
+      zIndexOffset: 500,
+      icon: L.divIcon({ className: '', iconSize: [26, 26], iconAnchor: [13, 26],
+        html: `<div class="pin place"><b>${letter}</b></div>` })
+    }).bindTooltip(esc(p.label + ' · ' + p.stopName), { direction: 'top', offset: [0, -26] }).addTo(map);
+    m.on('click', () => map.flyTo([p.lat, p.lon], 15));
+    placePins.push(m);
+  });
+}
+function renderProfile() {
+  drawPlacePins();
+  const p = $('profile'); p.classList.remove('hidden');
+  if (!me) { p.innerHTML = '<a class="login-btn" href="/login.html">LOG IN FOR BETTER FEATURES</a>'; return; }
+  p.innerHTML = `<button class="prof-btn" id="prof-btn" type="button" aria-haspopup="true" aria-label="Profile menu">
+      <span class="avatar">${esc(initial(me.displayName))}</span><span class="prof-name">${esc(me.displayName)}</span></button>
+    <div class="menu hidden" id="menu"></div>`;
+  $('prof-btn').onclick = () => $('menu').classList.contains('hidden') ? openMenu() : closeMenu();
+}
+function closeMenu() { const m = $('menu'); if (m) m.classList.add('hidden'); }
+function openMenu() { if (!me || !$('menu')) return; renderMenu(); $('menu').classList.remove('hidden'); }
+document.addEventListener('mousedown', e => { if (!e.composedPath().includes($('profile'))) closeMenu(); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeMenu(); });
+
+function renderMenu() {
+  const by = Object.fromEntries((me.places || []).map(p => [p.label, p.stopName]));
+  $('menu').innerHTML = `<div class="who"><span class="avatar">${esc(initial(me.displayName))}</span>
+      <div><div class="who-name">${esc(me.displayName)}</div><div class="who-sub">${me.google ? 'Google account' : '@' + esc(me.username)}</div></div></div>
+    <label class="lbl">My places (nearest bus stop)</label>
+    ${['Home', 'Work', 'Other'].map((l, i) => `<div class="field" style="margin-bottom:10px"><input data-label="${l}" id="pl-${i}" placeholder="${l} stop" value="${esc(by[l] || '')}" autocomplete="off"><ul class="sug" id="pl-sug-${i}"></ul></div>`).join('')}
+    <div id="pl-err" class="hint" style="color:var(--red);margin:0"></div>
+    <button class="go" id="pl-save" type="button" style="margin:6px 0 14px">SAVE &amp; SHOW MY ROUTES</button>
+    <div id="near-out"></div>
+    <button class="only" id="signout" type="button" style="width:100%;margin-top:14px">Sign out</button>`;
   [0, 1, 2].forEach(i => attachSuggest($('pl-' + i), $('pl-sug-' + i), () => {}));
   $('pl-save').onclick = savePlaces;
+  $('signout').onclick = () => { setToken(null); me = null; nearby = []; renderProfile(); };
   renderNearby();
 }
 
-async function authSubmit() {
-  const up = authMode === 'signup';
-  await finishAuth(await postJson('/api/auth/' + (up ? 'signup' : 'login'),
-    { username: $('au-user').value.trim(), password: $('au-pass').value, displayName: up ? $('au-name').value.trim() : null }));
-}
-async function finishAuth(r) {
-  if (!r.ok) {
-    const e = await r.json().catch(() => ({})), el = $('au-err');
-    if (el) el.textContent = e.message || 'Something went wrong';
-    return;
-  }
-  const d = await r.json();
-  setToken(d.token); me = d.user;
-  await loadNearby(true); renderMe();
-}
-function drawGoogle() {
-  const slot = $('g-btn');
-  if (!slot || !cfg.googleClientId || !window.google || !google.accounts) return;
-  google.accounts.id.initialize({ client_id: cfg.googleClientId,
-    callback: async resp => finishAuth(await postJson('/api/auth/google', { credential: resp.credential })) });
-  google.accounts.id.renderButton(slot, { theme: 'filled_black', size: 'large', text: 'continue_with', width: 300 });
-}
-
 async function savePlaces() {
-  const places = [...document.querySelectorAll('#me-out input[data-label]')]
+  const places = [...document.querySelectorAll('#menu input[data-label]')]
     .filter(i => i.value.trim()).map(i => ({ label: i.dataset.label, stopName: i.value.trim() }));
   const r = await authed('/api/me/places', { method: 'PUT', body: JSON.stringify(places) });
   if (!r.ok) { $('pl-err').textContent = (await r.json().catch(() => ({}))).message || 'Could not save'; return; }
   me = await r.json(); $('pl-err').textContent = '';
+  drawPlacePins();
   await loadNearby(true); renderNearby();
+  if (placePins.length) map.fitBounds(placePins.map(m => m.getLatLng()), { padding: [90, 90], maxZoom: 15 });
 }
 async function loadNearby(apply) {
   const r = await authed('/api/me/nearby?radius=800');
-  if (r.status === 401) { setToken(null); me = null; renderMe(); return; }
+  if (r.status === 401) { setToken(null); me = null; renderProfile(); return; }
   nearby = r.ok ? await r.json() : [];
   if (apply && nearby.length) showOnly(nearby.slice(0, MAX_VISIBLE).map(n => n.routeLabel));
 }
 function renderNearby() {
-  const el = $('near-out'); if (!el) return;
-  if (!(me.places || []).length) { el.innerHTML = '<p class="hint" style="margin-top:14px">Save a stop to see the routes near you.</p>'; return; }
+  const el = $('near-out'); if (!el || !me) return;
+  if (!(me.places || []).length) { el.innerHTML = '<p class="hint">Save a stop to see the routes near you.</p>'; return; }
   el.innerHTML = nearby.length
-    ? '<label class="lbl" style="margin-top:16px">Routes near you (within 800 m)</label>' + nearby.map(n =>
+    ? '<label class="lbl">Routes near you (within 800 m)</label>' + nearby.map(n =>
         `<div class="route-row"><span class="chip" style="--c:${colorOf(n.routeName)}">${esc(n.routeLabel)}</span>
          <div class="r-info"><div class="r-name">${esc(n.stopName)}</div><div class="r-sub">${n.distM} m from your ${esc(n.placeLabel)}</div></div></div>`).join('')
-    : '<p class="empty" style="margin-top:14px">No demo routes pass within 800 m of your places yet.</p>';
+    : '<p class="empty">No demo routes pass within 800 m of your places yet.</p>';
 }
 
 loadRoutes().then(() => { connect(); initAuth(); });
