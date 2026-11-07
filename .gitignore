@@ -4,3 +4,5 @@ target/
 *.iml
 data/raw/
 __pycache__/
+*.env
+run-gateway.sh

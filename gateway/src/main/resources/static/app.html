@@ -165,6 +165,7 @@ main{flex:1;display:flex;min-height:0;margin-top:4px}
       <button class="tab" data-tab="stops">Stops</button>
       <button class="tab" data-tab="plan">Plan</button>
       <button class="tab" data-tab="alerts">Alerts<span class="badge hidden" id="badge">0</span></button>
+      <button class="tab" data-tab="me">Me</button>
     </nav>
 
     <section class="pane" id="tab-routes">
@@ -195,6 +196,8 @@ main{flex:1;display:flex;min-height:0;margin-top:4px}
       <p class="hint">Delays, road blocks and buses that stop reporting. Click one to fly to it.</p>
       <div id="alert-list"><p class="empty" id="no-alerts">No alerts yet.</p></div>
     </section>
+
+    <section class="pane hidden" id="tab-me"><div id="me-out"></div></section>
   </aside>
 
   <div id="mapwrap">
@@ -512,7 +515,109 @@ setInterval(() => {
 }, 2000);
 document.addEventListener('keydown', e => { if (e.key === 'Escape') $('busCard').querySelector('.x')?.click(); });
 
-loadRoutes().then(connect);
+/* ---------- accounts ---------- */
+let cfg = { authEnabled: false, googleClientId: '' }, token = null, me = null, nearby = [], authMode = 'login';
+try { token = localStorage.getItem('bp_token'); } catch (e) {}
+const setToken = t => { token = t; try { t ? localStorage.setItem('bp_token', t) : localStorage.removeItem('bp_token'); } catch (e) {} };
+const authed = (url, opts = {}) => fetch(url, { ...opts, headers: { 'Content-Type': 'application/json', ...(token ? { Authorization: 'Bearer ' + token } : {}) } });
+const postJson = (url, body) => fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
+
+async function initAuth() {
+  try { cfg = await (await fetch('/api/config')).json(); } catch (e) { return; }
+  if (!cfg.authEnabled) { document.querySelector('[data-tab="me"]').classList.add('hidden'); return; }
+  if (cfg.googleClientId) {
+    const s = document.createElement('script');
+    s.src = 'https://accounts.google.com/gsi/client'; s.async = true; s.onload = () => { if (!me) renderMe(); };
+    document.head.appendChild(s);
+  }
+  if (token) {
+    const r = await authed('/api/me');
+    if (r.ok) { me = await r.json(); await loadNearby(true); } else setToken(null);
+  }
+  renderMe();
+  if (location.hash === '#signin') showTab('me');
+}
+
+function renderMe() {
+  const box = $('me-out');
+  if (!me) {
+    const up = authMode === 'signup';
+    box.innerHTML = `<p class="hint">${up ? 'Create an account' : 'Sign in'} to save your home and work stops and see the routes near you first.</p>
+      <div class="field"><label class="lbl" for="au-user">Username</label><input id="au-user" autocomplete="username"></div>
+      ${up ? '<div class="field"><label class="lbl" for="au-name">Display name</label><input id="au-name"></div>' : ''}
+      <div class="field"><label class="lbl" for="au-pass">Password</label><input id="au-pass" type="password" autocomplete="${up ? 'new-password' : 'current-password'}"></div>
+      <div id="au-err" class="hint" style="color:var(--red)"></div>
+      <button class="go" id="au-go" style="margin:6px 0 10px">${up ? 'CREATE ACCOUNT' : 'SIGN IN'}</button>
+      <button class="only" id="au-switch" style="width:100%">${up ? 'I already have an account' : 'New here? Create an account'}</button>
+      <div id="g-btn" style="margin-top:14px"></div>`;
+    $('au-go').onclick = authSubmit;
+    $('au-switch').onclick = () => { authMode = up ? 'login' : 'signup'; renderMe(); };
+    box.querySelectorAll('input').forEach(i => i.addEventListener('keydown', e => { if (e.key === 'Enter') authSubmit(); }));
+    drawGoogle();
+    return;
+  }
+  const byLabel = Object.fromEntries((me.places || []).map(p => [p.label, p.stopName]));
+  box.innerHTML = `<div class="row"><div><div class="strong">${esc(me.displayName)}</div>
+      <div class="muted">${me.google ? 'Google account' : esc(me.username)}</div></div><button class="only" id="signout">Sign out</button></div>
+    <label class="lbl" style="margin-top:18px">My places (nearest bus stop)</label>
+    ${['Home', 'Work', 'Other'].map((l, i) => `<div class="field"><input data-label="${l}" id="pl-${i}" placeholder="${l} stop" value="${esc(byLabel[l] || '')}" autocomplete="off"><ul class="sug" id="pl-sug-${i}"></ul></div>`).join('')}
+    <div id="pl-err" class="hint" style="color:var(--red)"></div>
+    <button class="go" id="pl-save" style="margin-top:4px">SAVE &amp; SHOW MY ROUTES</button>
+    <div id="near-out"></div>`;
+  $('signout').onclick = () => { setToken(null); me = null; nearby = []; renderMe(); };
+  [0, 1, 2].forEach(i => attachSuggest($('pl-' + i), $('pl-sug-' + i), () => {}));
+  $('pl-save').onclick = savePlaces;
+  renderNearby();
+}
+
+async function authSubmit() {
+  const up = authMode === 'signup';
+  await finishAuth(await postJson('/api/auth/' + (up ? 'signup' : 'login'),
+    { username: $('au-user').value.trim(), password: $('au-pass').value, displayName: up ? $('au-name').value.trim() : null }));
+}
+async function finishAuth(r) {
+  if (!r.ok) {
+    const e = await r.json().catch(() => ({})), el = $('au-err');
+    if (el) el.textContent = e.message || 'Something went wrong';
+    return;
+  }
+  const d = await r.json();
+  setToken(d.token); me = d.user;
+  await loadNearby(true); renderMe();
+}
+function drawGoogle() {
+  const slot = $('g-btn');
+  if (!slot || !cfg.googleClientId || !window.google || !google.accounts) return;
+  google.accounts.id.initialize({ client_id: cfg.googleClientId,
+    callback: async resp => finishAuth(await postJson('/api/auth/google', { credential: resp.credential })) });
+  google.accounts.id.renderButton(slot, { theme: 'filled_black', size: 'large', text: 'continue_with', width: 300 });
+}
+
+async function savePlaces() {
+  const places = [...document.querySelectorAll('#me-out input[data-label]')]
+    .filter(i => i.value.trim()).map(i => ({ label: i.dataset.label, stopName: i.value.trim() }));
+  const r = await authed('/api/me/places', { method: 'PUT', body: JSON.stringify(places) });
+  if (!r.ok) { $('pl-err').textContent = (await r.json().catch(() => ({}))).message || 'Could not save'; return; }
+  me = await r.json(); $('pl-err').textContent = '';
+  await loadNearby(true); renderNearby();
+}
+async function loadNearby(apply) {
+  const r = await authed('/api/me/nearby?radius=800');
+  if (r.status === 401) { setToken(null); me = null; renderMe(); return; }
+  nearby = r.ok ? await r.json() : [];
+  if (apply && nearby.length) showOnly(nearby.slice(0, MAX_VISIBLE).map(n => n.routeLabel));
+}
+function renderNearby() {
+  const el = $('near-out'); if (!el) return;
+  if (!(me.places || []).length) { el.innerHTML = '<p class="hint" style="margin-top:14px">Save a stop to see the routes near you.</p>'; return; }
+  el.innerHTML = nearby.length
+    ? '<label class="lbl" style="margin-top:16px">Routes near you (within 800 m)</label>' + nearby.map(n =>
+        `<div class="route-row"><span class="chip" style="--c:${colorOf(n.routeName)}">${esc(n.routeLabel)}</span>
+         <div class="r-info"><div class="r-name">${esc(n.stopName)}</div><div class="r-sub">${n.distM} m from your ${esc(n.placeLabel)}</div></div></div>`).join('')
+    : '<p class="empty" style="margin-top:14px">No demo routes pass within 800 m of your places yet.</p>';
+}
+
+loadRoutes().then(() => { connect(); initAuth(); });
 })();
 </script>
 </body>

@@ -13,3 +13,8 @@ server:
 
 bustracker:
   data-dir: data/filtered
+  auth:
+    enabled: ${AUTH_ENABLED:false}
+    mongodb-uri: ${MONGODB_URI:}
+    jwt-secret: ${JWT_SECRET:}
+    google-client-id: ${GOOGLE_CLIENT_ID:}

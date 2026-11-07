@@ -1,5 +1,7 @@
 package com.mohith.bustracker.gateway.web;
 
+
+import com.mohith.bustracker.common.gtfs.Geo;
 import com.mohith.bustracker.common.gtfs.GtfsModel.GtfsData;
 import com.mohith.bustracker.common.gtfs.GtfsModel.Shape;
 import com.mohith.bustracker.common.gtfs.GtfsModel.StopTime;
@@ -112,4 +114,20 @@ public class TransitIndex {
         }
         return out;
     }
+    public record Nearby(String routeLabel, String routeName, String placeLabel, String stopName, int distM) {}
+
+/** For each route, the stop closest to the given point, if it is within radiusM. */
+public List<Nearby> nearby(double lat, double lon, String placeLabel, double radiusM) {
+    Map<String, Nearby> best = new HashMap<>();
+    for (ShapeDto s : shapes) {
+        for (StopDto st : s.stops()) {
+            int d = (int) Math.round(Geo.meters(lat, lon, st.lat(), st.lon()));
+            if (d > radiusM) continue;
+            String label = s.routeName().split(" ")[0];
+            Nearby cur = best.get(label);
+            if (cur == null || d < cur.distM()) best.put(label, new Nearby(label, s.routeName(), placeLabel, st.name(), d));
+        }
+    }
+    return new ArrayList<>(best.values());
+}
 }
