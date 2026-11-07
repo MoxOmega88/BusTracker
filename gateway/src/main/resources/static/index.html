@@ -180,7 +180,7 @@ footer p{margin:0;max-width:640px}
 <script>
 const $ = id => document.getElementById(id);
 const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const COLORS = {'171':'#3da5ff','500':'#ff7a45','276':'#3ddc97','K-2':'#c77dff'};
+const COLORS = {'13':'#ff3b4d','171':'#3da5ff','500':'#ff7a45','276':'#3ddc97','K-2':'#c77dff'};
 const hue = s => { let h = 0; for (const c of s) h = (h * 31 + c.charCodeAt(0)) >>> 0; return h % 360; };
 const colorOf = l => COLORS[l] || (COLORS[l] = `hsl(${hue(l)} 78% 62%)`);
 

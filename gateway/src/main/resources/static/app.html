@@ -229,7 +229,7 @@ main{flex:1;display:flex;min-height:0;margin-top:4px}
 const $ = id => document.getElementById(id);
 const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const label = n => String(n).split(' ')[0];
-const PALETTE = {'171':'#3da5ff','500':'#ff7a45','276':'#3ddc97','K-2':'#c77dff'};
+const PALETTE = {'13':'#ff3b4d','171':'#3da5ff','500':'#ff7a45','276':'#3ddc97','K-2':'#c77dff'};
 const hue = s => { let h = 0; for (const c of s) h = (h * 31 + c.charCodeAt(0)) >>> 0; return h % 360; };
 const colorOf = n => { const l = label(n); return PALETTE[l] || (PALETTE[l] = `hsl(${hue(l)} 78% 62%)`); };
 const mmss = s => { s = Math.max(0, Math.round(s)); return Math.floor(s / 60) + ':' + String(s % 60).padStart(2, '0'); };
